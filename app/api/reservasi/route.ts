@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server"
 
 function normalizeIndonesianWhatsApp(value: string) {
-  const cleaned = value.trim().replace(/[\\s().-]/g, "")
+  const cleaned = value.trim().replace(/[\s().-]/g, "")
 
-  if (/^08\\d{8,11}$/.test(cleaned)) return cleaned
-  if (/^628\\d{8,11}$/.test(cleaned)) return `+${cleaned}`
-  if (/^\\+628\\d{8,11}$/.test(cleaned)) return cleaned
+  if (/^08\d{8,11}$/.test(cleaned)) return cleaned
+  if (/^628\d{8,11}$/.test(cleaned)) return `+${cleaned}`
+  if (/^\+628\d{8,11}$/.test(cleaned)) return cleaned
 
   return null
 }
