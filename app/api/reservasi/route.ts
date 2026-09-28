@@ -54,16 +54,22 @@ export async function POST(request: Request) {
 
     const text = await response.text()
 
-    let result
+let result
 
-    try {
-      result = JSON.parse(text)
-    } catch {
-      result = {
-        success: response.ok,
-        message: text,
-      }
-    }
+try {
+  result = JSON.parse(text)
+} catch {
+  console.error("Unexpected Apps Script response:", text)
+
+  return NextResponse.json(
+    {
+      success: false,
+      message:
+        "Google Apps Script tidak mengembalikan respons yang valid. Periksa kembali deployment Web App dan aksesnya.",
+    },
+    { status: 502 }
+  )
+}
 
     if (!response.ok || result.success === false) {
       throw new Error(
