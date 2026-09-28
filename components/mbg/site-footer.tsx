@@ -1,62 +1,188 @@
-"use client"
-
-import { useEffect, useState } from "react"
 import Image from "next/image"
 
-const closingWords = [
-  "Perjumpaan",
-  "Teman Perjalanan",
-  "Cerita",
-  "Percakapan",
-  "Pertemuan",
-  "Kawan",
-  "Ruang Temu",
-  "Perjalanan",
-  "Ingatan",
-  "Kenangan",
-  "Suara",
-  "Kata",
-  "Rasa",
-  "Cerita Manusia",
-  "Ruang Bersama",
-  "Langkah",
-  "Jejak",
-  "Singgah",
-  "Berbagi",
-  "Kebersamaan",
-  "Perjalanan Kecil",
-  "Ruang Perjumpaan",
-  "Pulang",
-  "Cerita Perjalanan",
-  "Temu Manusia",
-]
+const closingWords = ["Perjumpaan","Teman Perjalanan","Cerita","Percakapan","Pertemuan","Kawan","Ruang Temu","Perjalanan","Ingatan","Kenangan","Suara","Kata","Rasa","Cerita Manusia","Ruang Bersama","Langkah","Jejak","Singgah","Berbagi","Kebersamaan","Perjalanan Kecil","Ruang Perjumpaan","Pulang","Cerita Perjalanan","Temu Manusia"]
 
 function ScoreboardWord() {
-  const [index, setIndex] = useState(0)
-
-  useEffect(() => {
-    const interval = window.setInterval(() => {
-      setIndex((current) =>
-        current === closingWords.length - 1 ? 0 : current + 1,
-      )
-    }, 1300)
-
-    return () => window.clearInterval(interval)
-  }, [])
-
-  const currentWord = closingWords[index]
-
   return (
     <span
       className="relative inline-flex min-h-[1.35em] min-w-[9.8ch] items-center justify-center overflow-hidden rounded-[5px] border border-white/10 bg-[#223B4D] px-3 py-1 align-baseline font-body text-[0.72em] font-extrabold uppercase tracking-[0.09em] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_2px_0_rgba(0,0,0,0.12)] sm:min-w-[13ch]"
-      aria-label={currentWord}
+      aria-label={closingWords.join(", ")}
     >
-      <span
-        key={currentWord}
-        className="mbg-score-flip whitespace-nowrap"
-      >
-        {currentWord}
-      </span>
+        <span
+          className="mbg-score-word"
+          style={{ "--score-index": i } as React.CSSProperties}
+          aria-hidden={i === 0 ? undefined : true}
+        >
+          Perjumpaan
+        </span>
+        <span
+          className="mbg-score-word"
+          style={{ "--score-index": i } as React.CSSProperties}
+          aria-hidden={i === 0 ? undefined : true}
+        >
+          Teman Perjalanan
+        </span>
+        <span
+          className="mbg-score-word"
+          style={{ "--score-index": i } as React.CSSProperties}
+          aria-hidden={i === 0 ? undefined : true}
+        >
+          Cerita
+        </span>
+        <span
+          className="mbg-score-word"
+          style={{ "--score-index": i } as React.CSSProperties}
+          aria-hidden={i === 0 ? undefined : true}
+        >
+          Percakapan
+        </span>
+        <span
+          className="mbg-score-word"
+          style={{ "--score-index": i } as React.CSSProperties}
+          aria-hidden={i === 0 ? undefined : true}
+        >
+          Pertemuan
+        </span>
+        <span
+          className="mbg-score-word"
+          style={{ "--score-index": i } as React.CSSProperties}
+          aria-hidden={i === 0 ? undefined : true}
+        >
+          Kawan
+        </span>
+        <span
+          className="mbg-score-word"
+          style={{ "--score-index": i } as React.CSSProperties}
+          aria-hidden={i === 0 ? undefined : true}
+        >
+          Ruang Temu
+        </span>
+        <span
+          className="mbg-score-word"
+          style={{ "--score-index": i } as React.CSSProperties}
+          aria-hidden={i === 0 ? undefined : true}
+        >
+          Perjalanan
+        </span>
+        <span
+          className="mbg-score-word"
+          style={{ "--score-index": i } as React.CSSProperties}
+          aria-hidden={i === 0 ? undefined : true}
+        >
+          Ingatan
+        </span>
+        <span
+          className="mbg-score-word"
+          style={{ "--score-index": i } as React.CSSProperties}
+          aria-hidden={i === 0 ? undefined : true}
+        >
+          Kenangan
+        </span>
+        <span
+          className="mbg-score-word"
+          style={{ "--score-index": i } as React.CSSProperties}
+          aria-hidden={i === 0 ? undefined : true}
+        >
+          Suara
+        </span>
+        <span
+          className="mbg-score-word"
+          style={{ "--score-index": i } as React.CSSProperties}
+          aria-hidden={i === 0 ? undefined : true}
+        >
+          Kata
+        </span>
+        <span
+          className="mbg-score-word"
+          style={{ "--score-index": i } as React.CSSProperties}
+          aria-hidden={i === 0 ? undefined : true}
+        >
+          Rasa
+        </span>
+        <span
+          className="mbg-score-word"
+          style={{ "--score-index": i } as React.CSSProperties}
+          aria-hidden={i === 0 ? undefined : true}
+        >
+          Cerita Manusia
+        </span>
+        <span
+          className="mbg-score-word"
+          style={{ "--score-index": i } as React.CSSProperties}
+          aria-hidden={i === 0 ? undefined : true}
+        >
+          Ruang Bersama
+        </span>
+        <span
+          className="mbg-score-word"
+          style={{ "--score-index": i } as React.CSSProperties}
+          aria-hidden={i === 0 ? undefined : true}
+        >
+          Langkah
+        </span>
+        <span
+          className="mbg-score-word"
+          style={{ "--score-index": i } as React.CSSProperties}
+          aria-hidden={i === 0 ? undefined : true}
+        >
+          Jejak
+        </span>
+        <span
+          className="mbg-score-word"
+          style={{ "--score-index": i } as React.CSSProperties}
+          aria-hidden={i === 0 ? undefined : true}
+        >
+          Singgah
+        </span>
+        <span
+          className="mbg-score-word"
+          style={{ "--score-index": i } as React.CSSProperties}
+          aria-hidden={i === 0 ? undefined : true}
+        >
+          Berbagi
+        </span>
+        <span
+          className="mbg-score-word"
+          style={{ "--score-index": i } as React.CSSProperties}
+          aria-hidden={i === 0 ? undefined : true}
+        >
+          Kebersamaan
+        </span>
+        <span
+          className="mbg-score-word"
+          style={{ "--score-index": i } as React.CSSProperties}
+          aria-hidden={i === 0 ? undefined : true}
+        >
+          Perjalanan Kecil
+        </span>
+        <span
+          className="mbg-score-word"
+          style={{ "--score-index": i } as React.CSSProperties}
+          aria-hidden={i === 0 ? undefined : true}
+        >
+          Ruang Perjumpaan
+        </span>
+        <span
+          className="mbg-score-word"
+          style={{ "--score-index": i } as React.CSSProperties}
+          aria-hidden={i === 0 ? undefined : true}
+        >
+          Pulang
+        </span>
+        <span
+          className="mbg-score-word"
+          style={{ "--score-index": i } as React.CSSProperties}
+          aria-hidden={i === 0 ? undefined : true}
+        >
+          Cerita Perjalanan
+        </span>
+        <span
+          className="mbg-score-word"
+          style={{ "--score-index": i } as React.CSSProperties}
+          aria-hidden={i === 0 ? undefined : true}
+        >
+          Temu Manusia
+        </span>
       <span
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 top-1/2 h-px bg-white/10"
@@ -118,7 +244,7 @@ export function SiteFooter() {
           </p>
         </div>
       </div>
-
     </footer>
   )
 }
+
