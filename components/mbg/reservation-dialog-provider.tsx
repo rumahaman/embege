@@ -164,7 +164,7 @@ export function ReservationDialogProvider() {
           ) : (
             <div className="flex flex-col gap-5 py-4 text-center">
               <DialogHeader className="items-center gap-2">
-                <DialogTitle className="font-heading text-4xl leading-none text-[#2F3E46] sm:text-5xl">
+                <DialogTitle className="font-heading text-4xl leading-none text-[#2F3E46]">
                   Reservasi Berhasil
                 </DialogTitle>
                 <DialogDescription className="font-body text-base leading-relaxed text-[#2F3E46]/75">
@@ -175,13 +175,16 @@ export function ReservationDialogProvider() {
               <div className="rounded-2xl border border-[#2F3E46]/15 bg-[#AFC1CC] p-5 shadow-sm">
                 <div className="mx-auto mb-3 flex w-fit items-center gap-2 rounded-full bg-[#2F3E46] px-4 py-2 font-body text-xs font-semibold text-[#F5F0E6]">
                   <CheckCircle2 className="size-4 text-[#8AC89B]" />
-                  RESERVASI BERHASIL
+                  TERCATAT
                 </div>
                 <p className="font-body text-xs font-bold uppercase tracking-[0.3em] text-[#2F3E46]/60">
                   No. Reservasi
                 </p>
                 <p className="mt-2 break-all font-heading text-4xl font-semibold leading-none tracking-wide text-[#2F3E46] sm:text-5xl">
                   {reservationNumber}
+                </p>
+                <p className="mt-3 font-body text-xs font-medium text-[#2F3E46]/65">
+                  Simpan nomor ini untuk registrasi
                 </p>
               </div>
 
@@ -190,7 +193,7 @@ export function ReservationDialogProvider() {
                   <p className="font-body text-[11px] font-bold uppercase tracking-[0.22em] text-[#2F3E46]/50">
                     Nama
                   </p>
-                  <p className="mt-1 font-body text-sm font-semibold text-[#2F3E46]">
+                  <p className="mt-1 font-body text-sm font-semibold leading-snug text-[#2F3E46]">
                     {form.namaLengkap}
                   </p>
                 </div>
@@ -198,7 +201,7 @@ export function ReservationDialogProvider() {
                   <p className="font-body text-[11px] font-bold uppercase tracking-[0.22em] text-[#2F3E46]/50">
                     Kota Acara
                   </p>
-                  <p className="mt-1 font-body text-sm font-semibold text-[#2F3E46]">
+                  <p className="mt-1 font-body text-sm font-semibold leading-snug text-[#2F3E46]">
                     {form.kotaAcara}
                   </p>
                 </div>
@@ -206,7 +209,7 @@ export function ReservationDialogProvider() {
                   <p className="font-body text-[11px] font-bold uppercase tracking-[0.22em] text-[#2F3E46]/50">
                     Venue
                   </p>
-                  <p className="mt-1 font-body text-sm font-semibold text-[#2F3E46]">
+                  <p className="mt-1 font-body text-sm font-semibold leading-snug text-[#2F3E46]">
                     {selectedVenue?.name ?? "-"}
                   </p>
                 </div>
@@ -214,7 +217,7 @@ export function ReservationDialogProvider() {
                   <p className="font-body text-[11px] font-bold uppercase tracking-[0.22em] text-[#2F3E46]/50">
                     Tanggal
                   </p>
-                  <p className="mt-1 font-body text-sm font-semibold text-[#2F3E46]">
+                  <p className="mt-1 font-body text-sm font-semibold leading-snug text-[#2F3E46]">
                     {selectedVenue?.date ?? "-"}
                   </p>
                 </div>
@@ -225,14 +228,23 @@ export function ReservationDialogProvider() {
                   Simpan bukti reservasimu
                 </p>
                 <p className="mt-1 font-body text-sm leading-relaxed text-[#2F3E46]/75">
-                  Screenshot halaman ini dan simpan nomor reservasi untuk ditunjukkan saat datang.
+                  Screenshot halaman ini sebagai bukti reservasi.
+                  <br />
+                  Tunjukkan nomor reservasi saat registrasi.
                 </p>
               </div>
 
-              <p className="font-body text-sm leading-relaxed text-[#2F3E46]/70">
-                Jangan lupa membawa <span className="font-semibold text-[#2F3E46]">1 sajak</span>{" "}
-                sebagai tiket masuk dan menunjukkan identitas saat registrasi.
-              </p>
+              <div className="rounded-xl border border-[#2F3E46]/10 bg-white/60 px-4 py-3 text-center">
+                <p className="font-body text-[11px] font-bold uppercase tracking-[0.24em] text-[#2F3E46]/50">
+                  Jangan lupa
+                </p>
+                <p className="mt-1 font-body text-sm leading-relaxed text-[#2F3E46]/75">
+                  Bawa <span className="font-hand text-base font-semibold text-[#2F3E46]">1 sajak</span>{" "}
+                  sebagai tiket masuk.
+                  <br />
+                  Tunjukkan identitas saat registrasi.
+                </p>
+              </div>
 
               <Button
                 type="button"
