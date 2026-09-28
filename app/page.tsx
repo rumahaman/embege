@@ -12,6 +12,7 @@ export default function Page() {
   return (
     <>
       <SiteHeader />
+
       <main>
         <HeroSection />
         <LokasiAcaraSection />
@@ -20,6 +21,7 @@ export default function Page() {
         <CtaBannerSection />
         <IkutiPerjalananSection />
       </main>
+
       <SiteFooter />
       <ReservationDialogProvider />
     </>

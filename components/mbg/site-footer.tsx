@@ -1,32 +1,51 @@
 import Image from "next/image"
-import { Mail } from "lucide-react"
 
 export function SiteFooter() {
   return (
-    <footer id="kontak" className="relative overflow-hidden bg-[#EDF2F5] pt-14">
-      <div className="border-t border-[#2F3E46]/10 bg-[#2F3E46] py-10 text-white">
-        <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 sm:px-6 md:flex-row md:items-start md:justify-between">
-          <div className="flex flex-col gap-2">
-            <div className="flex items-center gap-2">
+    <footer id="kontak" className="relative overflow-hidden bg-[#2F3E46] text-white">
+      <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-14">
+        <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
+          {/* Identity */}
+          <div className="flex flex-col gap-3">
+            <div className="flex items-center gap-3">
               <Image
                 src="/images/logo-bgn.jpg"
                 alt="Logo Badan Gigs Nasional"
-                width={32}
-                height={32}
-                className="size-8 rounded-full object-cover"
+                width={40}
+                height={40}
+                className="size-10 rounded-full object-cover"
               />
-              <span className="font-hand text-lg">Badan Gigs Nasional</span>
+
+              <div>
+                <p className="font-hand text-xl leading-none text-white">
+                  Manggung Bergizi Gratis
+                </p>
+
+                <p className="mt-1 font-body text-sm text-white/60">
+                  Dipersembahkan oleh
+                </p>
+
+                <p className="font-body text-sm font-semibold text-white/80">
+                  Badan Gigs Nasional
+                </p>
+              </div>
             </div>
-            <p className="max-w-xs font-body text-sm text-white/60">
-              Manggung Bergizi Gratis — dipersembahkan oleh Badan Gigs Nasional.
+          </div>
+
+          {/* Closing statement */}
+          <div className="max-w-sm md:text-right">
+            <p className="font-hand text-2xl leading-tight text-white/80 sm:text-3xl">
+              Musik, sajak, dan
+              <br />
+              perjumpaan manusia.
             </p>
           </div>
         </div>
 
-        <div className="mx-auto mt-8 max-w-6xl border-t border-white/10 px-4 pt-6 sm:px-6">
-          <p className="text-center font-body text-xs text-white/50">
-            &copy; {new Date().getFullYear()} Badan Gigs Nasional. Masuk dengan sajak, pulang
-            dengan cerita.
+        {/* Divider + copyright */}
+        <div className="mt-10 border-t border-white/10 pt-6">
+          <p className="text-center font-body text-xs text-white/45">
+            &copy; {new Date().getFullYear()} Badan Gigs Nasional
           </p>
         </div>
       </div>

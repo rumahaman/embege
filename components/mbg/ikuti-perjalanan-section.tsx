@@ -27,6 +27,7 @@ const socialLinks = [
 export function IkutiPerjalananSection() {
   return (
     <section
+      id="ikuti-perjalanan"
       aria-labelledby="ikuti-perjalanan-title"
       className="relative overflow-hidden bg-[#A9C1CC] py-14 sm:py-16"
     >
@@ -66,13 +67,13 @@ export function IkutiPerjalananSection() {
                     alt=""
                     className="size-6 object-contain"
                   />
-
                 </div>
 
                 <div>
                   <p className="font-body text-base font-semibold text-[#2F3E46]">
                     {social.name}
                   </p>
+
                   <p className="font-body text-sm text-[#2F3E46]/60">
                     {social.handle}
                   </p>
