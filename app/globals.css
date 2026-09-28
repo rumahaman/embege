@@ -278,7 +278,7 @@
   }
 }
 
-/* MBG photo gallery: compact shuffled card stack */
+/* MBG photo gallery: compact shuffled card stack — production sync */
 .mbg-gallery-card {
   left: var(--mbg-gallery-left);
   top: var(--mbg-gallery-top);
