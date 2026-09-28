@@ -47,6 +47,9 @@ export function SiteFooter() {
           <p className="text-center font-body text-xs text-white/45">
             &copy; {new Date().getFullYear()} Badan Gigs Nasional
           </p>
+          <p className="mt-1 text-center font-body text-[10px] tracking-[0.08em] text-white/30">
+            Republik Indienesia
+          </p>
         </div>
       </div>
     </footer>
