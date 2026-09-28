@@ -11,7 +11,7 @@ export function SetorSajakSection() {
     <section id="setor-sajak" className="relative overflow-hidden bg-[#EDF2F5] py-16 sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-center">
-          <div className="relative order-2 justify-self-center lg:order-1">
+          <div className="relative order-2 justify-self-center lg:order-1 lg:-translate-x-16 xl:-translate-x-20">
             <MbgPhotoGallery />
           </div>
 
