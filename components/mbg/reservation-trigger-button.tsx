@@ -36,7 +36,7 @@ export function ReservationTriggerButton({
         } else {
           scrollToReservationLocations()
         }
-      }
+      }}
       className={cn(
         "bg-[#F6EB35] text-[#2F3E46] hover:bg-[#F6EB35]/90 font-hand text-base",
         className,
