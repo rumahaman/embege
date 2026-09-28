@@ -234,7 +234,7 @@ export function ReservationDialogProvider() {
                 </p>
               </div>
 
-              <div className="relative overflow-hidden rounded-xl border border-[#2F3E46]/10 bg-white/60 px-4 py-3 pr-28 text-left sm:pr-32">
+              <div className="relative overflow-hidden rounded-xl border border-[#2F3E46]/10 bg-white/60 px-4 py-3 pr-24 text-left sm:pr-28">
                 <div>
                   <p className="font-body text-[11px] font-bold uppercase tracking-[0.24em] text-[#2F3E46]/50">
                     Jangan lupa
@@ -247,15 +247,15 @@ export function ReservationDialogProvider() {
                   </p>
                 </div>
                 <div
-                  className="absolute right-7 top-1/2 flex size-20 -translate-y-1/2 rotate-[-8deg] items-center justify-center rounded-full border-2 border-dashed border-[#2F3E46]/15 bg-[#F6EB35]/15 text-[#2F3E46]/50 shadow-[0_2px_0_rgba(47,62,70,0.03)]"
+                  className="absolute right-11 top-1/2 flex size-24 -translate-y-1/2 rotate-[-8deg] items-center justify-center rounded-full border-2 border-dashed border-[#2F3E46]/55 bg-[#F6EB35]/55 text-[#2F3E46]/80 shadow-[0_2px_0_rgba(47,62,70,0.08)]"
                   aria-label="$etor $ajak"
                 >
-                  <div className="flex size-16 items-center justify-center rounded-full border-2 border-[#2F3E46]/15 text-center">
+                  <div className="flex size-20 items-center justify-center rounded-full border-2 border-[#2F3E46]/45 text-center">
                     <div className="leading-none">
-                      <p className="font-body text-[7px] font-bold uppercase tracking-[0.16em]">
+                      <p className="font-body text-[8px] font-bold uppercase tracking-[0.18em]">
                         1 Sajak
                       </p>
-                      <p className="mt-1 font-hand text-[14px] font-semibold italic">
+                      <p className="mt-1 font-hand text-[17px] font-semibold italic">
                         $etor $ajak
                       </p>
                     </div>
