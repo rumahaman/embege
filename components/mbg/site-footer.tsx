@@ -53,7 +53,7 @@ function ScoreboardWord() {
     >
       <span
         key={currentWord}
-        className="animate-[mbg-score-flip_420ms_cubic-bezier(.22,1,.36,1)] whitespace-nowrap"
+        className="mbg-score-flip whitespace-nowrap"
       >
         {currentWord}
       </span>
@@ -119,28 +119,6 @@ export function SiteFooter() {
         </div>
       </div>
 
-      <style jsx>{`
-        @keyframes mbg-score-flip {
-          0% {
-            transform: translateY(-34%);
-            opacity: 0;
-          }
-          45% {
-            transform: translateY(8%);
-            opacity: 1;
-          }
-          100% {
-            transform: translateY(0);
-            opacity: 1;
-          }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          :global(.animate-\\[mbg-score-flip_420ms-cubic-bezier\\(.22\\,1\\,.36\\,1\\)\\]) {
-            animation: none !important;
-          }
-        }
-      `}</style>
     </footer>
   )
 }
