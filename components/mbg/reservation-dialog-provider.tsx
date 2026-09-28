@@ -62,7 +62,7 @@ function normalizeIndonesianWhatsApp(value: string) {
   return null
 }
 
-export function ReservationDialogProvider() {
+type ReservationDialogProviderProps = {\n  initialCity?: string\n}\n\nexport function ReservationDialogProvider({ initialCity }: ReservationDialogProviderProps) {
   const [open, setOpen] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
