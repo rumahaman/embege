@@ -325,28 +325,42 @@
 
 
 /* MBG footer scoreboard animation */
-.mbg-score-flip {
-  display: inline-block;
-  animation: mbg-score-flip 420ms cubic-bezier(.22, 1, .36, 1);
+.mbg-score-word {
+  position: absolute;
+  inset: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(-34%);
+  animation: mbg-score-word 32.5s infinite;
+  animation-delay: calc(var(--score-index) * -1.3s);
 }
 
-@keyframes mbg-score-flip {
-  0% {
-    transform: translateY(-34%);
-    opacity: 0;
-  }
-  45% {
-    transform: translateY(8%);
+@keyframes mbg-score-word {
+  0%,
+  3.08% {
     opacity: 1;
+    transform: translateY(0);
+  }
+  3.85% {
+    opacity: 0;
+    transform: translateY(8%);
   }
   100% {
-    transform: translateY(0);
-    opacity: 1;
+    opacity: 0;
+    transform: translateY(8%);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mbg-score-flip {
+  .mbg-score-word {
     animation: none !important;
+  }
+
+  .mbg-score-word:first-of-type {
+    opacity: 1;
+    transform: none;
   }
 }
