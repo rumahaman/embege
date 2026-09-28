@@ -48,14 +48,16 @@ export function HeroSection() {
 
         <div className="relative z-10 flex flex-col items-center gap-4">
           <div className="relative w-full max-w-[320px] rotate-1 overflow-hidden rounded-md border-4 border-white/70 shadow-xl sm:max-w-[360px]">
-            <Image
-              src="/images/amis-hero.jpg"
-              alt="Aldy Amis merokok sambil melihat ke atas langit, mengenakan kacamata hitam dan kaus bertuliskan lirik lagu"
-              width={800}
-              height={1050}
-              priority
-              className="h-auto w-full object-cover"
-            />
+            <div className="h-full w-full overflow-hidden">
+              <Image
+                src="/images/amis-hero.jpg"
+                alt="Aldy Amis merokok sambil melihat ke atas langit, mengenakan kacamata hitam dan kaus bertuliskan lirik lagu"
+                width={800}
+                height={1050}
+                priority
+                className="h-auto w-full object-cover mbg-hover-sway-x"
+              />
+            </div>
           </div>
 
           <div className="w-full max-w-[360px] rounded-md border border-[#2F3E46]/15 bg-white/70 px-4 py-3 font-body text-xs text-[#2F3E46]/70 sm:text-sm">
