@@ -350,3 +350,44 @@
     animation: none !important;
   }
 }
+
+/* MBG venue hover without client hydration */
+#lokasi-acara .mbg-route-node-icon {
+  transition:
+    transform 300ms ease-out,
+    background-color 300ms ease-out,
+    box-shadow 300ms ease-out;
+}
+
+#lokasi-acara .mbg-route-node:hover .mbg-route-node-icon,
+#lokasi-acara .mbg-route-node:focus-within .mbg-route-node-icon {
+  transform: scale(1.1);
+  background-color: #F6EB35;
+  box-shadow: 8px 8px 0 rgba(47, 62, 70, 0.2);
+}
+
+#lokasi-acara .mbg-route-node:hover .mbg-route-node-label,
+#lokasi-acara .mbg-route-node:focus-within .mbg-route-node-label {
+  transform: scale(1.05);
+}
+
+#lokasi-acara .mbg-venue-card:hover {
+  box-shadow: 0 0 0 1px rgba(246, 235, 53, 0.5), 0 10px 25px rgba(47, 62, 70, 0.10);
+}
+
+#lokasi-acara:has(.mbg-route-node[data-venue-id="ruang-rumi"]:hover) .mbg-venue-card[data-venue-id="ruang-rumi"],
+#lokasi-acara:has(.mbg-route-node[data-venue-id="rumah-rengganis"]:hover) .mbg-venue-card[data-venue-id="rumah-rengganis"],
+#lokasi-acara:has(.mbg-route-node[data-venue-id="buku-akik"]:hover) .mbg-venue-card[data-venue-id="buku-akik"],
+#lokasi-acara:has(.mbg-route-node[data-venue-id="rumah-budaya-ratna"]:hover) .mbg-venue-card[data-venue-id="rumah-budaya-ratna"] {
+  outline: 1px solid rgba(246, 235, 53, 0.55);
+  outline-offset: -1px;
+}
+
+#lokasi-acara:has(.mbg-venue-card[data-venue-id="ruang-rumi"]:hover) .mbg-route-node[data-venue-id="ruang-rumi"] .mbg-route-node-icon,
+#lokasi-acara:has(.mbg-venue-card[data-venue-id="rumah-rengganis"]:hover) .mbg-route-node[data-venue-id="rumah-rengganis"] .mbg-route-node-icon,
+#lokasi-acara:has(.mbg-venue-card[data-venue-id="buku-akik"]:hover) .mbg-route-node[data-venue-id="buku-akik"] .mbg-route-node-icon,
+#lokasi-acara:has(.mbg-venue-card[data-venue-id="rumah-budaya-ratna"]:hover) .mbg-route-node[data-venue-id="rumah-budaya-ratna"] .mbg-route-node-icon {
+  transform: scale(1.1);
+  background-color: #F6EB35;
+  box-shadow: 8px 8px 0 rgba(47, 62, 70, 0.2);
+}
