@@ -1,5 +1,15 @@
 import { NextResponse } from "next/server"
 
+function normalizeIndonesianWhatsApp(value: string) {
+  const cleaned = value.trim().replace(/[\\s().-]/g, "")
+
+  if (/^08\\d{8,11}$/.test(cleaned)) return cleaned
+  if (/^628\\d{8,11}$/.test(cleaned)) return `+${cleaned}`
+  if (/^\\+628\\d{8,11}$/.test(cleaned)) return cleaned
+
+  return null
+}
+
 export async function POST(request: Request) {
   try {
     const body = await request.json()
@@ -22,6 +32,19 @@ export async function POST(request: Request) {
       )
     }
 
+    const normalizedWhatsApp = normalizeIndonesianWhatsApp(String(nomorWhatsApp))
+
+    if (!normalizedWhatsApp) {
+      return NextResponse.json(
+        {
+          success: false,
+          message:
+            "Nomor WhatsApp tidak valid. Gunakan format 08…, 628…, atau +628….",
+        },
+        { status: 400 }
+      )
+    }
+
     const scriptUrl = process.env.GOOGLE_APPS_SCRIPT_URL
 
     if (!scriptUrl) {
@@ -39,7 +62,7 @@ export async function POST(request: Request) {
     params.append("timestamp", new Date().toISOString())
     params.append("namaLengkap", namaLengkap)
     params.append("instagram", instagram)
-    params.append("nomorWhatsApp", nomorWhatsApp)
+    params.append("nomorWhatsApp", normalizedWhatsApp)
     params.append("email", email || "")
     params.append("kotaAcara", kotaAcara)
 
