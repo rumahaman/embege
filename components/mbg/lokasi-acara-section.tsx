@@ -113,7 +113,7 @@ export function LokasiAcaraSection() {
                     <span
                       className={
                         "mt-4 font-heading text-2xl leading-none text-[#2F3E46] transition-transform duration-300 " +
-                        (isActive ? "scale-105 bg-[#F6EB35]" : "scale-100")
+                        (isActive ? "scale-105" : "scale-100")
                       }
                     >
                       {cityName}
@@ -202,7 +202,7 @@ export function LokasiAcaraSection() {
                     className="h-40 w-full object-cover transition-transform duration-500 ease-out group-hover/image:scale-105"
                   />
 
-                  <Badge className="absolute left-3 top-3 bg-[#F6EB35] font-hand text-sm text-[#2F3E46]">
+                  <Badge className="absolute left-3 top-3 border border-[#2F3E46]/15 bg-[#A9C1CC] font-hand text-sm text-[#2F3E46] shadow-[2px_2px_0_rgba(47,62,70,0.12)]">
                     {venue.dateShort}
                   </Badge>
                 </div>
