@@ -193,3 +193,77 @@
   height: 2px;
 }
 
+/* MBG hover motion: subtle, desktop pointer only, disabled for reduced motion */
+@media (hover: hover) and (pointer: fine) {
+  .mbg-hover-sway-x {
+    transition: transform 240ms ease-out;
+  }
+
+  .mbg-hover-sway-x:hover {
+    animation: mbg-sway-x 1.8s ease-in-out;
+  }
+
+  .mbg-hover-sway-y {
+    transition: transform 240ms ease-out;
+  }
+
+  .mbg-hover-sway-y:hover {
+    animation: mbg-sway-y 1.8s ease-in-out;
+  }
+
+  .mbg-hover-sway-diagonal {
+    transition: transform 240ms ease-out;
+  }
+
+  .mbg-hover-sway-diagonal:hover {
+    animation: mbg-sway-diagonal 1.8s ease-in-out;
+  }
+}
+
+@keyframes mbg-sway-x {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(3px);
+  }
+  75% {
+    transform: translateX(-3px);
+  }
+}
+
+@keyframes mbg-sway-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-3px);
+  }
+  75% {
+    transform: translateY(3px);
+  }
+}
+
+@keyframes mbg-sway-diagonal {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(2px, -2px);
+  }
+  75% {
+    transform: translate(-2px, 2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mbg-hover-sway-x,
+  .mbg-hover-sway-y,
+  .mbg-hover-sway-diagonal {
+    animation: none !important;
+    transition: none !important;
+  }
+}
