@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 
 const closingWords = [
@@ -33,8 +33,25 @@ const closingWords = [
 
 function ScoreboardWord() {
   const [index, setIndex] = useState(0)
+  const [isVisible, setIsVisible] = useState(false)
+  const wordRef = useRef<HTMLSpanElement>(null)
 
   useEffect(() => {
+    const element = wordRef.current
+    if (!element) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { rootMargin: "120px 0px" },
+    )
+
+    observer.observe(element)
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (!isVisible) return
+
     const interval = window.setInterval(() => {
       setIndex((current) =>
         current === closingWords.length - 1 ? 0 : current + 1,
@@ -42,12 +59,13 @@ function ScoreboardWord() {
     }, 1300)
 
     return () => window.clearInterval(interval)
-  }, [])
+  }, [isVisible])
 
   const currentWord = closingWords[index]
 
   return (
     <span
+      ref={wordRef}
       className="relative inline-flex min-h-[1.35em] min-w-[9.8ch] items-center justify-center overflow-hidden rounded-[5px] border border-white/10 bg-[#223B4D] px-3 py-1 align-baseline font-body text-[0.72em] font-extrabold uppercase tracking-[0.09em] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_2px_0_rgba(0,0,0,0.12)] sm:min-w-[13ch]"
       aria-label={currentWord}
     >
