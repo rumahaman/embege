@@ -23,6 +23,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { venues } from "@/lib/venues"
 import { OPEN_RESERVATION_EVENT } from "./reservation-trigger-button"
+import { ReservationTicket } from "./reservation-ticket"
 
 type FormState = {
   namaLengkap: string
@@ -48,12 +49,14 @@ export function ReservationDialogProvider() {
   const [open, setOpen] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [reservationNumber, setReservationNumber] = useState("")
   const [form, setForm] = useState<FormState>(initialForm)
 
   useEffect(() => {
     function handleOpen(event: Event) {
       const detail = (event as CustomEvent<{ city?: string }>).detail
       setSubmitted(false)
+      setReservationNumber("")
       setForm((prev) => ({ ...initialForm, kotaAcara: detail?.city ?? prev.kotaAcara }))
       setOpen(true)
     }
@@ -69,7 +72,10 @@ export function ReservationDialogProvider() {
     form.setuju1 &&
     form.setuju2
 
-    async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  const selectedVenue = venues.find((venue) => venue.city === form.kotaAcara)
+  const hasEmail = form.email.trim().length > 0
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
       event.preventDefault()
       if (!isValid || isSubmitting) return
     
@@ -96,6 +102,7 @@ export function ReservationDialogProvider() {
           throw new Error(result.message || "Reservasi gagal dikirim.")
         }
     
+        setReservationNumber(result.reservationNumber ?? "")
         setSubmitted(true)
       } catch (error) {
         console.error("Reservation error:", error)
@@ -114,31 +121,68 @@ export function ReservationDialogProvider() {
       open={open}
       onOpenChange={(next) => {
         setOpen(next)
-        if (!next) setSubmitted(false)
+        if (!next) {
+          setSubmitted(false)
+          setReservationNumber("")
+        }
       }}
     >
-      <DialogContent className="max-h-[90vh] overflow-y-auto border-2 border-[#2F3E46]/15 bg-[#EDF2F5] text-[#2F3E46] sm:max-w-md">
+      <DialogContent className="max-h-[90vh] overflow-y-auto border-2 border-[#2F3E46]/15 bg-[#EDF2F5] text-[#2F3E46] sm:max-w-2xl">
         {submitted ? (
-          <div className="flex flex-col items-center gap-4 py-6 text-center">
-            <span className="flex size-16 items-center justify-center rounded-full bg-[#F6EB35]">
-              <PartyPopper className="size-8 text-[#2F3E46]" />
-            </span>
-            <DialogHeader className="items-center gap-2">
-              <DialogTitle className="font-heading text-4xl text-[#2F3E46]">Reservasi Berhasil</DialogTitle>
-              <DialogDescription className="font-body text-base text-[#2F3E46]/80">
-                Terima kasih telah melakukan reservasi.
-                <br />
-                Jangan lupa membawa satu sajak sebagai tiket masuk acara.
-              </DialogDescription>
-            </DialogHeader>
-            <Button
-              type="button"
-              onClick={() => setOpen(false)}
-              className="mt-2 bg-[#F6EB35] font-hand text-[#2F3E46] hover:bg-[#F6EB35]/90"
-            >
-              Tutup
-            </Button>
-          </div>
+          hasEmail ? (
+            <div className="flex flex-col items-center gap-4 py-6 text-center">
+              <span className="flex size-16 items-center justify-center rounded-full bg-[#F6EB35]">
+                <PartyPopper className="size-8 text-[#2F3E46]" />
+              </span>
+              <DialogHeader className="items-center gap-2">
+                <DialogTitle className="font-heading text-4xl text-[#2F3E46]">Reservasi Berhasil</DialogTitle>
+                <DialogDescription className="font-body text-base text-[#2F3E46]/80">
+                  Detail reservasi kamu sudah tercatat.
+                  <br />
+                  Konfirmasi reservasi juga dikirim ke email kamu.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="w-full rounded-2xl bg-[#AFC1CC] px-5 py-4 text-center">
+                <p className="font-body text-xs font-bold uppercase tracking-[0.24em] text-[#2F3E46]/65">
+                  No. Reservasi
+                </p>
+                <p className="mt-1 break-all font-heading text-3xl text-[#2F3E46]">{reservationNumber}</p>
+              </div>
+              <Button
+                type="button"
+                onClick={() => setOpen(false)}
+                className="mt-2 bg-[#F6EB35] font-hand text-[#2F3E46] hover:bg-[#F6EB35]/90"
+              >
+                Tutup
+              </Button>
+            </div>
+          ) : (
+            <div className="space-y-4 py-2">
+              <DialogHeader className="items-center gap-2 text-center">
+                <DialogTitle className="font-heading text-4xl text-[#2F3E46]">Tiket Kamu</DialogTitle>
+                <DialogDescription className="font-body text-base text-[#2F3E46]/80">
+                  Reservasimu sudah tercatat. Simpan tiket ini dan bawa saat datang ke venue.
+                </DialogDescription>
+              </DialogHeader>
+
+              <ReservationTicket
+                reservationNumber={reservationNumber}
+                name={form.namaLengkap}
+                city={form.kotaAcara}
+                venue={selectedVenue?.name ?? form.kotaAcara}
+                date={selectedVenue?.date ?? ""}
+              />
+
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setOpen(false)}
+                className="w-full border-[#2F3E46]/20 bg-transparent font-hand text-lg text-[#2F3E46] hover:bg-[#2F3E46]/5"
+              >
+                Tutup
+              </Button>
+            </div>
+          )
         ) : (
           <>
             <DialogHeader>
