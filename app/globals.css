@@ -278,17 +278,21 @@
   }
 }
 
-/* MBG detached van: transparent asset, static egg-salt-blue background, van moves only */
+/* MBG detached van: transparent asset + realistic soft shadow */
 @media (hover: hover) and (pointer: fine) {
   .mbg-van-detached {
     transform: scale(1);
     transform-origin: center center;
-    transition: transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
-    will-change: transform;
+    transition:
+      transform 650ms cubic-bezier(0.22, 1, 0.36, 1),
+      filter 650ms cubic-bezier(0.22, 1, 0.36, 1);
+    filter: drop-shadow(0 10px 7px rgba(47, 62, 70, 0.22));
+    will-change: transform, filter;
   }
 
   .mbg-van-frame:hover .mbg-van-detached {
     transform: scale(0.95) translateY(-2px);
+    filter: drop-shadow(0 13px 9px rgba(47, 62, 70, 0.18));
   }
 }
 
