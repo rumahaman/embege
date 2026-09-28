@@ -1,7 +1,6 @@
 import Image from "next/image"
 import { MapPin, Users } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { venues } from "@/lib/venues"
 import { ReservationTriggerButton } from "./reservation-trigger-button"
 import { DoodleStar } from "./doodles"
@@ -77,9 +76,14 @@ export function LokasiAcaraSection() {
                     nativeButton={false}
                     className="w-full border-[#2F3E46]/20 font-body text-[#2F3E46]"
                     render={
-                      <a href={venue.mapsUrl} target="_blank" rel="noopener noreferrer">
-                        Lihat Lokasi
-                      </a>
+                      <a
+                        href={venue.mapsUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+    className="inline-flex h-8 w-full items-center justify-center rounded-lg border border-[#2F3E46]/20 bg-transparent px-2.5 text-sm font-medium text-[#2F3E46] transition-colors hover:bg-[#2F3E46]/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2F3E46]/30"
+>
+  Lihat Lokasi
+</a>
                     }
                   />
                 </div>

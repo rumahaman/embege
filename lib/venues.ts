@@ -18,7 +18,8 @@ export const venues: Venue[] = [
     dateShort: "15 Okt",
     quota: 100,
     image: "/images/venue-ruang-rumi.jpg",
-    mapsUrl: "https://maps.app.goo.gl/e8Q1f8TY1P2owQ4N7",
+    mapsUrl:
+      "https://www.google.com/maps/search/?api=1&query=Ruang+Rumi+Sepatan+Tangerang",
   },
   {
     id: "rumah-rengganis",
@@ -28,7 +29,8 @@ export const venues: Venue[] = [
     dateShort: "16 Okt",
     quota: 100,
     image: "/images/venue-rengganis.jpg",
-    mapsUrl: "https://maps.app.goo.gl/VQbYJdNwJr7JxYjN7",
+    mapsUrl:
+      "https://www.google.com/maps/search/?api=1&query=Rumah+Rengganis+Cirebon",
   },
   {
     id: "buku-akik",
@@ -38,7 +40,8 @@ export const venues: Venue[] = [
     dateShort: "17 Okt",
     quota: 33,
     image: "/images/venue-buku-akik.jpg",
-    mapsUrl: "https://maps.app.goo.gl/beTmF2gKstsNkAWp7",
+    mapsUrl:
+      "https://www.google.com/maps/search/?api=1&query=Buku+Akik+Yogyakarta",
   },
   {
     id: "rumah-budaya-ratna",
@@ -48,6 +51,7 @@ export const venues: Venue[] = [
     dateShort: "18 Okt",
     quota: 100,
     image: "/images/venue-rumah-budaya-ratna.jpg",
-    mapsUrl: "https://maps.app.goo.gl/muPyuTYjZVRzvLrT6",
+    mapsUrl:
+      "https://www.google.com/maps/search/?api=1&query=Rumah+Budaya+Ratna+Malang",
   },
 ]
