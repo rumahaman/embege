@@ -60,12 +60,13 @@ export function IkutiPerjalananSection() {
               className="group flex items-center justify-between border border-white/35 bg-white/15 px-5 py-4 transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/25"
             >
               <div className="flex items-center gap-4">
-                <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#F6EB35]">
+                <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-white">
                   <img
                     src={social.icon}
                     alt=""
                     className="size-6 object-contain"
                   />
+
                 </div>
 
                 <div>
