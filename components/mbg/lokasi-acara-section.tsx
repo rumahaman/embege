@@ -71,7 +71,7 @@ export function LokasiAcaraSection() {
                   <ReservationTriggerButton city={venue.city} className="w-full">
                     Reservasi
                   </ReservationTriggerButton>
-                  
+
                       <a
                         href={venue.mapsUrl}
                         target="_blank"
@@ -80,8 +80,7 @@ export function LokasiAcaraSection() {
 >
   Lihat Lokasi
 </a>
-                    }
-                  />
+                    
                 </div>
               </div>
             </article>
