@@ -288,11 +288,15 @@
   will-change: transform;
 }
 
+.mbg-gallery-card {
+  cursor: zoom-in;
+}
+
 .mbg-gallery-card:hover {
   animation-play-state: paused;
-  transform: translateY(-8px) scale(1.045) rotate(var(--mbg-gallery-rotate));
-  z-index: 30 !important;
-  box-shadow: 0 14px 24px rgba(47, 62, 70, 0.18);
+  transform: translateY(-8px) scale(1.6) rotate(var(--mbg-gallery-rotate));
+  z-index: 40 !important;
+  box-shadow: 0 18px 32px rgba(47, 62, 70, 0.22);
 }
 
 @keyframes mbg-gallery-shuffle {
