@@ -21,8 +21,6 @@ export function CtaBannerSection() {
           Perjalanan masih panjang...
         </p>
         <p className="max-w-lg font-body text-base text-white/75">
-        Perjalanan masih panjang...
-
 Musik dan pertemuan manusia adalah cara kita tetap percaya pada kehidupan. Datang, bawa satu sajak, dan jadi bagian dari perjalanan ini.
         </p>
         <ReservationTriggerButton className="shadow-[3px_3px_0_0_rgba(255,255,255,0.3)]" />
