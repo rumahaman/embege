@@ -35,7 +35,7 @@ export function LokasiAcaraSection() {
           </div>
 
           {/* Van */}
-          <div className="flex justify-center lg:justify-start">
+          <div className="flex justify-center lg:-translate-x-4 lg:justify-start">
             <div className="mbg-van-frame w-full max-w-[360px]">
               <Image
                 src="/mbg-van-transparent.png"
