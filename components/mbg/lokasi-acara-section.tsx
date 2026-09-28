@@ -71,11 +71,7 @@ export function LokasiAcaraSection() {
                   <ReservationTriggerButton city={venue.city} className="w-full">
                     Reservasi
                   </ReservationTriggerButton>
-                  <Button
-                    variant="outline"
-                    nativeButton={false}
-                    className="w-full border-[#2F3E46]/20 font-body text-[#2F3E46]"
-                    render={
+                  
                       <a
                         href={venue.mapsUrl}
                         target="_blank"
