@@ -33,10 +33,6 @@ export function IkutiPerjalananSection() {
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mb-8">
-          <p className="font-body text-xs font-semibold uppercase tracking-[0.16em] text-[#2F3E46]/60">
-            Musik · Sajak · Teman Perjalanan
-          </p>
-
           <h2
             id="ikuti-perjalanan-title"
             className="mt-2 font-heading text-5xl leading-none text-[#2F3E46] sm:text-6xl"
