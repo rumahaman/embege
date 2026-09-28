@@ -61,6 +61,8 @@ export function IkutiPerjalananSection() {
                   <img
                     src={social.icon}
                     alt=""
+                    loading="lazy"
+                    decoding="async"
                     className="size-6 object-contain"
                   />
                 </div>
