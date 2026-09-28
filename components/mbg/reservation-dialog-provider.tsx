@@ -69,37 +69,45 @@ export function ReservationDialogProvider() {
     form.setuju1 &&
     form.setuju2
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    if (!isValid || isSubmitting) return
-
-    setIsSubmitting(true)
-
-    const scriptUrl = process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_URL
-
-    try {
-      if (scriptUrl) {
-        const payload = new FormData()
-        payload.append("timestamp", new Date().toISOString())
-        payload.append("namaLengkap", form.namaLengkap)
-        payload.append("instagram", form.instagram)
-        payload.append("nomorWhatsApp", form.whatsapp)
-        payload.append("email", form.email)
-        payload.append("kotaAcara", form.kotaAcara)
-
-        await fetch(scriptUrl, {
+    async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+      event.preventDefault()
+      if (!isValid || isSubmitting) return
+    
+      setIsSubmitting(true)
+    
+      try {
+        const response = await fetch("/api/reservasi", {
           method: "POST",
-          mode: "no-cors",
-          body: payload,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            namaLengkap: form.namaLengkap,
+            instagram: form.instagram,
+            nomorWhatsApp: form.whatsapp,
+            email: form.email,
+            kotaAcara: form.kotaAcara,
+          }),
         })
+    
+        const result = await response.json()
+    
+        if (!response.ok || !result.success) {
+          throw new Error(result.message || "Reservasi gagal dikirim.")
+        }
+    
+        setSubmitted(true)
+      } catch (error) {
+        console.error("Reservation error:", error)
+        alert(
+          error instanceof Error
+            ? error.message
+            : "Terjadi kesalahan saat mengirim reservasi."
+        )
+      } finally {
+        setIsSubmitting(false)
       }
-      setSubmitted(true)
-    } catch {
-      setSubmitted(true)
-    } finally {
-      setIsSubmitting(false)
     }
-  }
 
   return (
     <Dialog
