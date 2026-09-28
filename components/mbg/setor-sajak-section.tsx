@@ -19,6 +19,7 @@ export function SetorSajakSection() {
                 alt="Aldy Amis tampil di depan kerumunan penonton yang duduk dekat dengan panggung"
                 width={700}
                 height={500}
+                sizes="(min-width: 1024px) 448px, 0px"
                 className="h-auto w-full object-cover"
               />
             </div>
