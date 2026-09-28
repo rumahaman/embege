@@ -125,7 +125,7 @@ function createTicketSvg(
   <text x="105" y="302" class="hand" font-size="34">intimate shownya Aldy Amis</text>
 
   <rect x="795" y="116" width="165" height="52" rx="10" fill="${COLORS.yellow}"/>
-  <text x="877" y="151" text-anchor="middle" class="hand" font-size="27">${$etor $ajak}</text>
+  <text x="877" y="151" text-anchor="middle" class="hand" font-size="27">$etor $ajak</text>
 
   <path d="M107 333 h866" stroke="${COLORS.navy}" stroke-opacity=".18" stroke-width="2" stroke-dasharray="8 12"/>
 
