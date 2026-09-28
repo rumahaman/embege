@@ -242,7 +242,7 @@ export function ReservationDialogProvider() {
                 Tutup
               </Button>
             </div>
-          ) : (
+          )) : (
           <>
             <DialogHeader>
               <DialogTitle className="font-heading text-4xl text-[#2F3E46]">Reservasi Kehadiran</DialogTitle>
