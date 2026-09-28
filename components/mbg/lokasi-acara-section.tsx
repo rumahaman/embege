@@ -58,14 +58,16 @@ export function LokasiAcaraSection() {
 
           {/* Van */}
           <div className="flex justify-center lg:justify-end">
-            <Image
-              src="/images/mbg-van.jpg"
-              alt="Ilustrasi van Badan Gigs Nasional dalam perjalanan MBG"
-              width={700}
-              height={440}
-              className="w-full max-w-md object-contain"
-            />
-          </div>
+  <div className="w-full max-w-md overflow-hidden rounded-2xl border border-[#2F3E46]/10 bg-white/40 p-3 shadow-sm">
+    <Image
+      src="/images/mbg-van.jpg"
+      alt="Ilustrasi van Badan Gigs Nasional dalam perjalanan MBG"
+      width={700}
+      height={440}
+      className="w-full rounded-xl object-contain"
+    />
+  </div>
+</div>
         </div>
 
         {/* Venue Cards */}
