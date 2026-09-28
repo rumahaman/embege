@@ -1,6 +1,3 @@
-"use client"
-
-import { useState } from "react"
 import Image from "next/image"
 import { BusFront, MapPin, Users } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
@@ -9,8 +6,6 @@ import { ReservationTriggerButton } from "./reservation-trigger-button"
 import { DoodleStar } from "./doodles"
 
 export function LokasiAcaraSection() {
-  const [activeVenue, setActiveVenue] = useState<string | null>(null)
-
   return (
     <section
       id="lokasi-acara"
@@ -85,7 +80,6 @@ export function LokasiAcaraSection() {
 
             <div className="relative z-10 grid grid-cols-4 gap-6">
               {venues.map((venue, index) => {
-                const isActive = activeVenue === venue.id
                 const cityName =
                   venue.city === "Kabupaten Tangerang"
                     ? "Tangerang"
@@ -94,21 +88,14 @@ export function LokasiAcaraSection() {
                 return (
                   <div
                     key={venue.id}
-                    onMouseEnter={() => setActiveVenue(venue.id)}
-                    onMouseLeave={() => setActiveVenue(null)}
+                    data-venue-id={venue.id}
                     className={
-                      index % 2 === 0
-                        ? "flex translate-y-3 flex-col items-center text-center"
-                        : "flex -translate-y-3 flex-col items-center text-center"
+                      "mbg-route-node flex flex-col items-center text-center " +
+                      (index % 2 === 0 ? "translate-y-3" : "-translate-y-3")
                     }
                   >
                     <div
-                      className={
-                        "flex size-[76px] items-center justify-center rounded-full border-2 border-[#2F3E46]/80 bg-[#A9C1CC] shadow-[6px_6px_0_rgba(47,62,70,0.18)] transition-all duration-300 ease-out " +
-                        (isActive
-                          ? "scale-110 bg-[#F6EB35] shadow-[8px_8px_0_rgba(47,62,70,0.2)]"
-                          : "scale-100")
-                      }
+                      className="mbg-route-node-icon flex size-[76px] items-center justify-center rounded-full border-2 border-[#2F3E46]/80 bg-[#A9C1CC] shadow-[6px_6px_0_rgba(47,62,70,0.18)] transition-all duration-300 ease-out"
                     >
                       <BusFront
                         className="size-8 text-[#2F3E46]"
@@ -118,8 +105,7 @@ export function LokasiAcaraSection() {
 
                     <span
                       className={
-                        "mt-4 font-heading text-2xl leading-none text-[#2F3E46] transition-transform duration-300 " +
-                        (isActive ? "scale-105" : "scale-100")
+                        "mbg-route-node-label mt-4 font-heading text-2xl leading-none text-[#2F3E46] transition-transform duration-300"
                       }
                     >
                       {cityName}
@@ -143,7 +129,6 @@ export function LokasiAcaraSection() {
 
             <div className="relative flex flex-col gap-7">
               {venues.map((venue) => {
-                const isActive = activeVenue === venue.id
                 const cityName =
                   venue.city === "Kabupaten Tangerang"
                     ? "Tangerang"
@@ -152,15 +137,11 @@ export function LokasiAcaraSection() {
                 return (
                   <div
                     key={venue.id}
-                    onMouseEnter={() => setActiveVenue(venue.id)}
-                    onMouseLeave={() => setActiveVenue(null)}
-                    className="relative flex items-center gap-4"
+                    data-venue-id={venue.id}
+                    className="mbg-route-node relative flex items-center gap-4"
                   >
                     <div
-                      className={
-                        "relative z-10 flex size-14 shrink-0 items-center justify-center rounded-full border-2 border-[#2F3E46]/80 bg-[#F6EB35] shadow-[4px_4px_0_rgba(47,62,70,0.16)] transition-transform duration-300 " +
-                        (isActive ? "scale-105" : "scale-100")
-                      }
+                      className="mbg-route-node-icon relative z-10 flex size-14 shrink-0 items-center justify-center rounded-full border-2 border-[#2F3E46]/80 bg-[#F6EB35] shadow-[4px_4px_0_rgba(47,62,70,0.16)] transition-transform duration-300"
                     >
                       <BusFront
                         className="size-6 text-[#2F3E46]"
@@ -186,17 +167,13 @@ export function LokasiAcaraSection() {
         {/* Venue Cards */}
         <div className="mt-8 grid gap-6 sm:mt-10 sm:grid-cols-2 lg:grid-cols-4">
           {venues.map((venue, index) => {
-            const isActive = activeVenue === venue.id
-
             return (
               <article
                 key={venue.id}
-                onMouseEnter={() => setActiveVenue(venue.id)}
-                onMouseLeave={() => setActiveVenue(null)}
+                data-venue-id={venue.id}
                 className={
-                  "group flex flex-col overflow-hidden rounded-lg border border-[#2F3E46]/10 bg-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-lg " +
-                  (index % 2 === 0 ? "lg:rotate-[-0.35deg]" : "lg:rotate-[0.35deg]") +
-                  (isActive ? " ring-1 ring-[#F6EB35]/50" : "")
+                  "mbg-venue-card group flex flex-col overflow-hidden rounded-lg border border-[#2F3E46]/10 bg-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-lg " +
+                  (index % 2 === 0 ? "lg:rotate-[-0.35deg]" : "lg:rotate-[0.35deg]")
                 }
               >
                 <div className="group/image relative overflow-hidden">
