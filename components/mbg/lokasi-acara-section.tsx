@@ -43,12 +43,16 @@ export function LokasiAcaraSection() {
           <div className="flex justify-center lg:justify-end">
             <div className="w-full max-w-md overflow-hidden rounded-2xl border border-[#2F3E46]/10 bg-white/40 p-3 shadow-sm">
               <div className="mbg-van-frame relative aspect-[1216/753] overflow-hidden rounded-xl bg-[#A9C1CC]">
+                <div
+                  className="mbg-van-ground-shadow pointer-events-none absolute bottom-[9%] left-1/2 z-0 h-[4%] w-[54%] -translate-x-1/2 rounded-[50%] bg-[#2F3E46]/18 blur-[8px]"
+                  aria-hidden="true"
+                />
                 <Image
-                  src="/images/mbg-van.jpg"
+                  src="/mbg-van-transparent.png"
                   alt="Ilustrasi van Badan Gigs Nasional dalam perjalanan MBG"
                   fill
                   sizes="(min-width: 1024px) 400px, 100vw"
-                  className="mbg-van-detached object-cover"
+                  className="mbg-van-detached z-10 object-contain"
                 />
               </div>
             </div>
