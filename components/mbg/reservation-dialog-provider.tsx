@@ -50,6 +50,7 @@ export function ReservationDialogProvider() {
   const [submitted, setSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [reservationNumber, setReservationNumber] = useState("")
+  const [cityLocked, setCityLocked] = useState(false)
   const [form, setForm] = useState<FormState>(initialForm)
 
   useEffect(() => {
@@ -57,7 +58,8 @@ export function ReservationDialogProvider() {
       const detail = (event as CustomEvent<{ city?: string }>).detail
       setSubmitted(false)
       setReservationNumber("")
-      setForm((prev) => ({ ...initialForm, kotaAcara: detail?.city ?? prev.kotaAcara }))
+      setCityLocked(Boolean(detail?.city))
+      setForm({ ...initialForm, kotaAcara: detail?.city ?? "" })
       setOpen(true)
     }
     window.addEventListener(OPEN_RESERVATION_EVENT, handleOpen)
@@ -124,6 +126,7 @@ export function ReservationDialogProvider() {
         if (!next) {
           setSubmitted(false)
           setReservationNumber("")
+          setCityLocked(false)
         }
       }}
     >
@@ -239,12 +242,17 @@ export function ReservationDialogProvider() {
                   />
                 </Field>
                 <Field>
-                  <FieldLabel htmlFor="kotaAcara">Kota Acara</FieldLabel>
+                  <FieldLabel htmlFor="kotaAcara">
+                    Kota Acara
+                    {cityLocked && (
+                      <span className="ml-2 font-normal text-[#2F3E46]/50">(dikunci sesuai pilihan venue)</span>
+                    )}
+                  </FieldLabel>
                   <Select
                     value={form.kotaAcara}
                     onValueChange={(value) => setForm((f) => ({ ...f, kotaAcara: value ?? "" }))}
                   >
-                    <SelectTrigger id="kotaAcara" className="w-full bg-white">
+                    <SelectTrigger id="kotaAcara" disabled={cityLocked} className="w-full bg-white disabled:cursor-not-allowed disabled:opacity-70">
                       <SelectValue placeholder="Pilih kota acara" />
                     </SelectTrigger>
                     <SelectContent>
