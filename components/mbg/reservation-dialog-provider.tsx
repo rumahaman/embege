@@ -248,23 +248,34 @@ export function ReservationDialogProvider() {
                       <span className="ml-2 font-normal text-[#2F3E46]/50">(dikunci sesuai pilihan venue)</span>
                     )}
                   </FieldLabel>
-                  <Select
-                    value={form.kotaAcara}
-                    onValueChange={(value) => setForm((f) => ({ ...f, kotaAcara: value ?? "" }))}
-                  >
-                    <SelectTrigger id="kotaAcara" disabled={cityLocked} className="w-full bg-white disabled:cursor-not-allowed disabled:opacity-70">
-                      <SelectValue placeholder="Pilih kota acara" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        {venues.map((venue) => (
-                          <SelectItem key={venue.id} value={venue.city}>
-                            {venue.city} — {venue.dateShort}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
+                  {cityLocked ? (
+                    <Input
+                      id="kotaAcara"
+                      value={form.kotaAcara}
+                      readOnly
+                      className="bg-[#F6EB35]/20 font-semibold"
+                    />
+                  ) : (
+                    <Select
+                      value={form.kotaAcara}
+                      onValueChange={(value) =>
+                        setForm((f) => ({ ...f, kotaAcara: value ?? "" }))
+                      }
+                    >
+                      <SelectTrigger id="kotaAcara" className="w-full bg-white">
+                        <SelectValue placeholder="Pilih kota acara" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          {venues.map((venue) => (
+                            <SelectItem key={venue.id} value={venue.city}>
+                              {venue.city} — {venue.dateShort}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  )}
                 </Field>
 
                 <Field orientation="horizontal">
