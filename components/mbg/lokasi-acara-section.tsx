@@ -1,3 +1,6 @@
+"use client"
+
+import { useState } from "react"
 import Image from "next/image"
 import { BusFront, MapPin, Users } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
@@ -6,6 +9,8 @@ import { ReservationTriggerButton } from "./reservation-trigger-button"
 import { DoodleStar } from "./doodles"
 
 export function LokasiAcaraSection() {
+  const [activeVenue, setActiveVenue] = useState<string | null>(null)
+
   return (
     <section
       id="lokasi-acara"
@@ -50,54 +55,76 @@ export function LokasiAcaraSection() {
 
         {/* Route Illustration */}
         <div
-          className="mt-12 rounded-2xl border border-[#2F3E46]/10 bg-white/45 px-5 py-8 shadow-sm sm:mt-14 sm:px-8 sm:py-10"
+          className="relative mt-10 px-2 py-4 sm:mt-12 sm:px-4 sm:py-6"
           aria-label="Ilustrasi rute perjalanan Manggung Bergizi Gratis dari Kabupaten Tangerang ke Cirebon, Yogyakarta, dan Malang"
         >
           {/* Desktop route */}
-          <div className="relative hidden px-4 py-6 md:block">
+          <div className="relative hidden min-h-[190px] px-2 md:block">
             <svg
-              viewBox="0 0 1200 220"
-              className="pointer-events-none absolute inset-x-0 top-2 h-44 w-full"
+              viewBox="0 0 1200 200"
+              className="pointer-events-none absolute inset-x-0 top-1 h-40 w-full"
               aria-hidden="true"
               preserveAspectRatio="none"
             >
               <path
-                d="M110 116 C205 165 290 165 385 114 S555 64 660 112 S815 164 910 111 S1050 75 1095 113"
+                d="M105 102 C205 145 285 145 390 100 S565 58 675 100 S835 145 925 99 S1055 62 1095 102"
                 fill="none"
                 stroke="#2F3E46"
                 strokeWidth="3"
                 strokeDasharray="9 11"
                 strokeLinecap="round"
-                opacity="0.35"
+                opacity="0.34"
               />
             </svg>
 
             <div className="relative z-10 grid grid-cols-4 gap-6">
-              {venues.map((venue, index) => (
-                <div
-                  key={venue.id}
-                  className={
-                    index % 2 === 0
-                      ? "flex translate-y-3 flex-col items-center text-center"
-                      : "flex -translate-y-3 flex-col items-center text-center"
-                  }
-                >
-                  <div className="flex size-[76px] items-center justify-center rounded-full border-2 border-[#2F3E46]/80 bg-[#F6EB35] shadow-[6px_6px_0_rgba(47,62,70,0.18)] transition-transform duration-200 hover:-translate-y-1">
-                    <BusFront
-                      className="size-8 text-[#2F3E46]"
-                      strokeWidth={1.8}
-                    />
+              {venues.map((venue, index) => {
+                const isActive = activeVenue === venue.id
+                const cityName =
+                  venue.city === "Kabupaten Tangerang"
+                    ? "Tangerang"
+                    : venue.city
+
+                return (
+                  <div
+                    key={venue.id}
+                    onMouseEnter={() => setActiveVenue(venue.id)}
+                    onMouseLeave={() => setActiveVenue(null)}
+                    className={
+                      index % 2 === 0
+                        ? "flex translate-y-3 flex-col items-center text-center"
+                        : "flex -translate-y-3 flex-col items-center text-center"
+                    }
+                  >
+                    <div
+                      className={
+                        "flex size-[76px] items-center justify-center rounded-full border-2 border-[#2F3E46]/80 bg-[#F6EB35] shadow-[6px_6px_0_rgba(47,62,70,0.18)] transition-all duration-300 ease-out " +
+                        (isActive
+                          ? "scale-110 shadow-[8px_8px_0_rgba(47,62,70,0.2)]"
+                          : "scale-100")
+                      }
+                    >
+                      <BusFront
+                        className="size-8 text-[#2F3E46]"
+                        strokeWidth={1.8}
+                      />
+                    </div>
+
+                    <span
+                      className={
+                        "mt-4 font-heading text-2xl leading-none text-[#2F3E46] transition-transform duration-300 " +
+                        (isActive ? "scale-105" : "scale-100")
+                      }
+                    >
+                      {cityName}
+                    </span>
+
+                    <span className="mt-1 font-body text-sm text-[#2F3E46]/60">
+                      {venue.date}
+                    </span>
                   </div>
-
-                  <span className="mt-4 font-heading text-2xl leading-none text-[#2F3E46]">
-                    {venue.city}
-                  </span>
-
-                  <span className="mt-1 font-body text-sm text-[#2F3E46]/60">
-                    {venue.date}
-                  </span>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </div>
 
@@ -109,90 +136,115 @@ export function LokasiAcaraSection() {
             />
 
             <div className="relative flex flex-col gap-7">
-              {venues.map((venue) => (
-                <div
-                  key={venue.id}
-                  className="relative flex items-center gap-4"
-                >
-                  <div className="relative z-10 flex size-14 shrink-0 items-center justify-center rounded-full border-2 border-[#2F3E46]/80 bg-[#F6EB35] shadow-[4px_4px_0_rgba(47,62,70,0.16)]">
-                    <BusFront
-                      className="size-6 text-[#2F3E46]"
-                      strokeWidth={1.8}
-                    />
-                  </div>
+              {venues.map((venue) => {
+                const isActive = activeVenue === venue.id
+                const cityName =
+                  venue.city === "Kabupaten Tangerang"
+                    ? "Tangerang"
+                    : venue.city
 
-                  <div>
-                    <p className="font-heading text-2xl leading-none text-[#2F3E46]">
-                      {venue.city}
-                    </p>
-                    <p className="mt-1 font-body text-sm text-[#2F3E46]/60">
-                      {venue.date}
-                    </p>
+                return (
+                  <div
+                    key={venue.id}
+                    onMouseEnter={() => setActiveVenue(venue.id)}
+                    onMouseLeave={() => setActiveVenue(null)}
+                    className="relative flex items-center gap-4"
+                  >
+                    <div
+                      className={
+                        "relative z-10 flex size-14 shrink-0 items-center justify-center rounded-full border-2 border-[#2F3E46]/80 bg-[#F6EB35] shadow-[4px_4px_0_rgba(47,62,70,0.16)] transition-transform duration-300 " +
+                        (isActive ? "scale-105" : "scale-100")
+                      }
+                    >
+                      <BusFront
+                        className="size-6 text-[#2F3E46]"
+                        strokeWidth={1.8}
+                      />
+                    </div>
+
+                    <div>
+                      <p className="font-heading text-2xl leading-none text-[#2F3E46]">
+                        {cityName}
+                      </p>
+                      <p className="mt-1 font-body text-sm text-[#2F3E46]/60">
+                        {venue.date}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </div>
         </div>
 
         {/* Venue Cards */}
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {venues.map((venue) => (
-            <article
-              key={venue.id}
-              className="flex flex-col overflow-hidden rounded-lg border border-[#2F3E46]/10 bg-white shadow-sm transition-shadow hover:shadow-md"
-            >
-              <div className="relative">
-                <Image
-                  src={venue.image || "/placeholder.svg"}
-                  alt={"Fasad " + venue.name + " di " + venue.city}
-                  width={480}
-                  height={320}
-                  className="h-40 w-full object-cover"
-                />
+        <div className="mt-8 grid gap-6 sm:mt-10 sm:grid-cols-2 lg:grid-cols-4">
+          {venues.map((venue, index) => {
+            const isActive = activeVenue === venue.id
 
-                <Badge className="absolute left-3 top-3 bg-[#F6EB35] font-hand text-sm text-[#2F3E46]">
-                  {venue.dateShort}
-                </Badge>
-              </div>
+            return (
+              <article
+                key={venue.id}
+                onMouseEnter={() => setActiveVenue(venue.id)}
+                onMouseLeave={() => setActiveVenue(null)}
+                className={
+                  "group flex flex-col overflow-hidden rounded-lg border border-[#2F3E46]/10 bg-white shadow-sm transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-lg " +
+                  (index % 2 === 0 ? "lg:rotate-[-0.35deg]" : "lg:rotate-[0.35deg]") +
+                  (isActive ? " ring-1 ring-[#F6EB35]/50" : "")
+                }
+              >
+                <div className="group/image relative overflow-hidden">
+                  <Image
+                    src={venue.image || "/placeholder.svg"}
+                    alt={"Fasad " + venue.name + " di " + venue.city}
+                    width={480}
+                    height={320}
+                    className="h-40 w-full object-cover transition-transform duration-500 ease-out group-hover/image:scale-105"
+                  />
 
-              <div className="flex flex-1 flex-col gap-3 p-4">
-                <div>
-                  <h3 className="font-hand text-lg leading-tight text-[#2F3E46]">
-                    {venue.name}
-                  </h3>
+                  <Badge className="absolute left-3 top-3 bg-[#F6EB35] font-hand text-sm text-[#2F3E46]">
+                    {venue.dateShort}
+                  </Badge>
+                </div>
 
-                  <p className="flex items-center gap-1 font-body text-sm text-[#2F3E46]/60">
-                    <MapPin className="size-3.5" />
-                    {venue.city}
+                <div className="flex flex-1 flex-col gap-3 p-4">
+                  <div>
+                    <h3 className="font-hand text-lg leading-tight text-[#2F3E46]">
+                      {venue.name}
+                    </h3>
+
+                    <p className="flex items-center gap-1 font-body text-sm text-[#2F3E46]/60">
+                      <MapPin className="size-3.5" />
+                      {venue.city}
+                    </p>
+                  </div>
+
+                  <p className="flex items-center gap-1.5 font-body text-sm text-[#2F3E46]/70">
+                    <Users className="size-3.5" />
+                    Kuota {venue.quota} peserta
                   </p>
+
+                  <div className="mt-auto flex flex-col gap-2 pt-2">
+                    <ReservationTriggerButton
+                      city={venue.city}
+                      className="w-full"
+                    >
+                      Reservasi
+                    </ReservationTriggerButton>
+
+                    <a
+                      href={venue.mapsUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex h-8 w-full items-center justify-center rounded-lg border border-[#2F3E46]/20 bg-transparent px-2.5 text-sm font-medium text-[#2F3E46] transition-colors hover:bg-[#2F3E46]/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2F3E46]/30"
+                    >
+                      Lihat Lokasi
+                    </a>
+                  </div>
                 </div>
-
-                <p className="flex items-center gap-1.5 font-body text-sm text-[#2F3E46]/70">
-                  <Users className="size-3.5" />
-                  Kuota {venue.quota} peserta
-                </p>
-
-                <div className="mt-auto flex flex-col gap-2 pt-2">
-                  <ReservationTriggerButton
-                    city={venue.city}
-                    className="w-full"
-                  >
-                    Reservasi
-                  </ReservationTriggerButton>
-
-                  <a
-                    href={venue.mapsUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex h-8 w-full items-center justify-center rounded-lg border border-[#2F3E46]/20 bg-transparent px-2.5 text-sm font-medium text-[#2F3E46] transition-colors hover:bg-[#2F3E46]/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2F3E46]/30"
-                  >
-                    Lihat Lokasi
-                  </a>
-                </div>
-              </div>
-            </article>
-          ))}
+              </article>
+            )
+          })}
         </div>
       </div>
     </section>
