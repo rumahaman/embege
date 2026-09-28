@@ -40,7 +40,7 @@ export function LokasiAcaraSection() {
           </div>
 
           {/* Van */}
-          <div className="flex justify-center lg:justify-end">
+          <div className="flex justify-center lg:justify-start">
             <div className="w-full max-w-[360px] overflow-hidden rounded-md border-4 border-white/70 bg-[#A9C1CC] shadow-xl">
               <div className="mbg-van-frame relative aspect-[1216/753] overflow-hidden rounded-[2px] bg-[#A9C1CC]">
                 <div
