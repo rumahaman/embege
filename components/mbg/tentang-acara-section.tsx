@@ -45,7 +45,7 @@ export function TentangAcaraSection() {
           </div>
 
           <blockquote className="mt-2 border-l-4 border-[#F6EB35] pl-4 font-heading text-3xl text-[#2F3E46]">
-            &ldquo;Masuk dengan sajak, pulang dengan cerita.&rdquo;
+          &ldquo;Bukan tentang besarnya panggung, melainkan dekatnya perjumpaan.&rdquo;
           </blockquote>
         </div>
       </div>
