@@ -15,7 +15,7 @@ export function CtaBannerSection() {
               alt="Aldy Amis bernyanyi memegang gitar dengan pencahayaan merah dramatis"
               width={900}
               height={600}
-              className="h-auto w-full object-cover mbg-hover-sway-diagonal"
+              className="h-auto w-full object-cover mbg-hover-zoom"
             />
           </div>
         </div>
