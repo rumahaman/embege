@@ -47,7 +47,7 @@ export function LokasiAcaraSection() {
                 alt="Ilustrasi van Badan Gigs Nasional dalam perjalanan MBG"
                 width={700}
                 height={440}
-                className="w-full rounded-xl object-contain"
+                className="w-full rounded-xl object-contain mbg-hover-sway-x"
               />
             </div>
           </div>
