@@ -205,6 +205,8 @@ export function LokasiAcaraSection() {
                     alt={"Fasad " + venue.name + " di " + venue.city}
                     width={480}
                     height={320}
+                    sizes="(min-width: 1024px) 260px, (min-width: 640px) 50vw, 100vw"
+                    height={320}
                     className="h-40 w-full object-cover transition-transform duration-500 ease-out group-hover/image:scale-105"
                   />
 
