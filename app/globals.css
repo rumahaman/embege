@@ -218,6 +218,15 @@
   .mbg-hover-sway-diagonal:hover {
     animation: mbg-sway-diagonal 1.8s ease-in-out;
   }
+
+  .mbg-hover-zoom {
+    transform: scale(1);
+    transition: transform 500ms ease-out;
+  }
+
+  .mbg-hover-zoom:hover {
+    transform: scale(1.04);
+  }
 }
 
 @keyframes mbg-sway-x {
@@ -262,8 +271,10 @@
 @media (prefers-reduced-motion: reduce) {
   .mbg-hover-sway-x,
   .mbg-hover-sway-y,
-  .mbg-hover-sway-diagonal {
+  .mbg-hover-sway-diagonal,
+  .mbg-hover-zoom {
     animation: none !important;
     transition: none !important;
   }
 }
+
