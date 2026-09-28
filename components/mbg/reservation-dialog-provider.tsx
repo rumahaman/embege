@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
 import { venues } from "@/lib/venues"
-import { OPEN_RESERVATION_EVENT } from "./reservation-trigger-button"
+import { OPEN_RESERVATION_EVENT } from "./reservation-events"
 
 type FormState = {
   namaLengkap: string
