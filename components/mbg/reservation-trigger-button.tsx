@@ -1,49 +1,50 @@
-"use client"
-
-import type { ComponentProps } from "react"
-import { Button } from "@/components/ui/button"
+import type { ReactNode } from "react"
+import { buttonVariants } from "@/components/ui/button"
+import type { VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
+import { ReservationClientTriggerButton } from "./reservation-client-trigger-button"
 
-export const OPEN_RESERVATION_EVENT = "mbg:open-reservation"
-
-export function openReservationDialog(city?: string) {
-  window.dispatchEvent(new CustomEvent(OPEN_RESERVATION_EVENT, { detail: { city } }))
-}
-
-export function scrollToReservationLocations() {
-  document.getElementById("lokasi-acara")?.scrollIntoView({
-    behavior: "smooth",
-    block: "start",
-  })
-}
-
-type ReservationTriggerButtonProps = ComponentProps<typeof Button> & {
+type ReservationTriggerButtonProps = {
   city?: string
+  className?: string
+  children?: ReactNode
+  variant?: VariantProps<typeof buttonVariants>["variant"]
+  size?: VariantProps<typeof buttonVariants>["size"]
 }
 
+/**
+ * Generic reservation CTAs are normal anchors, so they do not require client JS.
+ * Venue-specific CTAs remain a tiny client island because they open the modal.
+ */
 export function ReservationTriggerButton({
   city,
   className,
   children,
-  ...props
+  variant = "default",
+  size = "default",
 }: ReservationTriggerButtonProps) {
+  if (!city) {
+    return (
+      <a
+        href="#lokasi-acara"
+        className={cn(
+          buttonVariants({ variant, size, className }),
+          "bg-[#F6EB35] text-[#2F3E46] hover:bg-[#F6EB35]/90 font-hand text-base",
+        )}
+      >
+        {children ?? "Reservasi Kehadiran"}
+      </a>
+    )
+  }
+
   return (
-    <Button
-      type="button"
-      onClick={() => {
-        if (city) {
-          openReservationDialog(city)
-        } else {
-          scrollToReservationLocations()
-        }
-      }}
-      className={cn(
-        "bg-[#F6EB35] text-[#2F3E46] hover:bg-[#F6EB35]/90 font-hand text-base",
-        className,
-      )}
-      {...props}
+    <ReservationClientTriggerButton
+      city={city}
+      className={className}
+      variant={variant}
+      size={size}
     >
-      {children ?? "Reservasi Kehadiran"}
-    </Button>
+      {children}
+    </ReservationClientTriggerButton>
   )
 }
