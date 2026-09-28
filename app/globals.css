@@ -278,6 +278,36 @@
   }
 }
 
+/* MBG photo gallery: gentle shuffle without client-side state */
+.mbg-gallery-card {
+  transform: rotate(var(--mbg-gallery-rotate));
+  animation: mbg-gallery-drift var(--mbg-gallery-duration) ease-in-out var(--mbg-gallery-delay) infinite alternate;
+  transform-origin: center center;
+}
+
+.mbg-gallery-card:hover {
+  animation-play-state: paused;
+  transform: translateY(-5px) scale(1.03) rotate(var(--mbg-gallery-rotate));
+  z-index: 10;
+}
+
+@keyframes mbg-gallery-drift {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(var(--mbg-gallery-rotate));
+  }
+  50% {
+    transform: translate3d(var(--mbg-gallery-drift-x), var(--mbg-gallery-drift-y), 0) rotate(calc(var(--mbg-gallery-rotate) + 0.35deg));
+  }
+  100% {
+    transform: translate3d(calc(var(--mbg-gallery-drift-x) * -0.5), calc(var(--mbg-gallery-drift-y) * -0.5), 0) rotate(calc(var(--mbg-gallery-rotate) - 0.3deg));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mbg-gallery-card {
+    animation: none !important;
+  }
+}
 /* MBG detached van: transparent cutout with shape-following shadow */
 .mbg-van-detached {
   display: block;
