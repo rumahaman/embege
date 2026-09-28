@@ -44,6 +44,24 @@ const initialForm: FormState = {
   setuju2: false,
 }
 
+function normalizeIndonesianWhatsApp(value: string) {
+  const cleaned = value.trim().replace(/[\\s().-]/g, "")
+
+  if (/^08\\d{8,11}$/.test(cleaned)) {
+    return cleaned
+  }
+
+  if (/^628\\d{8,11}$/.test(cleaned)) {
+    return `+${cleaned}`
+  }
+
+  if (/^\\+628\\d{8,11}$/.test(cleaned)) {
+    return cleaned
+  }
+
+  return null
+}
+
 export function ReservationDialogProvider() {
   const [open, setOpen] = useState(false)
   const [submitted, setSubmitted] = useState(false)
@@ -68,7 +86,7 @@ export function ReservationDialogProvider() {
   const isValid =
     form.namaLengkap.trim().length > 1 &&
     form.instagram.trim().length > 1 &&
-    form.whatsapp.trim().length > 6 &&
+    normalizeIndonesianWhatsApp(form.whatsapp) !== null &&
     form.kotaAcara.length > 0 &&
     form.setuju1 &&
     form.setuju2
@@ -91,7 +109,7 @@ export function ReservationDialogProvider() {
           body: JSON.stringify({
             namaLengkap: form.namaLengkap,
             instagram: form.instagram,
-            nomorWhatsApp: form.whatsapp,
+            nomorWhatsApp: normalizeIndonesianWhatsApp(form.whatsapp),
             email: form.email,
             kotaAcara: form.kotaAcara,
           }),
@@ -320,11 +338,28 @@ export function ReservationDialogProvider() {
                     id="whatsapp"
                     required
                     type="tel"
+                    inputMode="tel"
+                    autoComplete="tel"
                     value={form.whatsapp}
-                    onChange={(e) => setForm((f) => ({ ...f, whatsapp: e.target.value }))}
-                    placeholder="08xx xxxx xxxx"
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/[^0-9+()\-\s]/g, "")
+                      setForm((f) => ({ ...f, whatsapp: value }))
+                    }}
+                    placeholder="08xx xxxx xxxx atau +628xx xxxx xxxx"
+                    pattern="(?:08\\d{8,11}|\\+628\\d{8,11}|628\\d{8,11})"
+                    title="Masukkan nomor HP Indonesia yang valid, misalnya 081234567890, 6281234567890, atau +6281234567890."
                     className="bg-white"
+                    aria-describedby="whatsapp-hint whatsapp-error"
+                    aria-invalid={form.whatsapp.length > 0 && normalizeIndonesianWhatsApp(form.whatsapp) === null}
                   />
+                  <FieldDescription id="whatsapp-hint" className="text-[#2F3E46]/55">
+                    Hanya nomor HP Indonesia. Format: 08…, 628…, atau +628….
+                  </FieldDescription>
+                  {form.whatsapp.length > 0 && normalizeIndonesianWhatsApp(form.whatsapp) === null && (
+                    <FieldDescription id="whatsapp-error" className="font-medium text-red-700">
+                      Nomor WhatsApp tidak valid. Gunakan format 08…, 628…, atau +628….
+                    </FieldDescription>
+                  )}
                 </Field>
                 <Field>
                   <FieldLabel htmlFor="email">Email (Opsional)</FieldLabel>
