@@ -50,7 +50,7 @@ export function SetorSajakSection() {
                 <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2 bg-[#97B4C1] [clip-path:polygon(0_65%,8%_40%,16%_70%,24%_45%,32%_68%,40%_42%,48%_70%,56%_46%,64%_72%,72%_45%,80%_70%,88%_42%,100%_62%,100%_0,0_0)]" />
                 <p className="relative mb-3 flex items-center gap-2 font-hand text-lg text-[#2F3E46]">
                   <FileText className="size-4" />
-                  Yang Perlu Dibawa
+                  Yang Bisa Dibawa
                 </p>
                 <ul className="relative flex flex-col gap-2 font-body text-sm text-[#2F3E46]/80">
                   {yangDibawa.map((item) => (
