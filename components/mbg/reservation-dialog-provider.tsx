@@ -401,7 +401,7 @@ export function ReservationDialogProvider() {
 
                 <Field
                   orientation="horizontal"
-                  className="rounded-xl border-2 border-[#2F3E46]/25 bg-white px-3 py-3 shadow-sm"
+                  className="relative rounded-xl border-2 border-[#2F3E46]/25 bg-white px-3 py-3 pr-20 shadow-sm sm:pr-24"
                 >
                   <Checkbox
                     id="setuju1"
@@ -413,9 +413,24 @@ export function ReservationDialogProvider() {
                     htmlFor="setuju1"
                     className="font-normal text-[#2F3E46] group-has-[:focus-visible]:text-[#2F3E46]"
                   >
-                    Saya memahami bahwa tiket masuk acara ditukar dengan satu sajak sesuai konsep{" "}
-                    <span className="font-hand text-base">$etor $ajak</span>.
+                    Saya memahami bahwa tiket masuk acara ditukar dengan satu sajak.
                   </FieldLabel>
+
+                  <div
+                    className="absolute right-2 top-1/2 flex size-[72px] -translate-y-1/2 rotate-[-9deg] items-center justify-center rounded-full border-2 border-dashed border-[#2F3E46]/55 bg-[#F6EB35]/55 text-[#2F3E46]/80 shadow-[0_1px_2px_rgba(47,62,70,0.08)]"
+                    aria-label="$etor $ajak"
+                  >
+                    <div className="flex size-[60px] items-center justify-center rounded-full border-2 border-[#2F3E46]/40 text-center">
+                      <div className="leading-none">
+                        <p className="font-body text-[7px] font-bold uppercase tracking-[0.14em]">
+                          1 Sajak
+                        </p>
+                        <p className="mt-0.5 font-hand text-[15px] font-semibold italic">
+                          $etor $ajak
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </Field>
 
                 <Field
