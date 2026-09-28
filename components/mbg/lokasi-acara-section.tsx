@@ -98,9 +98,9 @@ export function LokasiAcaraSection() {
                   >
                     <div
                       className={
-                        "flex size-[76px] items-center justify-center rounded-full border-2 border-[#2F3E46]/80 bg-[#F6EB35] shadow-[6px_6px_0_rgba(47,62,70,0.18)] transition-all duration-300 ease-out " +
+                        "flex size-[76px] items-center justify-center rounded-full border-2 border-[#2F3E46]/80 bg-[#A9C1CC] shadow-[6px_6px_0_rgba(47,62,70,0.18)] transition-all duration-300 ease-out " +
                         (isActive
-                          ? "scale-110 shadow-[8px_8px_0_rgba(47,62,70,0.2)]"
+                          ? "scale-110 bg-[#F6EB35] shadow-[8px_8px_0_rgba(47,62,70,0.2)]"
                           : "scale-100")
                       }
                     >
@@ -113,7 +113,7 @@ export function LokasiAcaraSection() {
                     <span
                       className={
                         "mt-4 font-heading text-2xl leading-none text-[#2F3E46] transition-transform duration-300 " +
-                        (isActive ? "scale-105" : "scale-100")
+                        (isActive ? "scale-105 bg-[#F6EB35]" : "scale-100")
                       }
                     >
                       {cityName}
