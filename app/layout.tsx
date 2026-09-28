@@ -2,7 +2,6 @@ import { Analytics } from "@vercel/analytics/next"
 import type { Metadata, Viewport } from "next"
 import Script from "next/script"
 import { Caveat, Inter, Kalam, Patrick_Hand } from "next/font/google"
-import { Toaster } from "@/components/ui/sonner"
 import "./globals.css"
 
 const caveat = Caveat({
@@ -110,17 +109,16 @@ export default function RootLayout({
       <body className="font-body antialiased">
         {children}
 
-        <Toaster />
 
         {process.env.NODE_ENV === "production" && <Analytics />}
 
         {/* Google Analytics 4 */}
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
 
-        <Script id="google-analytics" strategy="afterInteractive">
+        <Script id="google-analytics" strategy="lazyOnload">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
