@@ -278,7 +278,7 @@
   }
 }
 
-/* MBG detached van: static egg-salt-blue background, van moves only */
+/* MBG detached van: transparent asset, static egg-salt-blue background, van moves only */
 @media (hover: hover) and (pointer: fine) {
   .mbg-van-detached {
     transform: scale(1);
