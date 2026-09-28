@@ -9,13 +9,15 @@ export function CtaBannerSection() {
       <DoodleStar className="absolute right-[14%] bottom-10 size-4 opacity-70" />
       <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 px-4 text-center sm:px-6">
         <div className="relative w-full max-w-[420px] -rotate-1 overflow-hidden rounded-md border-4 border-white/20 shadow-2xl">
-          <Image
-            src="/images/amis-stage-red.jpg"
-            alt="Aldy Amis bernyanyi memegang gitar dengan pencahayaan merah dramatis"
-            width={900}
-            height={600}
-            className="h-auto w-full object-cover"
-          />
+          <div className="h-full w-full overflow-hidden">
+            <Image
+              src="/images/amis-stage-red.jpg"
+              alt="Aldy Amis bernyanyi memegang gitar dengan pencahayaan merah dramatis"
+              width={900}
+              height={600}
+              className="h-auto w-full object-cover mbg-hover-sway-diagonal"
+            />
+          </div>
         </div>
         <p className="font-heading text-4xl text-[#F6EB35] sm:text-5xl">
           Perjalanan masih panjang...
