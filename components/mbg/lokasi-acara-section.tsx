@@ -36,20 +36,15 @@ export function LokasiAcaraSection() {
 
           {/* Van */}
           <div className="flex justify-center lg:justify-start">
-            <div className="w-full max-w-[360px] overflow-hidden rounded-md border-4 border-white/70 bg-[#A9C1CC] shadow-xl">
-              <div className="mbg-van-frame relative aspect-[1216/753] overflow-hidden rounded-[2px] bg-[#A9C1CC]">
-                <div
-                  className="mbg-van-ground-shadow pointer-events-none absolute bottom-[5%] left-1/2 z-0 h-[10%] w-[68%] -translate-x-1/2 rounded-[50%]"
-                  aria-hidden="true"
-                />
-                <Image
-                  src="/mbg-van-transparent.png"
-                  alt="Ilustrasi van Badan Gigs Nasional dalam perjalanan MBG"
-                  fill
-                  sizes="(min-width: 1024px) 360px, (min-width: 640px) 360px, 100vw"
-                  className="mbg-van-detached z-10 object-contain"
-                />
-              </div>
+            <div className="mbg-van-frame w-full max-w-[360px]">
+              <Image
+                src="/mbg-van-transparent.png"
+                alt="Ilustrasi van Badan Gigs Nasional dalam perjalanan MBG"
+                width={1216}
+                height={753}
+                sizes="(min-width: 1024px) 360px, (min-width: 640px) 360px, 100vw"
+                className="mbg-van-detached h-auto w-full object-contain"
+              />
             </div>
           </div>
         </div>
