@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { MapPin, Users } from "lucide-react"
+import { BusFront, MapPin, Users } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { venues } from "@/lib/venues"
 import { ReservationTriggerButton } from "./reservation-trigger-button"
@@ -32,42 +32,125 @@ export function LokasiAcaraSection() {
               budaya. Cerita berbeda, rasa yang sama: manusia yang tetap ingin
               bertemu.
             </p>
+          </div>
 
-            {/* Route */}
-            <div className="mt-10 hidden items-center justify-between md:flex">
+          {/* Van */}
+          <div className="flex justify-center lg:justify-end">
+            <div className="w-full max-w-md overflow-hidden rounded-2xl border border-[#2F3E46]/10 bg-white/40 p-3 shadow-sm">
+              <Image
+                src="/images/mbg-van.jpg"
+                alt="Ilustrasi van Badan Gigs Nasional dalam perjalanan MBG"
+                width={700}
+                height={440}
+                className="w-full rounded-xl object-contain"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Route Illustration */}
+        <div
+          className="mt-12 rounded-2xl border border-[#2F3E46]/10 bg-white/45 px-5 py-8 shadow-sm sm:mt-14 sm:px-8 sm:py-10"
+          aria-label="Ilustrasi rute perjalanan Manggung Bergizi Gratis dari Kabupaten Tangerang ke Cirebon, Yogyakarta, dan Malang"
+        >
+          <div className="mb-7 flex items-center justify-between gap-4">
+            <div>
+              <p className="font-body text-xs font-semibold uppercase tracking-[0.16em] text-[#2F3E46]/50">
+                Rute Perjalanan
+              </p>
+              <p className="mt-1 font-heading text-3xl leading-none text-[#2F3E46] sm:text-4xl">
+                Empat kota, satu perjalanan
+              </p>
+            </div>
+
+            <div className="hidden shrink-0 items-center gap-2 rounded-full border border-[#2F3E46]/10 bg-white px-4 py-2 sm:flex">
+              <BusFront className="size-5 text-[#2F3E46]" />
+              <span className="font-body text-xs font-semibold uppercase tracking-wide text-[#2F3E46]/65">
+                MBG 2026
+              </span>
+            </div>
+          </div>
+
+          {/* Desktop route */}
+          <div className="relative hidden px-4 py-6 md:block">
+            <svg
+              viewBox="0 0 1200 220"
+              className="pointer-events-none absolute inset-x-0 top-2 h-44 w-full"
+              aria-hidden="true"
+              preserveAspectRatio="none"
+            >
+              <path
+                d="M110 116 C205 165 290 165 385 114 S555 64 660 112 S815 164 910 111 S1050 75 1095 113"
+                fill="none"
+                stroke="#2F3E46"
+                strokeWidth="3"
+                strokeDasharray="9 11"
+                strokeLinecap="round"
+                opacity="0.35"
+              />
+            </svg>
+
+            <div className="relative z-10 grid grid-cols-4 gap-6">
               {venues.map((venue, index) => (
                 <div
                   key={venue.id}
-                  className="flex flex-1 items-center"
+                  className={
+                    index % 2 === 0
+                      ? "flex translate-y-3 flex-col items-center text-center"
+                      : "flex -translate-y-3 flex-col items-center text-center"
+                  }
                 >
-                  <div className="flex flex-col items-center gap-1">
-                    <span className="size-2.5 rounded-full bg-[#2F3E46]" />
-
-                    <span className="font-hand text-xs text-[#2F3E46]/70">
-                      {venue.city}
-                    </span>
+                  <div className="flex size-[76px] items-center justify-center rounded-full border-2 border-[#2F3E46]/80 bg-[#F6EB35] shadow-[6px_6px_0_rgba(47,62,70,0.18)] transition-transform duration-200 hover:-translate-y-1">
+                    <BusFront
+                      className="size-8 text-[#2F3E46]"
+                      strokeWidth={1.8}
+                    />
                   </div>
 
-                  {index < venues.length - 1 && (
-                    <div className="mbg-dashed-route mx-2 flex-1" />
-                  )}
+                  <span className="mt-4 font-heading text-2xl leading-none text-[#2F3E46]">
+                    {venue.city}
+                  </span>
+
+                  <span className="mt-1 font-body text-sm text-[#2F3E46]/60">
+                    {venue.date}
+                  </span>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Van */}
-          <div className="flex justify-center lg:justify-end">
-  <div className="w-full max-w-md overflow-hidden rounded-2xl border border-[#2F3E46]/10 bg-white/40 p-3 shadow-sm">
-    <Image
-      src="/images/mbg-van.jpg"
-      alt="Ilustrasi van Badan Gigs Nasional dalam perjalanan MBG"
-      width={700}
-      height={440}
-      className="w-full rounded-xl object-contain"
-    />
-  </div>
-</div>
+          {/* Mobile route */}
+          <div className="relative md:hidden">
+            <div
+              className="absolute bottom-8 left-7 top-8 border-l-2 border-dashed border-[#2F3E46]/30"
+              aria-hidden="true"
+            />
+
+            <div className="relative flex flex-col gap-7">
+              {venues.map((venue) => (
+                <div
+                  key={venue.id}
+                  className="relative flex items-center gap-4"
+                >
+                  <div className="relative z-10 flex size-14 shrink-0 items-center justify-center rounded-full border-2 border-[#2F3E46]/80 bg-[#F6EB35] shadow-[4px_4px_0_rgba(47,62,70,0.16)]">
+                    <BusFront
+                      className="size-6 text-[#2F3E46]"
+                      strokeWidth={1.8}
+                    />
+                  </div>
+
+                  <div>
+                    <p className="font-heading text-2xl leading-none text-[#2F3E46]">
+                      {venue.city}
+                    </p>
+                    <p className="mt-1 font-body text-sm text-[#2F3E46]/60">
+                      {venue.date}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Venue Cards */}
@@ -80,7 +163,7 @@ export function LokasiAcaraSection() {
               <div className="relative">
                 <Image
                   src={venue.image || "/placeholder.svg"}
-                  alt={`Fasad ${venue.name} di ${venue.city}`}
+                  alt={"Fasad " + venue.name + " di " + venue.city}
                   width={480}
                   height={320}
                   className="h-40 w-full object-cover"
