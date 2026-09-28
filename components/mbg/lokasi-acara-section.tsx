@@ -41,8 +41,8 @@ export function LokasiAcaraSection() {
 
           {/* Van */}
           <div className="flex justify-center lg:justify-end">
-            <div className="w-full max-w-md overflow-hidden rounded-2xl border border-[#2F3E46]/10 bg-white/40 p-3 shadow-sm">
-              <div className="mbg-van-frame relative aspect-[1216/753] overflow-hidden rounded-xl bg-[#A9C1CC]">
+            <div className="w-full max-w-[360px] overflow-hidden rounded-md border-4 border-white/70 bg-[#A9C1CC] shadow-xl">
+              <div className="mbg-van-frame relative aspect-[1216/753] overflow-hidden rounded-[2px] bg-[#A9C1CC]">
                 <div
                   className="mbg-van-ground-shadow pointer-events-none absolute bottom-[5%] left-1/2 z-0 h-[10%] w-[68%] -translate-x-1/2 rounded-[50%]"
                   aria-hidden="true"
