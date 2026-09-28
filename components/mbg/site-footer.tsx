@@ -21,46 +21,6 @@ export function SiteFooter() {
               Manggung Bergizi Gratis — dipersembahkan oleh Badan Gigs Nasional.
             </p>
           </div>
-
-          <div className="flex flex-col gap-3">
-            <p className="font-hand text-lg">Ikuti Perjalanan</p>
-            <div className="flex items-center gap-3">
-              <a
-                href="https://instagram.com/badan.gigs.nasional"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram Badan Gigs Nasional"
-                className="flex size-9 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
-              >
-                <img src="/icons/instagram.svg" alt="" className="size-4" />
-              </a>
-              <a
-                href="https://open.spotify.com/artist/aldyamis"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Spotify Aldy Amis"
-                className="flex size-9 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
-              >
-                <img src="/icons/spotify.svg" alt="" className="size-4" />
-              </a>
-              <a
-                href="https://youtube.com/@aldyamis"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="YouTube Aldy Amis"
-                className="flex size-9 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
-              >
-                <img src="/icons/youtube.svg" alt="" className="size-4" />
-              </a>
-              <a
-                href="mailto:halo@manggungbergizigratis.id"
-                aria-label="Email Badan Gigs Nasional"
-                className="flex size-9 items-center justify-center rounded-full bg-white/10 text-white/80 transition-colors hover:bg-white/20 hover:text-[#F6EB35]"
-              >
-                <Mail className="size-4" />
-              </a>
-            </div>
-          </div>
         </div>
 
         <div className="mx-auto mt-8 max-w-6xl border-t border-white/10 px-4 pt-6 sm:px-6">
