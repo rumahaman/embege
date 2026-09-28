@@ -55,7 +55,7 @@ export function HeroSection() {
                 width={800}
                 height={1050}
                 priority
-                className="h-auto w-full object-cover mbg-hover-sway-x"
+                className="h-auto w-full object-cover mbg-hover-zoom"
               />
             </div>
           </div>
