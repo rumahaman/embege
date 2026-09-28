@@ -10,7 +10,7 @@ function ScoreboardWord() {
     >
         <span
           className="mbg-score-word"
-          style={{ "--score-index": i } as React.CSSProperties}
+          style={{ ["--score-index" as string]: i }}
           aria-hidden={i === 0 ? undefined : true}
         >
           Perjumpaan
