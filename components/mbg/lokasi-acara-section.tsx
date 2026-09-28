@@ -53,24 +53,6 @@ export function LokasiAcaraSection() {
           className="mt-12 rounded-2xl border border-[#2F3E46]/10 bg-white/45 px-5 py-8 shadow-sm sm:mt-14 sm:px-8 sm:py-10"
           aria-label="Ilustrasi rute perjalanan Manggung Bergizi Gratis dari Kabupaten Tangerang ke Cirebon, Yogyakarta, dan Malang"
         >
-          <div className="mb-7 flex items-center justify-between gap-4">
-            <div>
-              <p className="font-body text-xs font-semibold uppercase tracking-[0.16em] text-[#2F3E46]/50">
-                Rute Perjalanan
-              </p>
-              <p className="mt-1 font-heading text-3xl leading-none text-[#2F3E46] sm:text-4xl">
-                Empat kota, satu perjalanan
-              </p>
-            </div>
-
-            <div className="hidden shrink-0 items-center gap-2 rounded-full border border-[#2F3E46]/10 bg-white px-4 py-2 sm:flex">
-              <BusFront className="size-5 text-[#2F3E46]" />
-              <span className="font-body text-xs font-semibold uppercase tracking-wide text-[#2F3E46]/65">
-                MBG 2026
-              </span>
-            </div>
-          </div>
-
           {/* Desktop route */}
           <div className="relative hidden px-4 py-6 md:block">
             <svg
