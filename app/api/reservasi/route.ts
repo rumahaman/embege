@@ -80,6 +80,7 @@ try {
     return NextResponse.json({
       success: true,
       message: "Reservasi berhasil disimpan.",
+      reservationNumber: result.reservationNumber ?? "",
     })
   } catch (error) {
     console.error("Reservation API error:", error)
