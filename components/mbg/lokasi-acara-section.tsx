@@ -57,7 +57,7 @@ export function LokasiAcaraSection() {
 </div>
               {index < venues.length - 1 && <div className="mbg-dashed-route mx-2 flex-1" />}
             </div>
-          ))}
+      
         </div>
 
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
