@@ -109,7 +109,7 @@ export function ReservationDialogProvider() {
         if (!next) setSubmitted(false)
       }}
     >
-      <DialogContent className="max-h-[90vh] overflow-y-auto border-2 border-[#2F3E46]/15 bg-[#EDF2F5] sm:max-w-md">
+      <DialogContent className="max-h-[90vh] overflow-y-auto border-2 border-[#2F3E46]/15 bg-[#EDF2F5] text-[#2F3E46] sm:max-w-md">
         {submitted ? (
           <div className="flex flex-col items-center gap-4 py-6 text-center">
             <span className="flex size-16 items-center justify-center rounded-full bg-[#F6EB35]">
