@@ -15,15 +15,15 @@ const galleryPhotos = [
 export function MbgPhotoGallery() {
   return (
     <div
-      className="relative hidden w-full max-w-md overflow-visible lg:block"
+      className="relative hidden w-full max-w-[430px] overflow-visible lg:block"
       aria-label="Galeri dokumentasi perjalanan Manggung Bergizi Gratis"
     >
-      <div className="grid grid-cols-3 gap-3 px-1 py-2">
+      <div className="grid grid-cols-3 gap-4 px-1 py-2">
         {galleryPhotos.map((photo, index) => (
           <div
             key={photo.src}
             className={
-              "mbg-gallery-card group relative aspect-[1.18] overflow-hidden rounded-md border-4 border-white bg-white shadow-[0_10px_20px_rgba(47,62,70,0.12)] " +
+              "mbg-gallery-card group relative h-[108px] w-full overflow-hidden rounded-md border-4 border-white bg-white shadow-[0_10px_20px_rgba(47,62,70,0.12)] sm:h-[116px] " +
               (index === galleryPhotos.length - 1 ? "col-start-2" : "")
             }
             style={{
@@ -32,15 +32,15 @@ export function MbgPhotoGallery() {
               "--mbg-gallery-drift-y": photo.driftY,
               "--mbg-gallery-duration": photo.duration,
               "--mbg-gallery-delay": photo.delay,
-            } as React.CSSProperties}
+            }}
           >
             <Image
               src={photo.src}
               alt={photo.alt}
-              fill
-              sizes="(min-width: 1024px) 140px, 0px"
-              loading="lazy"
-              className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+              width={360}
+              height={280}
+              sizes="(min-width: 1024px) 130px, 0px"
+              className="block h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
             />
           </div>
         ))}
