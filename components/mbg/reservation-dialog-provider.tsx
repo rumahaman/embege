@@ -234,16 +234,33 @@ export function ReservationDialogProvider() {
                 </p>
               </div>
 
-              <div className="rounded-xl border border-[#2F3E46]/10 bg-white/60 px-4 py-3 text-center">
-                <p className="font-body text-[11px] font-bold uppercase tracking-[0.24em] text-[#2F3E46]/50">
-                  Jangan lupa
-                </p>
-                <p className="mt-1 font-body text-sm leading-relaxed text-[#2F3E46]/75">
-                  Bawa <span className="font-hand text-base font-semibold text-[#2F3E46]">1 sajak</span>{" "}
-                  sebagai tiket masuk.
-                  <br />
-                  Tunjukkan identitas saat registrasi.
-                </p>
+              <div className="relative overflow-hidden rounded-xl border border-[#2F3E46]/10 bg-white/60 px-4 py-3 pr-32 text-left sm:pr-36">
+                <div>
+                  <p className="font-body text-[11px] font-bold uppercase tracking-[0.24em] text-[#2F3E46]/50">
+                    Jangan lupa
+                  </p>
+                  <p className="mt-1 font-body text-sm leading-relaxed text-[#2F3E46]/75">
+                    Bawa <span className="font-hand text-base font-semibold text-[#2F3E46]">1 sajak</span>{" "}
+                    sebagai tiket masuk.
+                    <br />
+                    Tunjukkan identitas saat registrasi.
+                  </p>
+                </div>
+                <div
+                  className="absolute right-4 top-1/2 flex size-24 -translate-y-1/2 rotate-[-8deg] items-center justify-center rounded-full border-2 border-dashed border-[#2F3E46]/55 bg-[#F6EB35]/55 text-[#2F3E46]/80 shadow-[0_2px_0_rgba(47,62,70,0.08)]"
+                  aria-label="$etor $ajak"
+                >
+                  <div className="flex size-20 items-center justify-center rounded-full border-2 border-[#2F3E46]/45 text-center">
+                    <div className="leading-none">
+                      <p className="font-body text-[8px] font-bold uppercase tracking-[0.18em]">
+                        1 Sajak
+                      </p>
+                      <p className="mt-1 font-hand text-[18px] font-semibold italic">
+                        $etor $ajak
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <Button
