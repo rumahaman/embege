@@ -4,18 +4,6 @@ import { Mail } from "lucide-react"
 export function SiteFooter() {
   return (
     <footer id="kontak" className="relative overflow-hidden bg-[#EDF2F5] pt-14">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="relative">
-          <Image
-            src="/images/mbg-van.jpg"
-            alt="Ilustrasi van Satuan Pelayanan Panggung Gratis milik Badan Gigs Nasional"
-            width={900}
-            height={550}
-            className="mx-auto w-full max-w-2xl object-contain"
-          />
-        </div>
-      </div>
-
       <div className="border-t border-[#2F3E46]/10 bg-[#2F3E46] py-10 text-white">
         <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 sm:px-6 md:flex-row md:items-start md:justify-between">
           <div className="flex flex-col gap-2">

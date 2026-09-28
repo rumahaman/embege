@@ -15,20 +15,46 @@ export function LokasiAcaraSection() {
             Rute Perjalanan MBG
           </p>
         </div>
-        <h2 className="font-heading text-5xl text-[#2F3E46] sm:text-6xl">Pilih Kota, Temui di Sana</h2>
-        <p className="mt-3 max-w-xl font-body text-base text-[#2F3E46]/70">
-          Empat kota, empat ruang alternatif — dari toko buku hingga rumah budaya. Cerita berbeda,
-          rasa yang sama: manusia yang tetap ingin bertemu.
-        </p>
+        <div className="grid items-center gap-8 lg:grid-cols-[1fr_420px]">
+  <div>
+    <h2 className="font-heading text-5xl text-[#2F3E46] sm:text-6xl">
+      Pilih Kota, Temui di Sana
+    </h2>
 
-        {/* route line */}
-        <div className="mt-10 hidden items-center justify-between md:flex">
-          {venues.map((venue, index) => (
-            <div key={venue.id} className="flex flex-1 items-center">
-              <div className="flex flex-col items-center gap-1">
-                <span className="size-2.5 rounded-full bg-[#2F3E46]" />
-                <span className="font-hand text-xs text-[#2F3E46]/70">{venue.city}</span>
-              </div>
+    <p className="mt-3 max-w-xl font-body text-base text-[#2F3E46]/70">
+      Empat kota, empat ruang alternatif — dari toko buku hingga rumah budaya. Cerita berbeda,
+      rasa yang sama: manusia yang tetap ingin bertemu.
+    </p>
+
+    {/* route line */}
+    <div className="mt-10 hidden items-center justify-between md:flex">
+      {venues.map((venue, index) => (
+        <div key={venue.id} className="flex flex-1 items-center">
+          <div className="flex flex-col items-center gap-1">
+            <span className="size-2.5 rounded-full bg-[#2F3E46]" />
+            <span className="font-hand text-xs text-[#2F3E46]/70">
+              {venue.city}
+            </span>
+          </div>
+
+          {index < venues.length - 1 && (
+            <div className="mbg-dashed-route mx-2 flex-1" />
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <div className="flex justify-center lg:justify-end">
+    <Image
+      src="/images/mbg-van.jpg"
+      alt="Ilustrasi van Badan Gigs Nasional dalam perjalanan MBG"
+      width={700}
+      height={440}
+      className="w-full max-w-md object-contain"
+    />
+  </div>
+</div>
               {index < venues.length - 1 && <div className="mbg-dashed-route mx-2 flex-1" />}
             </div>
           ))}
