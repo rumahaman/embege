@@ -234,7 +234,7 @@ export function ReservationDialogProvider() {
                 </p>
               </div>
 
-              <div className="relative overflow-hidden rounded-xl border border-[#2F3E46]/10 bg-white/60 px-4 py-3 pr-24 text-left sm:pr-28">
+              <div className="relative rounded-xl border border-[#2F3E46]/10 bg-white/60 px-4 py-3 pr-24 text-left sm:pr-28">
                 <div>
                   <p className="font-body text-[11px] font-bold uppercase tracking-[0.24em] text-[#2F3E46]/50">
                     Jangan lupa
