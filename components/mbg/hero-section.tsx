@@ -55,6 +55,7 @@ export function HeroSection() {
                 width={800}
                 height={1050}
                 priority
+                sizes="(min-width: 640px) 360px, 100vw"
                 className="h-auto w-full object-cover mbg-hover-zoom"
               />
             </div>
