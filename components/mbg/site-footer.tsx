@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react"
 import Image from "next/image"
 
 const closingWords = ["Perjumpaan","Teman Perjalanan","Cerita","Percakapan","Pertemuan","Kawan","Ruang Temu","Perjalanan","Ingatan","Kenangan","Suara","Kata","Rasa","Cerita Manusia","Ruang Bersama","Langkah","Jejak","Singgah","Berbagi","Kebersamaan","Perjalanan Kecil","Ruang Perjumpaan","Pulang","Cerita Perjalanan","Temu Manusia"]
@@ -10,7 +11,7 @@ function ScoreboardWord() {
     >
         <span
           className="mbg-score-word"
-          style={{ ["--score-index" as string]: i }}
+          style={{ "--score-index": i } as CSSProperties}
           aria-hidden={i === 0 ? undefined : true}
         >
           Perjumpaan
@@ -247,4 +248,5 @@ export function SiteFooter() {
     </footer>
   )
 }
+
 
