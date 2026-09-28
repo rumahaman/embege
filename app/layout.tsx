@@ -1,5 +1,6 @@
 import { Analytics } from "@vercel/analytics/next"
 import type { Metadata, Viewport } from "next"
+import Script from "next/script"
 import { Caveat, Inter, Kalam, Patrick_Hand } from "next/font/google"
 import { Toaster } from "@/components/ui/sonner"
 import "./globals.css"
@@ -28,6 +29,7 @@ const inter = Inter({
 })
 
 const siteUrl = "https://www.manggungbergizigratis.id"
+const GA_MEASUREMENT_ID = "G-GTXD2C2Y22"
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -107,8 +109,27 @@ export default function RootLayout({
     >
       <body className="font-body antialiased">
         {children}
+
         <Toaster />
+
         {process.env.NODE_ENV === "production" && <Analytics />}
+
+        {/* Google Analytics 4 */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+          strategy="afterInteractive"
+        />
+
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            window.gtag = gtag;
+
+            gtag('js', new Date());
+            gtag('config', '${GA_MEASUREMENT_ID}');
+          `}
+        </Script>
       </body>
     </html>
   )
