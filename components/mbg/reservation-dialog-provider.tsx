@@ -294,14 +294,25 @@ export function ReservationDialogProvider() {
                 </Field>
                 <Field>
                   <FieldLabel htmlFor="instagram">Instagram</FieldLabel>
-                  <Input
-                    id="instagram"
-                    required
-                    value={form.instagram}
-                    onChange={(e) => setForm((f) => ({ ...f, instagram: e.target.value }))}
-                    placeholder="@username"
-                    className="bg-white"
-                  />
+                  <div className="relative">
+                    <span
+                      className="pointer-events-none absolute inset-y-0 left-3 flex items-center font-body text-sm font-semibold text-[#2F3E46]/70"
+                      aria-hidden="true"
+                    >
+                      @
+                    </span>
+                    <Input
+                      id="instagram"
+                      required
+                      value={form.instagram.replace(/^@/, "")}
+                      onChange={(e) => {
+                        const username = e.target.value.replace(/^@+/, "")
+                        setForm((f) => ({ ...f, instagram: username ? `@${username}` : "" }))
+                      }}
+                      placeholder="username"
+                      className="bg-white pl-8"
+                    />
+                  </div>
                 </Field>
                 <Field>
                   <FieldLabel htmlFor="whatsapp">Nomor WhatsApp</FieldLabel>
@@ -363,25 +374,39 @@ export function ReservationDialogProvider() {
                   )}
                 </Field>
 
-                <Field orientation="horizontal">
+                <Field
+                  orientation="horizontal"
+                  className="rounded-xl border-2 border-[#2F3E46]/25 bg-white px-3 py-3 shadow-sm"
+                >
                   <Checkbox
                     id="setuju1"
                     checked={form.setuju1}
                     onCheckedChange={(checked) => setForm((f) => ({ ...f, setuju1: checked === true }))}
+                    className="size-5 border-2 border-[#2F3E46] data-checked:border-[#2F3E46] data-checked:bg-[#2F3E46] data-checked:text-[#F6EB35]"
                   />
-                  <FieldLabel htmlFor="setuju1" className="font-normal">
+                  <FieldLabel
+                    htmlFor="setuju1"
+                    className="font-normal text-[#2F3E46] group-has-[:focus-visible]:text-[#2F3E46]"
+                  >
                     Saya memahami bahwa tiket masuk acara ditukar dengan satu sajak sesuai konsep{" "}
-                    <span className="font-hand">$etor $ajak</span>.
+                    <span className="font-hand text-base">$etor $ajak</span>.
                   </FieldLabel>
                 </Field>
 
-                <Field orientation="horizontal">
+                <Field
+                  orientation="horizontal"
+                  className="rounded-xl border-2 border-[#2F3E46]/25 bg-white px-3 py-3 shadow-sm"
+                >
                   <Checkbox
                     id="setuju2"
                     checked={form.setuju2}
                     onCheckedChange={(checked) => setForm((f) => ({ ...f, setuju2: checked === true }))}
+                    className="size-5 border-2 border-[#2F3E46] data-checked:border-[#2F3E46] data-checked:bg-[#2F3E46] data-checked:text-[#F6EB35]"
                   />
-                  <FieldLabel htmlFor="setuju2" className="font-normal">
+                  <FieldLabel
+                    htmlFor="setuju2"
+                    className="font-normal text-[#2F3E46] group-has-[:focus-visible]:text-[#2F3E46]"
+                  >
                     Saya bersedia menunjukkan identitas saat registrasi acara.
                   </FieldLabel>
                 </Field>
