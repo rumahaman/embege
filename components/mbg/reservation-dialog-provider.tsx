@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState, type FormEvent } from "react"
-import { PartyPopper, Loader2 } from "lucide-react"
+import { Loader2 } from "lucide-react"
 import {
   Dialog,
   DialogContent,
@@ -23,7 +23,6 @@ import {
 import { Button } from "@/components/ui/button"
 import { venues } from "@/lib/venues"
 import { OPEN_RESERVATION_EVENT } from "./reservation-trigger-button"
-import { ReservationTicket } from "./reservation-ticket"
 
 type FormState = {
   namaLengkap: string
@@ -130,27 +129,30 @@ export function ReservationDialogProvider() {
         }
       }}
     >
-      <DialogContent className="max-h-[90vh] overflow-y-auto border-2 border-[#2F3E46]/15 bg-[#EDF2F5] text-[#2F3E46] sm:max-w-2xl">
+      <DialogContent className="max-h-[90vh] overflow-y-auto border-2 border-[#2F3E46]/15 bg-[#EDF2F5] text-[#2F3E46] sm:max-w-md">
         {submitted ? (
           hasEmail ? (
             <div className="flex flex-col items-center gap-4 py-6 text-center">
-              <span className="flex size-16 items-center justify-center rounded-full bg-[#F6EB35]">
-                <PartyPopper className="size-8 text-[#2F3E46]" />
-              </span>
               <DialogHeader className="items-center gap-2">
-                <DialogTitle className="font-heading text-4xl text-[#2F3E46]">Reservasi Berhasil</DialogTitle>
+                <DialogTitle className="font-heading text-4xl text-[#2F3E46]">
+                  Reservasi Berhasil
+                </DialogTitle>
                 <DialogDescription className="font-body text-base text-[#2F3E46]/80">
                   Detail reservasi kamu sudah tercatat.
                   <br />
                   Konfirmasi reservasi juga dikirim ke email kamu.
                 </DialogDescription>
               </DialogHeader>
+
               <div className="w-full rounded-2xl bg-[#AFC1CC] px-5 py-4 text-center">
                 <p className="font-body text-xs font-bold uppercase tracking-[0.24em] text-[#2F3E46]/65">
                   No. Reservasi
                 </p>
-                <p className="mt-1 break-all font-heading text-3xl text-[#2F3E46]">{reservationNumber}</p>
+                <p className="mt-1 break-all font-heading text-3xl text-[#2F3E46]">
+                  {reservationNumber}
+                </p>
               </div>
+
               <Button
                 type="button"
                 onClick={() => setOpen(false)}
@@ -160,33 +162,45 @@ export function ReservationDialogProvider() {
               </Button>
             </div>
           ) : (
-            <div className="space-y-4 py-2">
-              <DialogHeader className="items-center gap-2 text-center">
-                <DialogTitle className="font-heading text-4xl text-[#2F3E46]">Tiket Kamu</DialogTitle>
-                <DialogDescription className="font-body text-base text-[#2F3E46]/80">
-                  Reservasimu sudah tercatat. Simpan tiket ini dan bawa saat datang ke venue.
+            <div className="flex flex-col gap-5 py-5 text-center">
+              <DialogHeader className="items-center gap-2">
+                <DialogTitle className="font-heading text-4xl text-[#2F3E46]">
+                  Reservasi Berhasil
+                </DialogTitle>
+                <DialogDescription className="font-body text-base leading-relaxed text-[#2F3E46]/80">
+                  Reservasimu sudah tercatat.
+                  <br />
+                  <span className="font-semibold text-[#2F3E46]">
+                    Disarankan screenshot halaman ini
+                  </span>{" "}
+                  sebagai bukti reservasi.
                 </DialogDescription>
               </DialogHeader>
 
-              <ReservationTicket
-                reservationNumber={reservationNumber}
-                name={form.namaLengkap}
-                city={form.kotaAcara}
-                venue={selectedVenue?.name ?? form.kotaAcara}
-                date={selectedVenue?.date ?? ""}
-              />
+              <div className="rounded-2xl border-2 border-[#2F3E46]/15 bg-[#AFC1CC] px-5 py-6 text-center">
+                <p className="font-body text-xs font-bold uppercase tracking-[0.28em] text-[#2F3E46]/65">
+                  No. Reservasi
+                </p>
+                <p className="mt-2 break-all font-heading text-4xl font-semibold tracking-wide text-[#2F3E46]">
+                  {reservationNumber}
+                </p>
+              </div>
+
+              <p className="font-body text-sm leading-relaxed text-[#2F3E46]/70">
+                Simpan nomor ini dan tunjukkan saat registrasi di venue.
+                <br />
+                Jangan lupa membawa satu sajak sebagai tiket masuk.
+              </p>
 
               <Button
                 type="button"
-                variant="outline"
                 onClick={() => setOpen(false)}
-                className="w-full border-[#2F3E46]/20 bg-transparent font-hand text-lg text-[#2F3E46] hover:bg-[#2F3E46]/5"
+                className="w-full bg-[#F6EB35] font-hand text-lg text-[#2F3E46] hover:bg-[#F6EB35]/90"
               >
                 Tutup
               </Button>
             </div>
-          )
-        ) : (
+          )        ) : (
           <>
             <DialogHeader>
               <DialogTitle className="font-heading text-4xl text-[#2F3E46]">Reservasi Kehadiran</DialogTitle>
