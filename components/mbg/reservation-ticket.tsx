@@ -14,6 +14,20 @@ type ReservationTicketProps = {
 
 const TICKET_WIDTH = 1080
 const TICKET_HEIGHT = 1536
+const NAVY = "#223B4D"
+const CREAM = "#F5F0E6"
+const YELLOW = "#F6EB35"
+const BLUE = "#AFC7D2"
+const TEXT = "#203444"
+
+function escapeXml(value: string) {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&apos;")
+}
 
 async function blobToDataUrl(blob: Blob) {
   return await new Promise<string | null>((resolve) => {
@@ -24,118 +38,135 @@ async function blobToDataUrl(blob: Blob) {
   })
 }
 
-async function inlineImages(root: HTMLElement) {
-  const images = Array.from(root.querySelectorAll("img"))
-
-  await Promise.all(
-    images.map(async (img) => {
-      const src = img.getAttribute("src")
-      if (!src || src.startsWith("data:")) return
-
-      try {
-        const absoluteUrl = new URL(src, window.location.href).href
-        const response = await fetch(absoluteUrl, { credentials: "same-origin" })
-        if (!response.ok) return
-
-        const dataUrl = await blobToDataUrl(await response.blob())
-        if (dataUrl) img.setAttribute("src", dataUrl)
-      } catch {
-        // Keep the original source as a fallback.
-      }
-    }),
-  )
-}
-
-function collectDocumentStyles() {
-  let css = ""
-
-  for (const sheet of Array.from(document.styleSheets)) {
-    try {
-      css += Array.from(sheet.cssRules)
-        .map((rule) => rule.cssText)
-        .join("\n")
-    } catch {
-      // Ignore stylesheets that the browser does not expose to CSSOM.
-    }
-  }
-
-  return css
-}
-
-async function waitForFonts() {
-  if ("fonts" in document) {
-    try {
-      await document.fonts.ready
-    } catch {
-      // Continue with the browser font fallback.
-    }
-  }
-}
-
-async function elementToPng(root: HTMLElement) {
-  await waitForFonts()
-
-  const clone = root.cloneNode(true) as HTMLElement
-  clone.style.transform = "none"
-  clone.style.transformOrigin = "top left"
-  clone.style.position = "relative"
-  clone.style.left = "0"
-  clone.style.top = "0"
-  clone.style.width = `${TICKET_WIDTH}px`
-  clone.style.height = `${TICKET_HEIGHT}px`
-  clone.style.margin = "0"
-
-  await inlineImages(clone)
-
-  const styleText = collectDocumentStyles()
-  const serialized = new XMLSerializer().serializeToString(clone)
-
-  const svg = `<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xhtml="http://www.w3.org/1999/xhtml" width="${TICKET_WIDTH}" height="${TICKET_HEIGHT}" viewBox="0 0 ${TICKET_WIDTH} ${TICKET_HEIGHT}">
-  <defs>
-    <style><![CDATA[
-${styleText}
-    ]]></style>
-  </defs>
-  <foreignObject x="0" y="0" width="${TICKET_WIDTH}" height="${TICKET_HEIGHT}">
-    <div xmlns="http://www.w3.org/1999/xhtml" style="width:${TICKET_WIDTH}px;height:${TICKET_HEIGHT}px;overflow:hidden;">
-      ${serialized}
-    </div>
-  </foreignObject>
-</svg>`
-
-  const blob = new Blob([svg], { type: "image/svg+xml;charset=utf-8" })
-  const url = URL.createObjectURL(blob)
-
+async function assetToDataUrl(path: string) {
   try {
-    const image = new Image()
-    image.decoding = "async"
-    image.src = url
-
-    await new Promise<void>((resolve, reject) => {
-      image.onload = () => resolve()
-      image.onerror = () => reject(new Error("Tiket gagal dirender."))
-    })
-
-    const canvas = document.createElement("canvas")
-    canvas.width = TICKET_WIDTH
-    canvas.height = TICKET_HEIGHT
-
-    const context = canvas.getContext("2d")
-    if (!context) throw new Error("Canvas tidak tersedia.")
-
-    context.clearRect(0, 0, TICKET_WIDTH, TICKET_HEIGHT)
-    context.drawImage(image, 0, 0, TICKET_WIDTH, TICKET_HEIGHT)
-
-    const png = await new Promise<Blob | null>((resolve) => {
-      canvas.toBlob(resolve, "image/png", 1)
-    })
-
-    if (!png) throw new Error("Tiket gagal dibuat.")
-    return png
-  } finally {
-    URL.revokeObjectURL(url)
+    const response = await fetch(path, { credentials: "same-origin" })
+    if (!response.ok) return null
+    return await blobToDataUrl(await response.blob())
+  } catch {
+    return null
   }
+}
+
+function createTicketSvg(
+  data: ReservationTicketProps,
+  logoDataUrl: string | null,
+  vanDataUrl: string | null,
+) {
+  const name = escapeXml(data.name)
+  const city = escapeXml(data.city)
+  const venue = escapeXml(data.venue)
+  const date = escapeXml(data.date)
+  const reservationNumber = escapeXml(data.reservationNumber)
+
+  const perforations = Array.from({ length: 15 }, (_, index) => {
+    const y = 85 + index * 97
+    return `
+      <circle cx="57" cy="${y}" r="14" fill="${NAVY}"/>
+      <circle cx="1023" cy="${y}" r="14" fill="${NAVY}"/>
+    `
+  }).join("")
+
+  const logo = logoDataUrl
+    ? `<image href="${logoDataUrl}" x="506" y="1372" width="68" height="68" preserveAspectRatio="xMidYMid meet"/>`
+    : ""
+
+  const van = vanDataUrl
+    ? `<image href="${vanDataUrl}" x="54" y="1121" width="420" height="260" preserveAspectRatio="xMidYMid meet"/>`
+    : ""
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="${TICKET_WIDTH}" height="${TICKET_HEIGHT}" viewBox="0 0 ${TICKET_WIDTH} ${TICKET_HEIGHT}">
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="${CREAM}"/>
+      <stop offset="100%" stop-color="#ECE5D7"/>
+    </linearGradient>
+    <pattern id="grain" width="18" height="18" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="${NAVY}" opacity=".07"/>
+    </pattern>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#102330" flood-opacity=".22"/>
+    </filter>
+    <style>
+      .display { font-family: "Caveat", cursive; font-weight: 700; fill: ${NAVY}; }
+      .body { font-family: "Inter", Arial, sans-serif; fill: ${TEXT}; }
+      .body-bold { font-family: "Inter", Arial, sans-serif; font-weight: 700; fill: ${TEXT}; }
+      .hand { font-family: "Patrick Hand", cursive; fill: ${NAVY}; }
+      .small { font-family: "Inter", Arial, sans-serif; font-weight: 700; letter-spacing: 5px; fill: ${NAVY}; }
+    </style>
+  </defs>
+
+  <rect width="${TICKET_WIDTH}" height="${TICKET_HEIGHT}" fill="${NAVY}"/>
+  <rect x="48" y="34" width="984" height="1468" rx="30" fill="url(#paper)" filter="url(#shadow)"/>
+  <rect x="48" y="34" width="984" height="1468" rx="30" fill="url(#grain)"/>
+
+  ${perforations}
+
+  <text x="88" y="136" class="display" font-size="66">Manggung</text>
+  <text x="88" y="204" class="display" font-size="66">Bergizi Gratis</text>
+  <text x="88" y="258" class="hand" font-size="34" font-style="italic">intimate shownya Aldy Amis</text>
+
+  <rect x="833" y="87" width="153" height="50" rx="11" fill="${YELLOW}"/>
+  <text x="909" y="120" text-anchor="middle" class="hand" font-size="28" font-style="italic">$etor $ajak</text>
+
+  <line x1="88" y1="288" x2="992" y2="288" stroke="${NAVY}" stroke-opacity=".2" stroke-width="2" stroke-dasharray="8 12"/>
+
+  <rect x="88" y="322" width="904" height="96" rx="18" fill="${YELLOW}"/>
+  <text x="540" y="386" text-anchor="middle" class="display" font-size="58">TIKET MASUK</text>
+
+  <line x1="88" y1="447" x2="355" y2="447" stroke="${NAVY}" stroke-width="3"/>
+  <line x1="725" y1="447" x2="992" y2="447" stroke="${NAVY}" stroke-width="3"/>
+  <text x="540" y="459" text-anchor="middle" class="small" font-size="16">SATU SAJAK SEBAGAI TIKET MASUK ACARA</text>
+
+  <rect x="88" y="487" width="904" height="164" rx="22" fill="${BLUE}"/>
+  <text x="540" y="530" text-anchor="middle" class="small" font-size="16" opacity=".72">NO. RESERVASI</text>
+  <text x="540" y="603" text-anchor="middle" class="display" font-size="62">${reservationNumber}</text>
+  <rect x="323" y="614" width="434" height="34" rx="17" fill="${NAVY}"/>
+  <circle cx="349" cy="631" r="8" fill="#8AC89B"/>
+  <text x="365" y="637" class="body-bold" font-size="16" fill="${CREAM}">Reservasi Berhasil Dicatat</text>
+
+  <text x="88" y="710" class="small" font-size="16" opacity=".68">NAMA</text>
+  <text x="88" y="750" class="body-bold" font-size="28">${name}</text>
+  <line x1="88" y1="768" x2="500" y2="768" stroke="${NAVY}" stroke-opacity=".2" stroke-dasharray="4 10"/>
+
+  <text x="580" y="710" class="small" font-size="16" opacity=".68">KOTA ACARA</text>
+  <text x="580" y="750" class="body-bold" font-size="28">${city}</text>
+  <line x1="580" y1="768" x2="992" y2="768" stroke="${NAVY}" stroke-opacity=".2" stroke-dasharray="4 10"/>
+
+  <text x="88" y="822" class="small" font-size="16" opacity=".68">VENUE</text>
+  <text x="88" y="862" class="body-bold" font-size="26">${venue}</text>
+  <line x1="88" y1="882" x2="500" y2="882" stroke="${NAVY}" stroke-opacity=".2" stroke-dasharray="4 10"/>
+
+  <text x="580" y="822" class="small" font-size="16" opacity=".68">TANGGAL</text>
+  <text x="580" y="862" class="body-bold" font-size="26">${date}</text>
+  <line x1="580" y1="882" x2="992" y2="882" stroke="${NAVY}" stroke-opacity=".2" stroke-dasharray="4 10"/>
+
+  <line x1="88" y1="918" x2="992" y2="918" stroke="${NAVY}" stroke-opacity=".2" stroke-width="2" stroke-dasharray="8 12"/>
+
+  <text x="88" y="968" class="small" font-size="16" opacity=".68">HTM</text>
+  <text x="88" y="1016" class="display" font-size="42">1 Sajak</text>
+  <path d="M88 1029 q46 16 98 0" fill="none" stroke="${YELLOW}" stroke-width="10" stroke-linecap="round"/>
+
+  <rect x="560" y="944" width="432" height="112" rx="18" fill="#FFFFFF" fill-opacity=".5" stroke="${YELLOW}" stroke-width="0"/>
+  <rect x="560" y="944" width="7" height="112" rx="3.5" fill="${YELLOW}"/>
+  <text x="588" y="981" class="hand" font-size="26" font-style="italic">Bawa satu sajak sebagai tiket masuk.</text>
+  <text x="588" y="1015" class="body" font-size="16">Simpan tiket ini dan tunjukkan identitas saat registrasi.</text>
+
+  <rect x="68" y="1075" width="944" height="275" rx="22" fill="${BLUE}" fill-opacity=".55"/>
+  <ellipse cx="274" cy="1312" rx="184" ry="21" fill="${NAVY}" fill-opacity=".16" filter="url(#shadow)"/>
+  ${van}
+
+  <text x="760" y="1198" class="hand" font-size="31" font-style="italic" text-anchor="middle">Satu sajak</text>
+  <text x="760" y="1238" class="hand" font-size="31" font-style="italic" text-anchor="middle">untuk satu pintu masuk.</text>
+
+  <line x1="88" y1="1370" x2="992" y2="1370" stroke="${NAVY}" stroke-opacity=".18" stroke-width="2"/>
+
+  <rect x="48" y="1388" width="984" height="114" fill="${NAVY}"/>
+  ${logo}
+  <text x="540" y="1471" text-anchor="middle" class="body-bold" font-size="24" letter-spacing="5" fill="${CREAM}">BADAN GIGS NASIONAL</text>
+  <text x="540" y="1493" text-anchor="middle" class="body" font-size="12" letter-spacing="2" fill="${CREAM}" opacity=".76">MANGGUNG BERGIZI GRATIS</text>
+</svg>`
 }
 
 async function downloadBlob(blob: Blob, fileName: string) {
@@ -149,13 +180,41 @@ async function downloadBlob(blob: Blob, fileName: string) {
   window.setTimeout(() => URL.revokeObjectURL(url), 1000)
 }
 
-function TicketInfo({
-  label,
-  value,
-}: {
-  label: string
-  value: string
-}) {
+async function svgToPng(svg: string) {
+  const blob = new Blob([svg], { type: "image/svg+xml;charset=utf-8" })
+  const url = URL.createObjectURL(blob)
+
+  try {
+    const image = new Image()
+    image.decoding = "async"
+
+    await new Promise<void>((resolve, reject) => {
+      image.onload = () => resolve()
+      image.onerror = () => reject(new Error("Tiket gagal dirender."))
+      image.src = url
+    })
+
+    const canvas = document.createElement("canvas")
+    canvas.width = TICKET_WIDTH
+    canvas.height = TICKET_HEIGHT
+
+    const context = canvas.getContext("2d")
+    if (!context) throw new Error("Canvas tidak tersedia.")
+
+    context.drawImage(image, 0, 0, TICKET_WIDTH, TICKET_HEIGHT)
+
+    const png = await new Promise<Blob | null>((resolve) => {
+      canvas.toBlob(resolve, "image/png", 1)
+    })
+
+    if (!png) throw new Error("Tiket gagal dibuat.")
+    return png
+  } finally {
+    URL.revokeObjectURL(url)
+  }
+}
+
+function TicketInfo({ label, value }: { label: string; value: string }) {
   return (
     <div className="min-w-0 border-b border-dashed border-[#223B4D]/20 pb-3">
       <p className="font-body text-[14px] font-bold uppercase tracking-[0.22em] text-[#223B4D]/65">
@@ -239,7 +298,6 @@ function TicketVisual({
             <p className="mt-3 break-all font-heading text-[64px] font-semibold leading-none tracking-[0.03em] text-[#223B4D]">
               {reservationNumber}
             </p>
-
             <div className="mx-auto mt-5 flex w-fit items-center gap-2 rounded-full bg-[#223B4D] px-5 py-2.5 text-[16px] font-semibold text-[#F5F0E6]">
               <CheckCircle2 className="size-5 text-[#8AC89B]" />
               Reservasi Berhasil Dicatat
@@ -282,10 +340,10 @@ function TicketVisual({
             src="/mbg-van-transparent.png"
             alt=""
             aria-hidden="true"
-            className="absolute bottom-[-6px] left-[5%] w-[72%] object-contain drop-shadow-[0_20px_13px_rgba(34,59,77,0.23)]"
+            className="absolute bottom-0 left-[2%] h-[92%] w-auto max-w-[58%] object-contain drop-shadow-[0_20px_13px_rgba(34,59,77,0.23)]"
           />
 
-          <div className="absolute right-[4%] top-[33%] w-[27%]">
+          <div className="absolute right-[5%] top-1/2 w-[30%] -translate-y-1/2">
             <p className="font-hand text-[30px] italic leading-tight text-[#223B4D]">
               Satu sajak
               <br />
@@ -313,13 +371,7 @@ function TicketVisual({
   )
 }
 
-export function ReservationTicket({
-  reservationNumber,
-  name,
-  city,
-  venue,
-  date,
-}: ReservationTicketProps) {
+export function ReservationTicket(props: ReservationTicketProps) {
   const frameRef = useRef<HTMLDivElement>(null)
   const ticketRef = useRef<HTMLDivElement>(null)
   const [scale, setScale] = useState(1)
@@ -342,16 +394,20 @@ export function ReservationTicket({
   }, [])
 
   async function handleDownload() {
-    if (isDownloading || !ticketRef.current) return
+    if (isDownloading) return
     setIsDownloading(true)
 
     try {
-      const png = await elementToPng(ticketRef.current)
-      const safeName = name.trim().replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "")
-      await downloadBlob(
-        png,
-        `${reservationNumber}-${safeName || "tiket"}.png`,
-      )
+      await document.fonts.ready
+      const [logoDataUrl, vanDataUrl] = await Promise.all([
+        assetToDataUrl("/images/icon.png"),
+        assetToDataUrl("/mbg-van-transparent.png"),
+      ])
+
+      const svg = createTicketSvg(props, logoDataUrl, vanDataUrl)
+      const png = await svgToPng(svg)
+      const safeName = props.name.trim().replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "")
+      await downloadBlob(png, `${props.reservationNumber}-${safeName || "tiket"}.png`)
     } catch (error) {
       console.error("Ticket download error:", error)
       alert("Tiket belum berhasil dibuat. Coba lagi sebentar.")
@@ -369,14 +425,23 @@ export function ReservationTicket({
         className="relative w-full overflow-hidden rounded-[30px] bg-[#223B4D]"
         style={{ height: frameHeight }}
       >
-        <TicketVisual
-          reservationNumber={reservationNumber}
-          name={name}
-          city={city}
-          venue={venue}
-          date={date}
-          innerRef={ticketRef}
-        />
+        <div
+          style={{
+            width: TICKET_WIDTH,
+            height: TICKET_HEIGHT,
+            transform: `scale(${scale})`,
+            transformOrigin: "top left",
+          }}
+        >
+          <TicketVisual
+            reservationNumber={props.reservationNumber}
+            name={props.name}
+            city={props.city}
+            venue={props.venue}
+            date={props.date}
+            innerRef={ticketRef}
+          />
+        </div>
       </div>
 
       <Button
