@@ -14,6 +14,7 @@ export function TentangAcaraSection() {
                 alt="Aldy Amis bernyanyi sambil bermain gitar di atas panggung dengan pencahayaan biru"
                 width={800}
                 height={1000}
+                sizes="(min-width: 1024px) 448px, 100vw"
                 className="h-auto w-full object-cover mbg-hover-zoom"
               />
             </div>
