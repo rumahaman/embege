@@ -1,6 +1,5 @@
-import Image from "next/image"
 import { Check, X, FileText } from "lucide-react"
-import { DoodleStar } from "./doodles"
+import { MbgPhotoGallery } from "./photo-gallery"
 import { ReservationTriggerButton } from "./reservation-trigger-button"
 
 const yangDibawa = ["Tulisan tangan", "Cetakan kertas", "Catatan di buku", "Hasil print"]
@@ -12,18 +11,8 @@ export function SetorSajakSection() {
     <section id="setor-sajak" className="relative overflow-hidden bg-[#EDF2F5] py-16 sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-center">
-          <div className="relative order-2 hidden justify-self-center lg:order-1 lg:flex">
-            <div className="relative w-full max-w-sm rotate-2 overflow-hidden rounded-md border-4 border-white shadow-xl">
-              <Image
-                src="/images/amis-crowd.jpg"
-                alt="Aldy Amis tampil di depan kerumunan penonton yang duduk dekat dengan panggung"
-                width={700}
-                height={500}
-                sizes="(min-width: 1024px) 448px, 0px"
-                className="h-auto w-full object-cover"
-              />
-            </div>
-            <DoodleStar className="absolute -right-3 -top-3 size-6" />
+          <div className="relative order-2 justify-self-center lg:order-1">
+            <MbgPhotoGallery />
           </div>
 
           <div className="order-1 flex flex-col gap-4 lg:order-2">
