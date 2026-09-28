@@ -44,7 +44,7 @@ export function LokasiAcaraSection() {
             <div className="w-full max-w-md overflow-hidden rounded-2xl border border-[#2F3E46]/10 bg-white/40 p-3 shadow-sm">
               <div className="mbg-van-frame relative aspect-[1216/753] overflow-hidden rounded-xl bg-[#A9C1CC]">
                 <div
-                  className="mbg-van-ground-shadow pointer-events-none absolute bottom-[9%] left-1/2 z-0 h-[4%] w-[54%] -translate-x-1/2 rounded-[50%] bg-[#2F3E46]/18 blur-[8px]"
+                  className="mbg-van-ground-shadow pointer-events-none absolute bottom-[8%] left-1/2 z-0 h-[6%] w-[62%] -translate-x-1/2 rounded-[50%] bg-[#2F3E46]/30 blur-[9px]"
                   aria-hidden="true"
                 />
                 <Image
