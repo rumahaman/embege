@@ -1,4 +1,69 @@
+"use client"
+
+import { useEffect, useState } from "react"
 import Image from "next/image"
+
+const closingWords = [
+  "Perjumpaan",
+  "Teman Perjalanan",
+  "Cerita",
+  "Percakapan",
+  "Pertemuan",
+  "Kawan",
+  "Ruang Temu",
+  "Perjalanan",
+  "Ingatan",
+  "Kenangan",
+  "Suara",
+  "Kata",
+  "Rasa",
+  "Cerita Manusia",
+  "Ruang Bersama",
+  "Langkah",
+  "Jejak",
+  "Singgah",
+  "Berbagi",
+  "Kebersamaan",
+  "Perjalanan Kecil",
+  "Ruang Perjumpaan",
+  "Pulang",
+  "Cerita Perjalanan",
+  "Temu Manusia",
+]
+
+function ScoreboardWord() {
+  const [index, setIndex] = useState(0)
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setIndex((current) =>
+        current === closingWords.length - 1 ? 0 : current + 1,
+      )
+    }, 1300)
+
+    return () => window.clearInterval(interval)
+  }, [])
+
+  const currentWord = closingWords[index]
+
+  return (
+    <span
+      className="relative inline-flex min-h-[1.35em] min-w-[9.8ch] items-center justify-center overflow-hidden rounded-[5px] border border-white/10 bg-[#223B4D] px-3 py-1 align-baseline font-body text-[0.72em] font-extrabold uppercase tracking-[0.09em] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_2px_0_rgba(0,0,0,0.12)] sm:min-w-[13ch]"
+      aria-label={currentWord}
+    >
+      <span
+        key={currentWord}
+        className="animate-[mbg-score-flip_420ms_cubic-bezier(.22,1,.36,1)] whitespace-nowrap"
+      >
+        {currentWord}
+      </span>
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-1/2 h-px bg-white/10"
+      />
+    </span>
+  )
+}
 
 export function SiteFooter() {
   return (
@@ -37,7 +102,8 @@ export function SiteFooter() {
             <p className="font-hand text-2xl leading-tight text-white/80 sm:text-3xl">
               Musik, sajak, dan
               <br />
-              perjumpaan manusia.
+              <ScoreboardWord />
+              <span className="ml-1">.</span>
             </p>
           </div>
         </div>
@@ -52,6 +118,29 @@ export function SiteFooter() {
           </p>
         </div>
       </div>
+
+      <style jsx>{`
+        @keyframes mbg-score-flip {
+          0% {
+            transform: translateY(-34%);
+            opacity: 0;
+          }
+          45% {
+            transform: translateY(8%);
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          :global(.animate-\\[mbg-score-flip_420ms-cubic-bezier\\(.22\\,1\\,.36\\,1\\)\\]) {
+            animation: none !important;
+          }
+        }
+      `}</style>
     </footer>
   )
 }
