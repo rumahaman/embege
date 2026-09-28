@@ -322,3 +322,31 @@
     transition: none !important;
   }
 }
+
+
+/* MBG footer scoreboard animation */
+.mbg-score-flip {
+  display: inline-block;
+  animation: mbg-score-flip 420ms cubic-bezier(.22, 1, .36, 1);
+}
+
+@keyframes mbg-score-flip {
+  0% {
+    transform: translateY(-34%);
+    opacity: 0;
+  }
+  45% {
+    transform: translateY(8%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mbg-score-flip {
+    animation: none !important;
+  }
+}
