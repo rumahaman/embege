@@ -8,13 +8,15 @@ export function TentangAcaraSection() {
       <div className="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:items-center lg:gap-16">
         <div className="order-2 flex flex-col gap-3 lg:order-1">
           <div className="relative w-full max-w-md -rotate-1 self-center overflow-hidden rounded-md border-4 border-white/70 shadow-xl lg:self-start">
-            <Image
-              src="/images/amis-stage-blue.jpg"
-              alt="Aldy Amis bernyanyi sambil bermain gitar di atas panggung dengan pencahayaan biru"
-              width={800}
-              height={1000}
-              className="h-auto w-full object-cover"
-            />
+            <div className="h-full w-full overflow-hidden">
+              <Image
+                src="/images/amis-stage-blue.jpg"
+                alt="Aldy Amis bernyanyi sambil bermain gitar di atas panggung dengan pencahayaan biru"
+                width={800}
+                height={1000}
+                className="h-auto w-full object-cover mbg-hover-sway-y"
+              />
+            </div>
           </div>
         </div>
 
