@@ -2,14 +2,14 @@ import Image from "next/image"
 import { DoodleStar } from "./doodles"
 
 const galleryPhotos = [
-  { src: "/images/amis-crowd.jpg", alt: "Aldy Amis tampil dekat dengan penonton", left: "4px", top: "14px", rotate: "-3deg", delay: "-0s" },
-  { src: "/images/amis-stage-blue.jpg", alt: "Aldy Amis bermain gitar dengan pencahayaan biru", left: "92px", top: "4px", rotate: "2.2deg", delay: "-1.5s" },
-  { src: "/images/amis-stage-red.jpg", alt: "Aldy Amis bernyanyi dengan pencahayaan merah", left: "178px", top: "12px", rotate: "-2.4deg", delay: "-3s" },
-  { src: "/images/amis-hero.jpg", alt: "Aldy Amis dalam perjalanan Manggung Bergizi Gratis", left: "264px", top: "2px", rotate: "3deg", delay: "-4.5s" },
-  { src: "/images/venue-ruang-rumi.jpg", alt: "Ruang Rumi sebagai salah satu ruang temu MBG", left: "28px", top: "112px", rotate: "1.8deg", delay: "-6s" },
-  { src: "/images/venue-rengganis.jpg", alt: "Rumah Rengganis sebagai salah satu ruang temu MBG", left: "112px", top: "106px", rotate: "-1.6deg", delay: "-7.5s" },
-  { src: "/images/venue-buku-akik.jpg", alt: "Buku Akik sebagai salah satu ruang temu MBG", left: "198px", top: "114px", rotate: "2.6deg", delay: "-9s" },
-  { src: "/images/venue-rumah-budaya-ratna.jpg", alt: "Rumah Budaya Ratna sebagai salah satu ruang temu MBG", left: "284px", top: "104px", rotate: "-2deg", delay: "-10.5s" },
+  { src: "/images/amis-crowd.jpg", alt: "Aldy Amis tampil dekat dengan penonton", left: "0px", top: "16px", rotate: "-4deg", delay: "-0s" },
+  { src: "/images/amis-stage-blue.jpg", alt: "Aldy Amis bermain gitar dengan pencahayaan biru", left: "82px", top: "2px", rotate: "2.8deg", delay: "-1.5s" },
+  { src: "/images/amis-stage-red.jpg", alt: "Aldy Amis bernyanyi dengan pencahayaan merah", left: "168px", top: "18px", rotate: "-2.8deg", delay: "-3s" },
+  { src: "/images/amis-hero.jpg", alt: "Aldy Amis dalam perjalanan Manggung Bergizi Gratis", left: "250px", top: "0px", rotate: "3.8deg", delay: "-4.5s" },
+  { src: "/images/venue-ruang-rumi.jpg", alt: "Ruang Rumi sebagai salah satu ruang temu MBG", left: "20px", top: "108px", rotate: "1.5deg", delay: "-6s" },
+  { src: "/images/venue-rengganis.jpg", alt: "Rumah Rengganis sebagai salah satu ruang temu MBG", left: "102px", top: "116px", rotate: "-2.2deg", delay: "-7.5s" },
+  { src: "/images/venue-buku-akik.jpg", alt: "Buku Akik sebagai salah satu ruang temu MBG", left: "186px", top: "104px", rotate: "2.9deg", delay: "-9s" },
+  { src: "/images/venue-rumah-budaya-ratna.jpg", alt: "Rumah Budaya Ratna sebagai salah satu ruang temu MBG", left: "274px", top: "112px", rotate: "-2.6deg", delay: "-10.5s" },
 ] as const
 
 export function MbgPhotoGallery() {

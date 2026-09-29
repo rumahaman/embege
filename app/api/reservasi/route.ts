@@ -94,9 +94,25 @@ try {
   )
 }
 
+    const responseCode = String(result.code ?? result.status ?? "").toUpperCase()
+    const soldOut =
+      result.soldOut === true ||
+      responseCode === "SOLD_OUT" ||
+      responseCode === "QUOTA_FULL"
+
     if (!response.ok || result.success === false) {
-      throw new Error(
-        result.message || "Google Apps Script gagal menerima data."
+      return NextResponse.json(
+        {
+          success: false,
+          soldOut,
+          code: soldOut ? "SOLD_OUT" : "RESERVATION_ERROR",
+          message:
+            result.message ||
+            (soldOut
+              ? "Kuota kota ini sudah penuh."
+              : "Google Apps Script gagal menerima data."),
+        },
+        { status: soldOut ? 409 : 502 }
       )
     }
 

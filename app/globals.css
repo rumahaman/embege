@@ -440,3 +440,15 @@
   background-color: #F6EB35;
   box-shadow: 8px 8px 0 rgba(47, 62, 70, 0.2);
 }
+
+
+/* MBG mobile safety */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 72px;
+}
+
+body {
+  min-width: 320px;
+  overflow-x: clip;
+}

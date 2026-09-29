@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { BusFront, MapPin, Users } from "lucide-react"
+import { BusFront, MapPin } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { venues } from "@/lib/venues"
 import { ReservationTriggerButton } from "./reservation-trigger-button"
@@ -28,9 +28,7 @@ export function LokasiAcaraSection() {
             </h2>
 
             <p className="mt-3 max-w-xl font-body text-base leading-relaxed text-[#2F3E46]/70">
-              Empat kota, empat ruang alternatif — dari toko buku hingga rumah
-              budaya. Cerita berbeda, rasa yang sama: manusia yang tetap ingin
-              bertemu.
+              Empat kota, empat ruang — dari toko buku hingga ruang literasi
             </p>
           </div>
 
@@ -197,11 +195,6 @@ export function LokasiAcaraSection() {
                       {venue.city}
                     </p>
                   </div>
-
-                  <p className="flex items-center gap-1.5 font-body text-sm text-[#2F3E46]/70">
-                    <Users className="size-3.5" />
-                    Kuota {venue.quota} peserta
-                  </p>
 
                   <div className="mt-auto flex flex-col gap-2 pt-2">
                     <ReservationTriggerButton

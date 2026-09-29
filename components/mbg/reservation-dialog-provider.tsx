@@ -68,6 +68,7 @@ export function ReservationDialogProvider() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [reservationNumber, setReservationNumber] = useState("")
   const [cityLocked, setCityLocked] = useState(false)
+  const [errorMessage, setErrorMessage] = useState("")
   const [form, setForm] = useState<FormState>(initialForm)
 
   useEffect(() => {
@@ -75,6 +76,7 @@ export function ReservationDialogProvider() {
       const detail = (event as CustomEvent<{ city?: string }>).detail
       setSubmitted(false)
       setReservationNumber("")
+      setErrorMessage("")
       setCityLocked(Boolean(detail?.city))
       setForm({ ...initialForm, kotaAcara: detail?.city ?? "" })
       setOpen(true)
@@ -99,7 +101,8 @@ export function ReservationDialogProvider() {
       if (!isValid || isSubmitting) return
     
       setIsSubmitting(true)
-    
+      setErrorMessage("")
+
       try {
         const response = await fetch("/api/reservasi", {
           method: "POST",
@@ -125,7 +128,7 @@ export function ReservationDialogProvider() {
         setSubmitted(true)
       } catch (error) {
         console.error("Reservation error:", error)
-        alert(
+        setErrorMessage(
           error instanceof Error
             ? error.message
             : "Terjadi kesalahan saat mengirim reservasi."
@@ -143,11 +146,12 @@ export function ReservationDialogProvider() {
         if (!next) {
           setSubmitted(false)
           setReservationNumber("")
+          setErrorMessage("")
           setCityLocked(false)
         }
       }}
     >
-      <DialogContent className="max-h-[90vh] overflow-y-auto border-2 border-[#2F3E46]/15 bg-[#EDF2F5] text-[#2F3E46] sm:max-w-md">
+      <DialogContent className="max-h-[calc(100dvh-1rem)] w-[calc(100%-1rem)] overflow-y-auto border-2 border-[#2F3E46]/15 bg-[#EDF2F5] text-[#2F3E46] sm:max-h-[90vh] sm:max-w-md">
         {submitted ? (
           hasEmail ? (
             <div className="flex flex-col items-center gap-4 py-6 text-center">
@@ -291,7 +295,7 @@ export function ReservationDialogProvider() {
             </div>
           )) : (
           <>
-            <DialogHeader>
+            <DialogHeader className="pr-8">
               <DialogTitle className="font-heading text-4xl text-[#2F3E46]">Reservasi Kehadiran</DialogTitle>
               <DialogDescription className="font-body text-[#2F3E46]/70">
                 1 Reservasi = 1 Orang. Isi datamu untuk ikut perjalanan Manggung Bergizi Gratis.
@@ -300,7 +304,7 @@ export function ReservationDialogProvider() {
             <form onSubmit={handleSubmit} className="mt-2">
               <FieldGroup>
                 <Field>
-                  <FieldLabel htmlFor="namaLengkap">Nama Lengkap</FieldLabel>
+                  <FieldLabel htmlFor="namaLengkap" className="text-[#2F3E46]">Nama Lengkap</FieldLabel>
                   <Input
                     id="namaLengkap"
                     required
@@ -311,7 +315,7 @@ export function ReservationDialogProvider() {
                   />
                 </Field>
                 <Field>
-                  <FieldLabel htmlFor="instagram">Instagram</FieldLabel>
+                  <FieldLabel htmlFor="instagram" className="text-[#2F3E46]">Instagram</FieldLabel>
                   <div className="relative">
                     <span
                       className="pointer-events-none absolute inset-y-0 left-3 flex items-center font-body text-sm font-semibold text-[#2F3E46]/70"
@@ -333,7 +337,7 @@ export function ReservationDialogProvider() {
                   </div>
                 </Field>
                 <Field>
-                  <FieldLabel htmlFor="whatsapp">Nomor WhatsApp</FieldLabel>
+                  <FieldLabel htmlFor="whatsapp" className="text-[#2F3E46]">Nomor WhatsApp</FieldLabel>
                   <Input
                     id="whatsapp"
                     required
@@ -352,7 +356,7 @@ export function ReservationDialogProvider() {
                   />
                 </Field>
                 <Field>
-                  <FieldLabel htmlFor="email">Email (Opsional)</FieldLabel>
+                  <FieldLabel htmlFor="email" className="text-[#2F3E46]">Email (Opsional)</FieldLabel>
                   <Input
                     id="email"
                     type="email"
@@ -363,7 +367,7 @@ export function ReservationDialogProvider() {
                   />
                 </Field>
                 <Field>
-                  <FieldLabel htmlFor="kotaAcara">
+                  <FieldLabel htmlFor="kotaAcara" className="text-[#2F3E46]">
                     Kota Acara
                     {cityLocked && (
                       <span className="ml-2 font-normal text-[#2F3E46]/50">(dikunci sesuai pilihan venue)</span>

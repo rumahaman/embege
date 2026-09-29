@@ -1,10 +1,8 @@
-import { Check, X, FileText } from "lucide-react"
+import { Check, FileText } from "lucide-react"
 import { MbgPhotoGallery } from "./photo-gallery"
 import { ReservationTriggerButton } from "./reservation-trigger-button"
 
-const yangDibawa = ["Tulisan tangan", "Cetakan kertas", "Catatan di buku", "Hasil print"]
-
-const tidakWajib = ["Membacakan sajak di depan umum", "Menjelaskan isi sajak", "Membawa karya sendiri"]
+const yangDibawa = ["Tulisan tangan", "Catatan di buku", "Sajak atau lirik", "Gambar atau coretan"]
 
 export function SetorSajakSection() {
   return (
@@ -26,7 +24,7 @@ export function SetorSajakSection() {
               boleh karya sendiri, boleh karya orang lain yang punya makna bagimu.
             </p>
 
-            <div className="mt-2 grid gap-4 sm:grid-cols-2">
+            <div className="mt-2 max-w-xl">
               <div
                 className="relative overflow-hidden rounded-md border border-[#2F3E46]/10 px-5 py-5 shadow-[0_4px_14px_rgba(47,62,70,0.06)]"
                 style={{
@@ -50,28 +48,12 @@ export function SetorSajakSection() {
                     </li>
                   ))}
                 </ul>
-              </div>
-
-              <div
-                className="relative overflow-hidden rounded-md border border-[#2F3E46]/10 px-5 py-5 shadow-[0_4px_14px_rgba(47,62,70,0.05)]"
-                style={{
-                  backgroundColor: "#A9C1CC",
-                  backgroundImage:
-                    "repeating-linear-gradient(to bottom, transparent 0, transparent 31px, rgba(47,62,70,0.10) 32px), radial-gradient(circle at 82% 18%, rgba(255,255,255,0.16), transparent 36%)",
-                  backgroundPosition: "0 12px, 0 0",
-                }}
-              >
-                <div className="pointer-events-none absolute inset-x-0 top-0 h-2 bg-[#97B4C1] [clip-path:polygon(0_42%,10%_18%,20%_45%,30%_22%,40%_46%,50%_20%,60%_44%,70%_18%,80%_46%,90%_22%,100%_40%,100%_100%,0_100%)]" />
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2 bg-[#97B4C1] [clip-path:polygon(0_62%,10%_40%,20%_66%,30%_45%,40%_70%,50%_43%,60%_68%,70%_40%,80%_72%,90%_44%,100%_64%,100%_0,0_0)]" />
-                <p className="relative mb-3 font-hand text-lg text-[#2F3E46]">Tidak Wajib</p>
-                <ul className="relative flex flex-col gap-2 font-body text-sm text-[#2F3E46]/80">
-                  {tidakWajib.map((item) => (
-                    <li key={item} className="flex items-start gap-2">
-                      <X className="mt-0.5 size-4 shrink-0 text-[#2F3E46]/70" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+                <div className="relative mt-4 border-t border-[#2F3E46]/10 pt-4">
+                  <p className="font-hand text-xl text-[#2F3E46]">Tidak membawa karya?</p>
+                  <p className="mt-1 font-body text-sm leading-relaxed text-[#2F3E46]/75">
+                    Kami menyediakan media untuk menulis, menggambar, atau meninggalkan pesan di lokasi acara.
+                  </p>
+                </div>
               </div>
             </div>
 
