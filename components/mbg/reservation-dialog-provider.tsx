@@ -147,7 +147,7 @@ export function ReservationDialogProvider() {
         }
       }}
     >
-      <DialogContent className="max-h-[90vh] overflow-y-auto border-2 border-[#2F3E46]/15 bg-[#EDF2F5] text-[#2F3E46] sm:max-w-md">
+      <DialogContent className="max-h-[min(92dvh,760px)] w-[calc(100%-1rem)] max-w-md gap-3 overflow-y-auto overscroll-contain border-2 border-[#2F3E46]/15 bg-[#EDF2F5] p-3 text-[#2F3E46] sm:w-full sm:gap-4 sm:p-4">
         {submitted ? (
           hasEmail ? (
             <div className="flex flex-col items-center gap-4 py-6 text-center">
@@ -185,7 +185,7 @@ export function ReservationDialogProvider() {
                 <DialogTitle className="font-heading text-4xl leading-none text-[#2F3E46]">
                   Reservasi Berhasil
                 </DialogTitle>
-                <DialogDescription className="font-body text-base leading-relaxed text-[#2F3E46]/75">
+                <DialogDescription className="font-body text-base leading-relaxed text-[#2F3E46]/75 pr-7 sm:pr-0">
                   Reservasimu sudah tercatat.
                 </DialogDescription>
               </DialogHeader>
@@ -300,7 +300,7 @@ export function ReservationDialogProvider() {
             <form onSubmit={handleSubmit} className="mt-2">
               <FieldGroup>
                 <Field>
-                  <FieldLabel htmlFor="namaLengkap">Nama Lengkap</FieldLabel>
+                  <FieldLabel htmlFor="namaLengkap" className="text-[#2F3E46]">Nama Lengkap</FieldLabel>
                   <Input
                     id="namaLengkap"
                     required
@@ -311,7 +311,7 @@ export function ReservationDialogProvider() {
                   />
                 </Field>
                 <Field>
-                  <FieldLabel htmlFor="instagram">Instagram</FieldLabel>
+                  <FieldLabel htmlFor="instagram" className="text-[#2F3E46]">Instagram</FieldLabel>
                   <div className="relative">
                     <span
                       className="pointer-events-none absolute inset-y-0 left-3 flex items-center font-body text-sm font-semibold text-[#2F3E46]/70"
@@ -333,7 +333,7 @@ export function ReservationDialogProvider() {
                   </div>
                 </Field>
                 <Field>
-                  <FieldLabel htmlFor="whatsapp">Nomor WhatsApp</FieldLabel>
+                  <FieldLabel htmlFor="whatsapp" className="text-[#2F3E46]">Nomor WhatsApp</FieldLabel>
                   <Input
                     id="whatsapp"
                     required
@@ -352,7 +352,7 @@ export function ReservationDialogProvider() {
                   />
                 </Field>
                 <Field>
-                  <FieldLabel htmlFor="email">Email (Opsional)</FieldLabel>
+                  <FieldLabel htmlFor="email" className="text-[#2F3E46]">Email (Opsional)</FieldLabel>
                   <Input
                     id="email"
                     type="email"
@@ -363,7 +363,7 @@ export function ReservationDialogProvider() {
                   />
                 </Field>
                 <Field>
-                  <FieldLabel htmlFor="kotaAcara">
+                  <FieldLabel htmlFor="kotaAcara" className="text-[#2F3E46]">
                     Kota Acara
                     {cityLocked && (
                       <span className="ml-2 font-normal text-[#2F3E46]/50">(dikunci sesuai pilihan venue)</span>
@@ -411,7 +411,7 @@ export function ReservationDialogProvider() {
                   />
                   <FieldLabel
                     htmlFor="setuju1"
-                    className="font-normal text-[#2F3E46] group-has-[:focus-visible]:text-[#2F3E46]"
+                    className="min-w-0 font-normal text-[#2F3E46] group-has-[:focus-visible]:text-[#2F3E46]"
                   >
                     Saya memahami bahwa tiket masuk acara ditukar dengan satu sajak.
                   </FieldLabel>

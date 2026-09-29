@@ -1,10 +1,8 @@
-import { Check, X, FileText } from "lucide-react"
+import { Check, FileText, PenLine } from "lucide-react"
 import { MbgPhotoGallery } from "./photo-gallery"
 import { ReservationTriggerButton } from "./reservation-trigger-button"
 
-const yangDibawa = ["Tulisan tangan", "Cetakan kertas", "Catatan di buku", "Hasil print"]
-
-const tidakWajib = ["Membacakan sajak di depan umum", "Menjelaskan isi sajak", "Membawa karya sendiri"]
+const yangDibawa = ["Tulisan tangan", "Catatan di buku"]
 
 export function SetorSajakSection() {
   return (
@@ -63,17 +61,14 @@ export function SetorSajakSection() {
               >
                 <div className="pointer-events-none absolute inset-x-0 top-0 h-2 bg-[#97B4C1] [clip-path:polygon(0_42%,10%_18%,20%_45%,30%_22%,40%_46%,50%_20%,60%_44%,70%_18%,80%_46%,90%_22%,100%_40%,100%_100%,0_100%)]" />
                 <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2 bg-[#97B4C1] [clip-path:polygon(0_62%,10%_40%,20%_66%,30%_45%,40%_70%,50%_43%,60%_68%,70%_40%,80%_72%,90%_44%,100%_64%,100%_0,0_0)]" />
-                <p className="relative mb-3 font-hand text-lg text-[#2F3E46]">Tidak Wajib</p>
-                <ul className="relative flex flex-col gap-2 font-body text-sm text-[#2F3E46]/80">
-                  {tidakWajib.map((item) => (
-                    <li key={item} className="flex items-start gap-2">
-                      <X className="mt-0.5 size-4 shrink-0 text-[#2F3E46]/70" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+                <p className="relative mb-2 flex items-center gap-2 font-hand text-lg text-[#2F3E46]">
+                  <PenLine className="size-4" />
+                  Tidak Membawa Karya?
+                </p>
+                <p className="relative font-body text-sm leading-relaxed text-[#2F3E46]/80">
+                  Kami menyediakan media untuk menulis, menggambar, atau meninggalkan pesan di lokasi acara.
+                </p>
+              </div>            </div>
 
             <p className="font-heading text-3xl text-[#2F3E46]">
               &ldquo;Masuk dengan sajak, pulang dengan cerita.&rdquo;

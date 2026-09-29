@@ -31,20 +31,7 @@ export function TentangAcaraSection() {
           <DoodleSquiggle />
 
           <div className="flex flex-col gap-4 font-body text-base leading-relaxed text-[#2F3E46]/85">
-            <p>
-              Manggung Bergizi Gratis adalah rangkaian pertunjukan intim Aldy Amis yang
-              diselenggarakan di beberapa kota, dipersembahkan oleh Badan Gigs Nasional.
-            </p>
-            <p>
-              Acara ini tidak dirancang sebagai konser besar, melainkan ruang pertemuan yang
-              memungkinkan penonton dan musisi berada dalam jarak yang lebih dekat — berbagi
-              cerita, pengalaman, dan suasana secara lebih personal.
-            </p>
-            <p>
-              Setiap penyelenggaraan Manggung Bergizi Gratis berlangsung di ruang-ruang alternatif
-              yang memiliki kedekatan dengan komunitas, budaya, dan kehidupan sehari-hari
-              masyarakat setempat.
-            </p>
+            <p>Manggung Bergizi Gratis adalah keresahan yang tidak disubsidi negara.</p>
           </div>
 
           <blockquote className="mt-2 border-l-4 border-[#F6EB35] pl-4 font-heading text-3xl text-[#2F3E46]">

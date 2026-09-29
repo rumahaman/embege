@@ -67,9 +67,10 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/images/amis-hero.jpg",
-        width: 1200,
-        height: 630,
+        url: "/images/amis-stage-red.jpg",
+        width: 900,
+        height: 600,
+        type: "image/jpeg",
         alt: "Manggung Bergizi Gratis — Badan Gigs Nasional",
       },
     ],
@@ -80,7 +81,7 @@ export const metadata: Metadata = {
     title: "Manggung Bergizi Gratis — Badan Gigs Nasional",
     description:
       "Empat kota, satu perjalanan. Musik dan sajak bersama Aldy Amis.",
-    images: ["/images/amis-hero.jpg"],
+    images: ["/images/amis-stage-red.jpg"],
   },
 
   icons: {
