@@ -31,13 +31,19 @@ export function ReservationClientTriggerButton({
       disabled={disabled}
       onClick={() => {
         if (disabled) return
-        
+
         window.dispatchEvent(
-          new CustomEvent(OPEN_RESERVATION_EVENT, { detail: { city } }),
+          new CustomEvent(OPEN_RESERVATION_EVENT, {
+            detail: { city },
+          }),
         )
       }}
       className={cn(
         "bg-[#F6EB35] text-[#2F3E46] hover:bg-[#F6EB35]/90 font-hand text-base",
+        "disabled:pointer-events-auto disabled:cursor-not-allowed",
+        "disabled:bg-[#D9E1E5] disabled:text-[#71808A]",
+        "disabled:border-[#AEBBC2] disabled:opacity-100",
+        "disabled:hover:bg-[#D9E1E5]",
         className,
       )}
     >
