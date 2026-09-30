@@ -26,7 +26,7 @@ export function CtaBannerSection() {
         <p className="max-w-lg font-body text-base text-white/75">
 Musik dan pertemuan manusia adalah cara kita tetap percaya pada kehidupan. Datang, bawa satu sajak, dan jadi bagian dari perjalanan ini.
         </p>
-        <ReservationTriggerButton className="shadow-[3px_3px_0_0_rgba(255,255,255,0.3)]" />
+        <ReservationTriggerButton className="h-11 px-6 text-base shadow-[3px_3px_0_0_rgba(255,255,255,0.3)]"/>
       </div>
     </section>
   )

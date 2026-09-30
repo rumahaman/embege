@@ -10,6 +10,7 @@ type ReservationTriggerButtonProps = {
   children?: ReactNode
   variant?: VariantProps<typeof buttonVariants>["variant"]
   size?: VariantProps<typeof buttonVariants>["size"]
+  disabled?: boolean
 }
 
 /**
@@ -22,6 +23,7 @@ export function ReservationTriggerButton({
   children,
   variant = "default",
   size = "default",
+  disabled = false,
 }: ReservationTriggerButtonProps) {
   if (!city) {
     return (
@@ -43,6 +45,7 @@ export function ReservationTriggerButton({
       className={className}
       variant={variant}
       size={size}
+      disabled={disabled}
     >
       {children}
     </ReservationClientTriggerButton>

@@ -9,14 +9,14 @@ export function SetorSajakSection() {
     <section id="setor-sajak" className="relative overflow-hidden bg-[#EDF2F5] py-16 sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-center">
-          <div className="relative order-2 justify-self-center lg:order-1 lg:-translate-x-16 xl:-translate-x-20">
+          <div className="relative order-2 justify-self-center lg:order-1 lg:justify-self-start lg:-translate-x-6 xl:-translate-x-10">
             <MbgPhotoGallery />
           </div>
 
           <div className="order-1 flex flex-col gap-4 lg:order-2">
             <p className="font-hand text-2xl text-[#2F3E46]/70 sm:text-3xl">$etor $ajak</p>
-            <h2 className="font-heading text-5xl text-[#2F3E46] sm:text-6xl">
-              HTM Acara Ini Ditukar dengan Satu Sajak
+            <h2 className="font-heading text-5xl leading-[0.95] text-[#2F3E46] sm:text-6xl">
+              Masuk acara? Bawa satu sajak.
             </h2>
             <p className="max-w-xl font-body text-base leading-relaxed text-[#2F3E46]/80">
               Manggung Bergizi Gratis tidak menggunakan tiket masuk berbayar. Sebagai bentuk
@@ -70,11 +70,8 @@ export function SetorSajakSection() {
                 </p>
               </div>            </div>
 
-            <p className="font-heading text-3xl text-[#2F3E46]">
-              &ldquo;Masuk dengan sajak, pulang dengan cerita.&rdquo;
-            </p>
 
-            <ReservationTriggerButton className="mt-2 w-fit shadow-[3px_3px_0_0_#2F3E46]" />
+            <ReservationTriggerButton className="mx-auto mt-2 h-11 w-fit px-6 text-base shadow-[3px_3px_0_0_#2F3E46]"/>
           </div>
         </div>
       </div>
