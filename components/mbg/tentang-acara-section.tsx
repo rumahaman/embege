@@ -33,10 +33,6 @@ export function TentangAcaraSection() {
           <div className="flex flex-col gap-4 font-body text-base leading-relaxed text-[#2F3E46]/85">
             <p>Manggung Bergizi Gratis adalah keresahan yang tidak disubsidi negara.</p>
           </div>
-
-          <blockquote className="mt-2 border-l-4 border-[#F6EB35] pl-4 font-heading text-3xl text-[#2F3E46]">
-          &ldquo;Bukan tentang besarnya panggung, melainkan dekatnya perjumpaan.&rdquo;
-          </blockquote>
         </div>
       </div>
     </section>

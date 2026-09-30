@@ -12,6 +12,7 @@ type ReservationClientTriggerButtonProps = {
   children?: ReactNode
   variant?: VariantProps<typeof buttonVariants>["variant"]
   size?: VariantProps<typeof buttonVariants>["size"]
+  disabled?: boolean
 }
 
 export function ReservationClientTriggerButton({
@@ -20,13 +21,17 @@ export function ReservationClientTriggerButton({
   children,
   variant = "default",
   size = "default",
+  disabled = false,
 }: ReservationClientTriggerButtonProps) {
   return (
     <Button
       type="button"
       variant={variant}
       size={size}
+      disabled={disabled}
       onClick={() => {
+        if (disabled) return
+        
         window.dispatchEvent(
           new CustomEvent(OPEN_RESERVATION_EVENT, { detail: { city } }),
         )
