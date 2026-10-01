@@ -64,9 +64,8 @@ export function HeroSection() {
           </p>
 
           <p className="mt-4 max-w-md font-body text-base leading-relaxed text-[#2F3E46]/80">
-            Empat kota, satu ruang temu. Musik, sajak, dan percakapan dalam
-            suasana yang intim — bergerak dari kota ke kota, membawa cerita
-            yang sama: kita masih percaya pada perjumpaan.
+            Empat kota, empat ruang temu. Musik, sajak, dan percakapan dalam
+            suasana yang intim — membawa cerita, merayakan perjumpaan
           </p>
 
           <div className="mt-6 flex flex-wrap items-center gap-3">
