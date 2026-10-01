@@ -126,6 +126,35 @@ export function SiteFooter() {
           </div>
         </div>
 
+        {/* Media partners */}
+        <div className="mt-10 border-t border-white/10 pt-8">
+          <p className="text-center font-body text-[11px] font-bold uppercase tracking-[0.24em] text-white/50">
+            Media Partner
+          </p>
+
+          <div className="mx-auto mt-4 grid max-w-xl grid-cols-2 gap-3 sm:gap-4">
+            <div className="flex min-h-20 items-center justify-center rounded-lg bg-[#F6F2E8] px-5 py-4">
+              <Image
+                src="/images/media-partner/folkslokal.svg"
+                alt="Folkslokal"
+                width={145}
+                height={28}
+                className="h-auto w-auto max-w-full"
+              />
+            </div>
+
+            <div className="flex min-h-20 items-center justify-center rounded-lg bg-[#F6F2E8] px-5 py-4">
+              <Image
+                src="/images/media-partner/hap-magazine.svg"
+                alt="HAP Magazine"
+                width={156}
+                height={28}
+                className="h-auto w-auto max-w-full"
+              />
+            </div>
+          </div>
+        </div>
+
         {/* Divider + copyright */}
         <div className="mt-10 border-t border-white/10 pt-6">
           <p className="text-center font-body text-xs text-white/45">
@@ -136,7 +165,6 @@ export function SiteFooter() {
           </p>
         </div>
       </div>
-
     </footer>
   )
 }
