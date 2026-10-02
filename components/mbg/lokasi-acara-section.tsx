@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import { useEffect, useState } from "react"
-import { BusFront, MapPin } from "lucide-react"
+import { BusFront, Clock, MapPin } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { venues } from "@/lib/venues"
 import { ReservationTriggerButton } from "./reservation-trigger-button"
@@ -256,10 +256,19 @@ export function LokasiAcaraSection() {
                       {venue.name}
                     </h3>
 
-                    <p className="flex items-center gap-1 font-body text-sm text-[#2F3E46]/60">
-                      <MapPin className="size-3.5" />
-                      {venue.city}
-                    </p>
+                    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 font-body text-sm text-[#2F3E46]/60">
+  <span className="inline-flex items-center gap-1">
+    <MapPin className="size-3.5 shrink-0" />
+    {venue.city}
+  </span>
+
+  <span aria-hidden="true">·</span>
+
+  <span className="inline-flex items-center gap-1">
+    <Clock className="size-3.5 shrink-0" />
+    {venue.eventTime} WIB
+  </span>
+</div>
 
                     <div className="mt-2">
                       {!loadingQuota && quota && (
