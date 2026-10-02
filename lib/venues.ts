@@ -4,6 +4,7 @@ export type Venue = {
   city: string
   date: string
   dateShort: string
+  eventTime: string
   quota: number
   image: string
   mapsUrl: string
@@ -16,6 +17,7 @@ export const venues: Venue[] = [
     city: "Kabupaten Tangerang",
     date: "15 Oktober 2026",
     dateShort: "15 Okt",
+    eventTime: "19.00",
     quota: 100,
     image: "/images/venue-ruang-rumi.jpg",
     mapsUrl:
@@ -27,6 +29,7 @@ export const venues: Venue[] = [
     city: "Cirebon",
     date: "16 Oktober 2026",
     dateShort: "16 Okt",
+    eventTime: "18.00",
     quota: 100,
     image: "/images/venue-rengganis.jpg",
     mapsUrl:
@@ -38,6 +41,7 @@ export const venues: Venue[] = [
     city: "Yogyakarta",
     date: "17 Oktober 2026",
     dateShort: "17 Okt",
+    eventTime: "19.00",
     quota: 100,
     image: "/images/venue-buku-akik.jpg",
     mapsUrl:
@@ -49,6 +53,7 @@ export const venues: Venue[] = [
     city: "Malang",
     date: "18 Oktober 2026",
     dateShort: "18 Okt",
+    eventTime: "19.00",
     quota: 33,
     image: "/images/venue-rumah-budaya-ratna.jpg",
     mapsUrl:
