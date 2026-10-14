@@ -4,8 +4,18 @@ import { cookies } from "next/headers"
 export const CHECKIN_COOKIE_NAME = "mbg_checkin_session"
 export const CHECKIN_SESSION_MAX_AGE = 60 * 60 * 12
 
+export const CHECKIN_CITIES = [
+  "Kabupaten Tangerang",
+  "Cirebon",
+  "Yogyakarta",
+  "Malang",
+] as const
+
+export type CheckInCity = (typeof CHECKIN_CITIES)[number]
+
 export type CheckInSession = {
   staffId: string
+  city: CheckInCity
   exp: number
 }
 
@@ -25,10 +35,11 @@ function sign(payload: string) {
   return createHmac("sha256", sessionSecret()).update(payload).digest("base64url")
 }
 
-export function createCheckInSessionToken(staffId: string) {
+export function createCheckInSessionToken(staffId: string, city: CheckInCity) {
   const payload = Buffer.from(
     JSON.stringify({
       staffId,
+      city,
       exp: Math.floor(Date.now() / 1000) + CHECKIN_SESSION_MAX_AGE,
     }),
   ).toString("base64url")
@@ -54,13 +65,15 @@ export function verifyCheckInSessionToken(token?: string): CheckInSession | null
     if (
       typeof decoded.staffId !== "string" ||
       !/^[A-Za-z0-9._-]{2,24}$/.test(decoded.staffId) ||
+      typeof decoded.city !== "string" ||
+      !(CHECKIN_CITIES as readonly string[]).includes(decoded.city) ||
       typeof decoded.exp !== "number" ||
       decoded.exp <= Math.floor(Date.now() / 1000)
     ) {
       return null
     }
 
-    return { staffId: decoded.staffId, exp: decoded.exp }
+    return { staffId: decoded.staffId, city: decoded.city as CheckInCity, exp: decoded.exp }
   } catch {
     return null
   }
