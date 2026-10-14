@@ -5,6 +5,8 @@ import {
   createCheckInSessionToken,
   isCheckInServerConfigured,
   timingSafeStringEqual,
+  CHECKIN_CITIES,
+  type CheckInCity,
 } from "@/lib/check-in-auth"
 
 export const runtime = "nodejs"
@@ -26,19 +28,25 @@ export async function POST(request: NextRequest) {
     const body = (await request.json()) as {
       pin?: unknown
       staffId?: unknown
+      city?: unknown
     }
 
     const pin = typeof body.pin === "string" ? body.pin : ""
+    const city = typeof body.city === "string" ? body.city.trim() : ""
     const staffId =
       typeof body.staffId === "string"
         ? body.staffId.trim()
         : ""
 
-    if (!/^[A-Za-z0-9._-]{2,24}$/.test(staffId) || !pin) {
+    if (
+      !/^[A-Za-z0-9._-]{2,24}$/.test(staffId) ||
+      !pin ||
+      !(CHECKIN_CITIES as readonly string[]).includes(city)
+    ) {
       return NextResponse.json(
         {
           success: false,
-          message: "Masukkan PIN dan inisial petugas yang valid.",
+          message: "Pilih kota venue, lalu masukkan PIN dan inisial petugas yang valid.",
         },
         { status: 400 },
       )
@@ -55,11 +63,12 @@ export async function POST(request: NextRequest) {
     const response = NextResponse.json({
       success: true,
       staffId,
+      city,
     })
 
     response.cookies.set({
       name: CHECKIN_COOKIE_NAME,
-      value: createCheckInSessionToken(staffId),
+      value: createCheckInSessionToken(staffId, city as CheckInCity),
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
