@@ -27,11 +27,23 @@ export async function POST(request: NextRequest) {
       reservationNumber?: unknown
     }
 
-    const city = typeof body.city === "string" ? body.city.trim() : ""
+    const requestedCity = typeof body.city === "string" ? body.city.trim() : ""
+    const city = session.city
     const reservationNumber =
       typeof body.reservationNumber === "string"
         ? body.reservationNumber.trim().toUpperCase()
         : ""
+
+    if (requestedCity !== city) {
+      return NextResponse.json(
+        {
+          success: false,
+          code: "WRONG_CITY",
+          message: "Sesi petugas terkunci ke venue yang dipilih saat login. Keluar dan login kembali untuk berpindah kota.",
+        },
+        { status: 409 },
+      )
+    }
 
     if (
       !ALLOWED_CITIES.has(city) ||
