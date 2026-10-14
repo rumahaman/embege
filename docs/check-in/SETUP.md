@@ -65,6 +65,10 @@ After the initial check-in handlers are installed, the multi-field search featur
 
 The Vercel UI/API change supports a single query field for reservation number, name, email, or WhatsApp. Until this Apps Script migration is installed and deployed, multi-field searches will not work end-to-end.
 
+5. In the same migration file, replace the complete active `getCheckInSummary_()` function with the function under “STEP 3”. It counts unique, non-cancelled reservation numbers and counts each check-in reservation once.
+6. Save and publish another new version of the same Apps Script Web App deployment. Preserve the existing Web App URL so Vercel's `GOOGLE_APPS_SCRIPT_URL` remains unchanged.
+7. Test duplicate rows deliberately in a safe test copy before using live event data. Verify that one reservation contributes at most 1 to “Terdaftar” and at most 1 to “Sudah hadir”.
+
 ## 5. Release
 
 Do not merge to `main` or add production secrets until preview tests pass. After approval, configure the production environment variables and release the reviewed changes. Keep a printed/exported participant list for each city as a fallback for internet or service outages.
