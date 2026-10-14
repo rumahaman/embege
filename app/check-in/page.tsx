@@ -375,7 +375,7 @@ export default function CheckInPage() {
               </div>
               {summary?.cities?.length ? (
                 <div className="mt-3 grid grid-cols-2 gap-2">
-                  {summary.cities.map((item) => (
+                  {summary.cities.filter((item) => CITIES.includes(item.city as City)).map((item) => (
                     <div
                       key={item.city}
                       className="flex items-center justify-between gap-2 rounded-lg border border-slate-200 px-3 py-2 text-sm"
