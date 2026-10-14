@@ -354,3 +354,77 @@ function getCheckInLogMap_() {
 
   return byReservation;
 }
+
+/*
+ * STEP 3 — Replace getCheckInSummary_ in the active Code.gs with this version.
+ * Counts unique, non-cancelled reservation numbers and counts each checked-in
+ * reservation once, even if duplicate rows exist in Registrasi or Check-in.
+ */
+function getCheckInSummary_() {
+  const registrationSheet = getRegistrationSheet();
+  const registrationLastRow = registrationSheet.getLastRow();
+  const registrationRows = registrationLastRow >= 2
+    ? registrationSheet.getRange(2, 2, registrationLastRow - 1, 7).getDisplayValues()
+    : [];
+
+  const validReservationNumbers = Object.create(null);
+  const registeredCounts = Object.create(null);
+
+  registrationRows.forEach(function (row) {
+    const reservationNumber = String(row[0] || "").trim().toUpperCase();
+    const city = String(row[5] || "").trim();
+    const status = String(row[6] || "").trim().toLowerCase();
+
+    if (!reservationNumber || !city || status === "dibatalkan") return;
+
+    // Reservation numbers are the identity key: never count duplicates twice.
+    if (Object.prototype.hasOwnProperty.call(validReservationNumbers, reservationNumber)) return;
+    validReservationNumbers[reservationNumber] = city;
+    registeredCounts[city] = (registeredCounts[city] || 0) + 1;
+  });
+
+  const checkInSheet = getCheckInSheet_();
+  const checkInLastRow = checkInSheet.getLastRow();
+  const logRows = checkInLastRow >= 2
+    ? checkInSheet.getRange(2, 1, checkInLastRow - 1, 6).getDisplayValues()
+    : [];
+  const checkedInReservations = Object.create(null);
+  const checkedInCounts = Object.create(null);
+
+  logRows.forEach(function (row) {
+    const reservationNumber = String(row[0] || "").trim().toUpperCase();
+    const loggedCity = String(row[2] || "").trim();
+    const status = String(row[5] || "").trim().toUpperCase();
+
+    if (
+      !reservationNumber ||
+      status !== "SUDAH HADIR" ||
+      validReservationNumbers[reservationNumber] !== loggedCity ||
+      Object.prototype.hasOwnProperty.call(checkedInReservations, reservationNumber)
+    ) return;
+
+    checkedInReservations[reservationNumber] = true;
+    checkedInCounts[loggedCity] = (checkedInCounts[loggedCity] || 0) + 1;
+  });
+
+  // Keep venue order/names consistent with the existing quota configuration.
+  const configuredCities = getQuotaData();
+  const cities = configuredCities.map(function (item) {
+    return {
+      city: item.city,
+      registered: registeredCounts[item.city] || 0,
+      checkedIn: checkedInCounts[item.city] || 0,
+    };
+  });
+
+  return {
+    success: true,
+    totalRegistered: cities.reduce(function (sum, item) {
+      return sum + item.registered;
+    }, 0),
+    totalCheckedIn: cities.reduce(function (sum, item) {
+      return sum + item.checkedIn;
+    }, 0),
+    cities: cities,
+  };
+}
