@@ -240,8 +240,8 @@ function searchCheckInReservations_(query, selectedCity) {
       queryDigits.length >= 7 &&
       normalizedPhone &&
       (normalizedPhone === queryPhone ||
-        normalizedPhone.endsWith(queryPhone) ||
-        normalizedPhone.endsWith(queryDigits))
+        normalizedPhone.includes(queryPhone) ||
+        normalizedPhone.includes(queryDigits))
     ) {
       score = 95;
     } else if (normalizedName === queryLower) {
