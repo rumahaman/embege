@@ -72,6 +72,7 @@ export default function CheckInPage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [result, setResult] = useState<SearchResult | null>(null)
   const [summary, setSummary] = useState<Summary | null>(null)
+  const [summaryError, setSummaryError] = useState("")
   const [loginError, setLoginError] = useState("")
   const [actionError, setActionError] = useState("")
   const [loading, setLoading] = useState(false)
@@ -81,18 +82,31 @@ export default function CheckInPage() {
 
   const loadSummary = useCallback(async () => {
     setRefreshing(true)
+    setSummaryError("")
     try {
       const response = await fetch("/api/check-in/summary", {
         cache: "no-store",
       })
-      if (!response.ok) {
+      const data = (await response.json().catch(() => null)) as
+        | (Summary & { message?: string })
+        | null
+
+      if (!response.ok || !data?.success) {
         setSummary(null)
+        setSummaryError(
+          data?.message ||
+            "Gagal memuat ringkasan dari backend. Periksa koneksi lalu tekan Perbarui angka.",
+        )
         return
       }
-      const data = (await response.json()) as Summary
-      if (data.success) setSummary(data)
+
+      setSummary(data)
+      setSummaryError("")
     } catch {
       setSummary(null)
+      setSummaryError(
+        "Koneksi ke backend terputus. Angka kehadiran tidak tersedia; coba Perbarui angka.",
+      )
     } finally {
       setRefreshing(false)
     }
@@ -376,6 +390,14 @@ export default function CheckInPage() {
                   Perbarui angka
                 </button>
               </div>
+              {summaryError && (
+                <p
+                  role="alert"
+                  className="mt-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm font-medium text-red-800"
+                >
+                  GAGAL MEMUAT RINGKASAN: {summaryError}
+                </p>
+              )}
               <div className="mt-4 grid grid-cols-2 gap-3">
                 <div className="rounded-xl bg-[#EDF2F5] p-3">
                   <div className="flex items-center gap-2 text-sm text-slate-600">
