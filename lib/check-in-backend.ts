@@ -17,17 +17,38 @@ export async function callCheckInAppsScript(
     apiSecret,
   })
 
-  const response = await fetch(scriptUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-    },
-    body: params.toString(),
-    cache: "no-store",
-    redirect: "follow",
-  })
+  let response: Response
+  try {
+    response = await fetch(scriptUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+      },
+      body: params.toString(),
+      cache: "no-store",
+      redirect: "follow",
+      signal: AbortSignal.timeout(12_000),
+    })
+  } catch (error) {
+    if (error instanceof Error && error.name === "TimeoutError") {
+      throw new Error(
+        "Waktu tunggu Apps Script habis (12 detik). Periksa koneksi atau status layanan, lalu coba lagi.",
+      )
+    }
+    throw new Error(
+      "Tidak dapat terhubung ke Apps Script. Periksa koneksi dan konfigurasi URL Web App, lalu coba lagi.",
+    )
+  }
 
-  const responseText = await response.text()
+  let responseText: string
+  try {
+    responseText = await response.text()
+  } catch {
+    throw new Error(
+      "Respons Apps Script terputus sebelum selesai diterima. Coba ulangi permintaan.",
+    )
+  }
+
   let payload: AppsScriptPayload
 
   try {
