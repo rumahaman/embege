@@ -20,7 +20,27 @@ export async function GET() {
       staffId: session.staffId,
     })
 
-    return NextResponse.json(payload, {
+    // Keep the API response scoped to the venue bound to this signed session.
+    const allCities = Array.isArray(payload.cities)
+      ? (payload.cities as Array<{ city?: unknown; registered?: unknown; checkedIn?: unknown }>)
+      : []
+    const citySummary = allCities.filter((item) => item.city === session.city)
+    const totalRegistered = citySummary.reduce(
+      (sum, item) => sum + (typeof item.registered === "number" ? item.registered : 0),
+      0,
+    )
+    const totalCheckedIn = citySummary.reduce(
+      (sum, item) => sum + (typeof item.checkedIn === "number" ? item.checkedIn : 0),
+      0,
+    )
+    const scopedPayload = {
+      ...payload,
+      totalRegistered,
+      totalCheckedIn,
+      cities: citySummary,
+    }
+
+    return NextResponse.json(scopedPayload, {
       status: statusForCheckInPayload(payload),
       headers: { "Cache-Control": "no-store" },
     })
