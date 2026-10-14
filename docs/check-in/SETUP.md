@@ -43,16 +43,29 @@ Test the preview page at `/check-in` with a test PIN and only with a known test 
 
 Required tests:
 
-- A valid reservation in the selected city is found.
-- A number that does not exist returns NOT_FOUND.
-- A reservation selected under another city returns WRONG_CITY.
+- Search by exact reservation number, full/partial name, email, and WhatsApp number.
+- Search results only include registrations from the city bound to the signed staff session.
+- If a name query matches several people, the staff member must select the intended participant.
+- A number/query that does not match a registration in the selected venue returns NOT_FOUND.
 - A cancelled reservation cannot be checked in.
 - The first check-in is written once to the Check-in tab.
 - A repeated or simultaneous check-in returns the existing log instead of adding a second row.
+- Search results do not expose attendee email or WhatsApp values.
 - Check-in log entries contain no attendee phone number or email.
 - Existing registration submission, number generation, quota endpoint, and optional confirmation email still work.
 
-## 4. Release
+## 4. Enable multi-field participant search
+
+After the initial check-in handlers are installed, the multi-field search feature also needs an Apps Script update.
+
+1. Open `docs/check-in/multifield-search-migration.gs` in the `development` branch.
+2. In the active Apps Script `Code.gs`, replace the complete existing `handleCheckInAction_(e, action)` function with the version in that migration file.
+3. Append the two helper functions `searchCheckInReservations_` and `normalizeCheckInPhone_` from that file. The older `searchCheckInReservation_` may remain unused.
+4. Save and update the existing Web App deployment to a new version, keeping its URL unchanged.
+
+The Vercel UI/API change supports a single query field for reservation number, name, email, or WhatsApp. Until this Apps Script migration is installed and deployed, multi-field searches will not work end-to-end.
+
+## 5. Release
 
 Do not merge to `main` or add production secrets until preview tests pass. After approval, configure the production environment variables and release the reviewed changes. Keep a printed/exported participant list for each city as a fallback for internet or service outages.
 
