@@ -40,7 +40,10 @@ type SearchResult = {
   code?: string
   message?: string
   participant?: Participant
+  participants?: Participant[]
   alreadyCheckedIn?: boolean
+  matchCount?: number
+  truncated?: boolean
 }
 
 type CitySummary = {
@@ -66,7 +69,7 @@ export default function CheckInPage() {
   const [pin, setPin] = useState("")
   const [staffId, setStaffId] = useState("")
   const [city, setCity] = useState<City>("Kabupaten Tangerang")
-  const [reservationNumber, setReservationNumber] = useState("")
+  const [searchQuery, setSearchQuery] = useState("")
   const [result, setResult] = useState<SearchResult | null>(null)
   const [summary, setSummary] = useState<Summary | null>(null)
   const [loginError, setLoginError] = useState("")
@@ -166,8 +169,8 @@ export default function CheckInPage() {
     setActionError("")
     setResult(null)
 
-    const normalized = reservationNumber.trim().toUpperCase()
-    setReservationNumber(normalized)
+    const normalized = searchQuery.trim()
+    setSearchQuery(normalized)
 
     try {
       const response = await fetch("/api/check-in/search", {
@@ -175,7 +178,7 @@ export default function CheckInPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           city: session?.city ?? city,
-          reservationNumber: normalized,
+          query: normalized,
         }),
       })
       const data = (await readJson(response)) as SearchResult
@@ -217,7 +220,7 @@ export default function CheckInPage() {
       } else if (!response.ok) {
         setActionError(data.message || "Check-in belum berhasil dicatat.")
       } else if (data.success) {
-        setReservationNumber(result.participant.reservationNumber)
+        setSearchQuery(result.participant.reservationNumber)
         await loadSummary()
       }
     } catch {
@@ -232,7 +235,7 @@ export default function CheckInPage() {
     setSession(null)
     setResult(null)
     setSummary(null)
-    setReservationNumber("")
+    setSearchQuery("")
   }
 
   const participant = result?.participant
@@ -412,8 +415,8 @@ export default function CheckInPage() {
               <div className="mb-4">
                 <h2 className="text-lg font-extrabold">Verifikasi reservasi</h2>
                 <p className="mt-1 text-sm leading-6 text-slate-600">
-                  Cari nomor reservasi untuk venue yang sudah dipilih saat login. Pastikan data
-                  peserta cocok sebelum menekan tombol konfirmasi.
+                  Cari menggunakan nomor reservasi, nama lengkap, email, atau nomor WhatsApp.
+                  Pastikan data peserta cocok sebelum menekan tombol konfirmasi.
                 </p>
               </div>
 
@@ -432,30 +435,31 @@ export default function CheckInPage() {
 
                 <label className="block">
                   <span className="mb-1.5 block text-sm font-semibold">
-                    Nomor reservasi
+                    Cari peserta
                   </span>
                   <input
-                    value={reservationNumber}
+                    value={searchQuery}
                     onChange={(event) => {
-                      setReservationNumber(event.target.value.toUpperCase())
+                      setSearchQuery(event.target.value)
                       setResult(null)
                       setActionError("")
                     }}
-                    autoCapitalize="characters"
                     autoComplete="off"
                     spellCheck={false}
-                    placeholder={`MBG-${({"Kabupaten Tangerang":"TGR", "Cirebon":"CBR", "Yogyakarta":"YGY", "Malang":"MLG"} as Record<City, string>)[session.city]}-001`}
+                    placeholder="Nama, nomor reservasi, email, atau WhatsApp"
                     required
-                    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 font-mono text-lg font-bold uppercase outline-none focus:border-[#35505C] focus:ring-2 focus:ring-[#A9C1CC]"
+                    minLength={2}
+                    maxLength={100}
+                    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-base font-semibold outline-none focus:border-[#35505C] focus:ring-2 focus:ring-[#A9C1CC]"
                   />
                   <span className="mt-1.5 block text-xs text-slate-500">
-                    Nomor dapat dilihat dari email konfirmasi atau bukti reservasi.
+                    Nama bisa dicari dengan sebagian kata. Email dan nomor WhatsApp juga bisa digunakan.
                   </span>
                 </label>
 
                 <button
                   type="submit"
-                  disabled={searching || !reservationNumber.trim()}
+                  disabled={searching || searchQuery.trim().length < 2}
                   className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#173B70] px-4 py-3.5 font-bold text-white hover:bg-[#102E58] disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   <Search size={18} />
@@ -471,7 +475,44 @@ export default function CheckInPage() {
 
               {result && (
                 <div className="mt-5 rounded-xl border border-slate-200 p-4">
-                  {participant ? (
+                  {result.participants?.length && !participant ? (
+                    <div className="space-y-3">
+                      <div className="mb-3">
+                        <p className="font-bold">Pilih peserta yang sesuai</p>
+                        <p className="mt-1 text-sm text-slate-600">
+                          Ditemukan {result.matchCount ?? result.participants.length} hasil di venue ini.
+                        </p>
+                      </div>
+                      {result.participants.map((item) => {
+                        const cancelled = String(item.registrationStatus || "").toLowerCase() === "dibatalkan"
+                        const checkedIn = item.checkInStatus === "SUDAH HADIR"
+                        return (
+                          <div key={item.reservationNumber} className="rounded-lg border border-slate-200 p-3">
+                            <p className="font-bold">{item.name}</p>
+                            <p className="mt-0.5 font-mono text-sm text-slate-600">{item.reservationNumber}</p>
+                            <p className="mt-1 text-sm text-slate-600">Status: {cancelled ? "Dibatalkan" : checkedIn ? "Sudah check-in" : "Belum hadir"}</p>
+                            <button
+                              type="button"
+                              onClick={() => setResult({
+                                success: !cancelled,
+                                code: cancelled ? "CANCELLED" : undefined,
+                                participant: item,
+                                alreadyCheckedIn: checkedIn,
+                              })}
+                              className="mt-3 w-full rounded-lg border border-[#173B70] px-3 py-2 text-sm font-bold text-[#173B70] hover:bg-[#EDF2F5]"
+                            >
+                              {cancelled ? "Lihat reservasi dibatalkan" : "Pilih peserta"}
+                            </button>
+                          </div>
+                        )
+                      })}
+                      {result.truncated && (
+                        <p className="rounded-lg bg-amber-50 p-3 text-sm text-amber-900">
+                          Hasil dibatasi hingga 10 peserta. Perjelas kata kunci agar peserta yang tepat ditemukan.
+                        </p>
+                      )}
+                    </div>
+                  ) : participant ? (
                     <>
                       <div className="mb-3 flex items-start gap-3">
                         <div className="rounded-full bg-[#E5EEF2] p-2 text-[#35505C]">
