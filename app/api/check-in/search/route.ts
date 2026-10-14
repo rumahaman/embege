@@ -24,15 +24,12 @@ export async function POST(request: NextRequest) {
   try {
     const body = (await request.json()) as {
       city?: unknown
-      reservationNumber?: unknown
+      query?: unknown
     }
 
     const requestedCity = typeof body.city === "string" ? body.city.trim() : ""
     const city = session.city
-    const reservationNumber =
-      typeof body.reservationNumber === "string"
-        ? body.reservationNumber.trim().toUpperCase()
-        : ""
+    const query = typeof body.query === "string" ? body.query.trim() : ""
 
     if (requestedCity !== city) {
       return NextResponse.json(
@@ -47,13 +44,14 @@ export async function POST(request: NextRequest) {
 
     if (
       !ALLOWED_CITIES.has(city) ||
-      !/^MBG-(TGR|CBR|YGY|MLG)-\d{3,}$/.test(reservationNumber)
+      query.length < 2 ||
+      query.length > 100
     ) {
       return NextResponse.json(
         {
           success: false,
           code: "INVALID_REQUEST",
-          message: "Pilih kota dan masukkan nomor reservasi dengan format yang benar.",
+          message: "Masukkan nama, nomor reservasi, email, atau WhatsApp (2–100 karakter).",
         },
         { status: 400 },
       )
@@ -62,7 +60,7 @@ export async function POST(request: NextRequest) {
     const payload = await callCheckInAppsScript({
       action: "checkin_search",
       city,
-      reservationNumber,
+      query,
       staffId: session.staffId,
     })
 
