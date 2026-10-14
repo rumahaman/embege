@@ -206,6 +206,7 @@ function searchCheckInReservations_(query, selectedCity) {
   const rawQuery = String(query || "").trim();
   const queryLower = rawQuery.toLowerCase();
   const queryUpper = rawQuery.toUpperCase();
+  const queryDigits = rawQuery.replace(/\D/g, "");
   const queryPhone = normalizeCheckInPhone_(rawQuery);
   const scoredMatches = [];
 
@@ -231,9 +232,11 @@ function searchCheckInReservations_(query, selectedCity) {
     } else if (normalizedEmail && normalizedEmail === queryLower) {
       score = 95;
     } else if (
-      queryPhone.length >= 7 &&
+      queryDigits.length >= 7 &&
       normalizedPhone &&
-      (normalizedPhone === queryPhone || normalizedPhone.endsWith(queryPhone))
+      (normalizedPhone === queryPhone ||
+        normalizedPhone.endsWith(queryPhone) ||
+        normalizedPhone.endsWith(queryDigits))
     ) {
       score = 95;
     } else if (normalizedName === queryLower) {
@@ -279,8 +282,13 @@ function searchCheckInReservations_(query, selectedCity) {
   });
 
   if (scoredMatches.length === 1) {
+    const cancelled =
+      String(participants[0].registrationStatus || "").trim().toLowerCase() === "dibatalkan";
+
     return {
-      success: true,
+      success: !cancelled,
+      code: cancelled ? "CANCELLED" : undefined,
+      message: cancelled ? "Reservasi ini sudah dibatalkan." : "Reservasi ditemukan.",
       alreadyCheckedIn: participants[0].checkInStatus === "SUDAH HADIR",
       participant: participants[0],
     };
