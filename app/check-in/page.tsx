@@ -62,7 +62,7 @@ async function readJson(response: Response) {
 
 export default function CheckInPage() {
   const [configured, setConfigured] = useState<boolean | null>(null)
-  const [session, setSession] = useState<{ staffId: string } | null>(null)
+  const [session, setSession] = useState<{ staffId: string; city: City } | null>(null)
   const [pin, setPin] = useState("")
   const [staffId, setStaffId] = useState("")
   const [city, setCity] = useState<City>("Kabupaten Tangerang")
@@ -110,8 +110,10 @@ export default function CheckInPage() {
         }
         setConfigured(true)
         if (response.ok) {
-          const data = (await response.json()) as { staffId: string }
-          setSession({ staffId: data.staffId })
+          const data = (await response.json()) as { staffId: string; city: City }
+          if (!CITIES.includes(data.city)) return
+          setCity(data.city)
+          setSession({ staffId: data.staffId, city: data.city })
           await loadSummary()
         }
       } catch {
@@ -133,20 +135,22 @@ export default function CheckInPage() {
       const response = await fetch("/api/check-in/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ pin, staffId }),
+        body: JSON.stringify({ pin, staffId, city }),
       })
       const data = (await readJson(response)) as {
         success?: boolean
         staffId?: string
+        city?: string
         message?: string
       }
 
-      if (!response.ok || !data.success || !data.staffId) {
+      if (!response.ok || !data.success || !data.staffId || !data.city || !CITIES.includes(data.city as City)) {
         setLoginError(data.message || "Tidak dapat masuk ke panel check-in.")
         return
       }
 
-      setSession({ staffId: data.staffId })
+      setCity(data.city as City)
+      setSession({ staffId: data.staffId, city: data.city as City })
       setPin("")
       await loadSummary()
     } catch {
@@ -170,7 +174,7 @@ export default function CheckInPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          city,
+          city: session?.city ?? city,
           reservationNumber: normalized,
         }),
       })
@@ -200,7 +204,7 @@ export default function CheckInPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          city,
+          city: session?.city ?? city,
           reservationNumber: result.participant.reservationNumber,
         }),
       })
@@ -294,6 +298,19 @@ export default function CheckInPage() {
             </div>
             <form onSubmit={handleLogin} className="space-y-4">
               <label className="block">
+                <span className="mb-1.5 block text-sm font-semibold">Kota venue</span>
+                <select
+                  value={city}
+                  onChange={(event) => setCity(event.target.value as City)}
+                  required
+                  className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none focus:border-[#35505C] focus:ring-2 focus:ring-[#A9C1CC]"
+                >
+                  {CITIES.map((item) => (
+                    <option key={item} value={item}>{item}</option>
+                  ))}
+                </select>
+              </label>
+              <label className="block">
                 <span className="mb-1.5 block text-sm font-semibold">Inisial petugas</span>
                 <input
                   value={staffId}
@@ -344,6 +361,7 @@ export default function CheckInPage() {
                     Petugas aktif
                   </p>
                   <p className="mt-1 font-bold">{session.staffId}</p>
+                  <p className="mt-1 text-sm text-slate-600">Venue: <span className="font-semibold text-[#173B70]">{session.city}</span></p>
                 </div>
                 <button
                   type="button"
@@ -375,7 +393,7 @@ export default function CheckInPage() {
               </div>
               {summary?.cities?.length ? (
                 <div className="mt-3 grid grid-cols-2 gap-2">
-                  {summary.cities.filter((item) => CITIES.includes(item.city as City)).map((item) => (
+                  {summary.cities.filter((item) => item.city === session.city).map((item) => (
                     <div
                       key={item.city}
                       className="flex items-center justify-between gap-2 rounded-lg border border-slate-200 px-3 py-2 text-sm"
@@ -394,30 +412,23 @@ export default function CheckInPage() {
               <div className="mb-4">
                 <h2 className="text-lg font-extrabold">Verifikasi reservasi</h2>
                 <p className="mt-1 text-sm leading-6 text-slate-600">
-                  Pilih kota sesuai venue, lalu cari nomor reservasi. Pastikan data
-                  cocok sebelum menekan tombol konfirmasi.
+                  Cari nomor reservasi untuk venue yang sudah dipilih saat login. Pastikan data
+                  peserta cocok sebelum menekan tombol konfirmasi.
                 </p>
               </div>
 
               <form onSubmit={handleSearch} className="space-y-4">
-                <label className="block">
+                <div className="block">
                   <span className="mb-1.5 flex items-center gap-2 text-sm font-semibold">
-                    <MapPin size={16} /> Kota acara
+                    <MapPin size={16} /> Venue petugas
                   </span>
-                  <select
-                    value={city}
-                    onChange={(event) => {
-                      setCity(event.target.value as City)
-                      setResult(null)
-                      setActionError("")
-                    }}
-                    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none focus:border-[#35505C] focus:ring-2 focus:ring-[#A9C1CC]"
-                  >
-                    {CITIES.map((item) => (
-                      <option key={item} value={item}>{item}</option>
-                    ))}
-                  </select>
-                </label>
+                  <div className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 font-semibold">
+                    {session.city}
+                  </div>
+                  <span className="mt-1.5 block text-xs text-slate-500">
+                    Venue terkunci sesuai pilihan saat login. Untuk berpindah kota, keluar lalu login kembali.
+                  </span>
+                </div>
 
                 <label className="block">
                   <span className="mb-1.5 block text-sm font-semibold">
@@ -433,7 +444,7 @@ export default function CheckInPage() {
                     autoCapitalize="characters"
                     autoComplete="off"
                     spellCheck={false}
-                    placeholder="MBG-CBR-001"
+                    placeholder={`MBG-${({"Kabupaten Tangerang":"TGR", "Cirebon":"CBR", "Yogyakarta":"YGY", "Malang":"MLG"} as Record<City, string>)[session.city]}-001`}
                     required
                     className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 font-mono text-lg font-bold uppercase outline-none focus:border-[#35505C] focus:ring-2 focus:ring-[#A9C1CC]"
                   />
