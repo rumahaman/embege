@@ -19,6 +19,9 @@ export async function GET() {
   return NextResponse.json({
     success: true,
     staffId: session.staffId,
+    city: session.city,
     expiresAt: session.exp,
+  }, {
+    headers: { "Cache-Control": "no-store" },
   })
 }
