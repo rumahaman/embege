@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { useCallback, useEffect, useState } from "react"
 import {
   ArrowRight,
@@ -266,8 +267,15 @@ export default function CheckInPage() {
     <main className="min-h-screen bg-[#EDF2F5] px-3 py-5 text-[#26363E] sm:px-6 sm:py-8">
       <div className="mx-auto max-w-3xl">
         <header className="mb-5 flex items-center gap-3 rounded-2xl bg-[#10181D] p-4 text-white shadow-sm sm:p-5">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#A9C1CC] text-[#17272F]">
-            <TicketCheck size={27} />
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white p-1.5">
+            <Image
+              src="/images/logo-bgn.jpg"
+              alt="Logo Badan Gigs Nasional"
+              width={48}
+              height={48}
+              priority
+              className="h-full w-full object-contain"
+            />
           </div>
           <div className="min-w-0 flex-1">
             <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#A9C1CC]">
