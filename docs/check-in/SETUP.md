@@ -1,0 +1,82 @@
+# MBG Check-in MVP — Setup dan aktivasi
+
+## Status
+
+The web UI and Vercel API routes are developed on the `development` branch. The application is **not operational against live registrations** until the Apps Script addition and environment secrets below are configured and tested.
+
+## 1. Vercel environment variables
+
+The existing `GOOGLE_APPS_SCRIPT_URL` variable is already used by the current registration and quota APIs. Do not replace or rotate it as part of this feature.
+
+Add these new variables to the Vercel project `embege` for the **Preview** environment first:
+
+- `CHECKIN_STAFF_PIN`: a strong staff passphrase/PIN. Prefer a long, non-guessable value rather than a short numeric PIN.
+- `CHECKIN_SESSION_SECRET`: a random secret with at least 32 bytes of entropy; used to sign the HTTP-only staff session cookie.
+- `CHECKIN_API_SECRET`: a separate random secret used only between the Vercel server and Apps Script.
+
+Do not put these values in source control or expose them to browser code. Do not use a `NEXT_PUBLIC_` prefix.
+
+## 2. Add the Apps Script handler
+
+1. Open the active Apps Script project bound to the MBG registration spreadsheet.
+2. Make a copy of the current `Code.gs` before editing.
+3. In Script editor > Project Settings > Script properties, add `CHECKIN_API_SECRET` with exactly the same value configured in Vercel.
+4. Open the existing `doPost(e)`. Immediately after its opening brace, before `let lock = null;`, add:
+
+```javascript
+  const incomingAction = String(
+    (e && e.parameter && e.parameter.action) || ""
+  ).trim().toLowerCase();
+
+  if (incomingAction.indexOf("checkin_") === 0) {
+    return handleCheckInAction_(e, incomingAction);
+  }
+```
+
+5. Append the contents of `apps-script-additions.gs` to the end of the existing `Code.gs`. Do not replace the existing code with this addition.
+6. Save and test. The addition creates a separate `Check-in` tab on first use with columns: No. Reservasi, Nama Lengkap, Kota Acara, Waktu Check-in, Petugas, Status.
+7. In Deploy > Manage deployments, edit the existing web-app deployment and publish a new version while preserving the existing deployment URL and its current access configuration. Do not create a replacement deployment URL unless you also deliberately update Vercel.
+
+## 3. Preview tests
+
+Test the preview page at `/check-in` with a test PIN and only with a known test reservation first.
+
+Required tests:
+
+- Search by exact reservation number, full/partial name, email, and WhatsApp number.
+- Search results only include registrations from the city bound to the signed staff session.
+- If a name query matches several people, the staff member must select the intended participant.
+- A number/query that does not match a registration in the selected venue returns NOT_FOUND.
+- A cancelled reservation cannot be checked in.
+- The first check-in is written once to the Check-in tab.
+- A repeated or simultaneous check-in returns the existing log instead of adding a second row.
+- Search results do not expose attendee email or WhatsApp values.
+- Check-in log entries contain no attendee phone number or email.
+- Existing registration submission, number generation, quota endpoint, and optional confirmation email still work.
+
+## 4. Enable multi-field participant search
+
+After the initial check-in handlers are installed, the multi-field search feature also needs an Apps Script update.
+
+1. Open `docs/check-in/multifield-search-migration.gs` in the `development` branch.
+2. In the active Apps Script `Code.gs`, replace the complete existing `handleCheckInAction_(e, action)` function with the version in that migration file.
+3. Append the two helper functions `searchCheckInReservations_` and `normalizeCheckInPhone_` from that file. The older `searchCheckInReservation_` may remain unused.
+4. Save and update the existing Web App deployment to a new version, keeping its URL unchanged.
+
+The Vercel UI/API change supports a single query field for reservation number, name, email, or WhatsApp. Until this Apps Script migration is installed and deployed, multi-field searches will not work end-to-end.
+
+5. In the same migration file, replace the complete active `getCheckInSummary_()` function with the function under “STEP 3”. It counts unique, non-cancelled reservation numbers and counts each check-in reservation once.
+6. Save and publish another new version of the same Apps Script Web App deployment. Preserve the existing Web App URL so Vercel's `GOOGLE_APPS_SCRIPT_URL` remains unchanged.
+7. Test duplicate rows deliberately in a safe test copy before using live event data. Verify that one reservation contributes at most 1 to “Terdaftar” and at most 1 to “Sudah hadir”.
+
+## 5. Release
+
+Do not merge to `main` or add production secrets until preview tests pass. After approval, configure the production environment variables and release the reviewed changes. Keep a printed/exported participant list for each city as a fallback for internet or service outages.
+
+## Security notes
+
+- The Vercel API validates the staff session before sending a request to Apps Script.
+- Apps Script validates `CHECKIN_API_SECRET` before performing check-in actions.
+- The check-in writer uses `LockService.getScriptLock()` to serialize the duplicate check and append operation.
+- The log contains minimum operational data only. Do not add WhatsApp numbers or attendee emails to the check-in log.
+- The staff identifier is an audit label entered at login; this MVP uses a shared PIN, not individually managed user accounts.
