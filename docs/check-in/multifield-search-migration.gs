@@ -281,8 +281,13 @@ function searchCheckInReservations_(query, selectedCity) {
 
   const MAX_RESULTS = 10;
   const selectedMatches = scoredMatches.slice(0, MAX_RESULTS);
+
+  // Read the check-in log once per search, then use O(1) lookups per candidate.
+  // The first log entry for each reservation is retained for deterministic display.
+  const checkInLogByReservation = getCheckInLogMap_();
   const participants = selectedMatches.map(function (match) {
-    const existing = findCheckInLog_(match.record.reservationNumber);
+    const key = String(match.record.reservationNumber || "").trim().toUpperCase();
+    const existing = checkInLogByReservation[key] || null;
     return publicCheckInParticipant_(match.record, existing);
   });
 
@@ -319,4 +324,33 @@ function normalizeCheckInPhone_(value) {
   }
 
   return digits;
+}
+
+/**
+ * Read the Check-in sheet once and index it by normalized reservation number.
+ * Used by multi-result search to avoid a sheet scan for every candidate.
+ */
+function getCheckInLogMap_() {
+  const sheet = getCheckInSheet_();
+  const lastRow = sheet.getLastRow();
+  const byReservation = Object.create(null);
+
+  if (lastRow < 2) return byReservation;
+
+  const rows = sheet.getRange(2, 1, lastRow - 1, 6).getDisplayValues();
+  rows.forEach(function (row) {
+    const key = String(row[0] || "").trim().toUpperCase();
+    if (!key || Object.prototype.hasOwnProperty.call(byReservation, key)) return;
+
+    byReservation[key] = {
+      reservationNumber: String(row[0] || "").trim(),
+      name: String(row[1] || "").trim(),
+      city: String(row[2] || "").trim(),
+      checkedInAt: String(row[3] || "").trim(),
+      staffId: String(row[4] || "").trim(),
+      status: String(row[5] || "").trim(),
+    };
+  });
+
+  return byReservation;
 }
