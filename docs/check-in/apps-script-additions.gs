@@ -297,7 +297,7 @@ function searchCheckInReservations_(query, selectedCity) {
 }
 
 function normalizeCheckInPhone_(value) {
-  let digits = String(value || "").replace(/\\D/g, "");
+  let digits = String(value || "").replace(/\D/g, "");
 
   if (digits.indexOf("62") === 0) {
     digits = "0" + digits.substring(2);
