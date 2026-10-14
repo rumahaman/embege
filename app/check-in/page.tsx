@@ -267,14 +267,14 @@ export default function CheckInPage() {
     <main className="min-h-screen bg-[#EDF2F5] px-3 py-5 text-[#26363E] sm:px-6 sm:py-8">
       <div className="mx-auto max-w-3xl">
         <header className="mb-5 flex items-center gap-3 rounded-2xl bg-[#10181D] p-4 text-white shadow-sm sm:p-5">
-          <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl bg-white">
+          <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full border border-white/70 bg-white p-0.5 shadow-sm">
             <Image
               src="/images/logo-bgn.jpg"
               alt="Logo Badan Gigs Nasional"
               fill
               priority
-              sizes="48px"
-              className="scale-[1.12] object-cover"
+              sizes="56px"
+              className="rounded-full object-contain"
             />
           </div>
           <div className="min-w-0 flex-1">
